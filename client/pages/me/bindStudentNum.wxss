@@ -1,0 +1,21 @@
+/* pages/me/bindStudentNum.wxss */
+.sumQues {
+  margin: 50rpx 30rpx 200rpx;
+  width: 690rpx;
+  height: 100%;
+  display: flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items: center;
+}
+.label
+{
+  width: 690rpx;
+}
+.form {
+  width: 690rpx;
+}
+.inputArea{
+  padding: 20rpx;
+  margin: 30rpx;
+}

@@ -1,0 +1,47 @@
+/* pages/toWork/editQuestionnaire/editQuestionnaire.wxss */
+
+.log-list {
+  display: flex;
+  flex-direction: column;
+  margin: 8px;
+  padding: 40rpx;
+}
+.border {
+  border: 2px solid #808080;
+}
+
+.submit
+{
+  padding: 20rpx;
+}
+
+.hide
+{
+  display: none;
+}
+
+.label
+{
+  margin-top: 10px;
+  margin-left: 20px;
+}
+.form {
+  width: 690rpx;
+}
+.checkboxGroup{
+  width: 520rpx;
+  padding: 20rpx;
+  margin: 8px;
+}
+.desc {
+  font-size: 30rpx;
+  padding-bottom: 5px;
+  color: red;
+  width:690rpx;
+}
+.switch {
+  width: 600rpx;
+  display: flex;
+  justify-content: flex-end;
+  padding: 5rpx;
+}

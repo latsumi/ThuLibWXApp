@@ -1,0 +1,46 @@
+<!--pages/toWork/leaderWork/checkSignIn.wxml-->
+<view class="descs">{{descs}}</view>
+<view class='gap'></view>
+<form bindsubmit="delSign">
+<view  style='margin-top:30px;'></view>
+
+<form bindsubmit="save">
+  <label class="label"> 1.确认签到信息</label>
+  <view class="inputArea">
+    <checkbox-group  class='checkSign' name="id">
+      <label wx:for="{{listData}}" wx:key="" wx:if='{{library==listData[index].library||library>1}}'>
+        <checkbox style='margin-bottom:15px;' value="{{listData[index].id}}"/>{{listData[index].name}} {{libraries[listData[index].library]}} {{classes[listData[index].workType]}} {{listData[index].manHour}}h {{listData[index].isRelief?remarks[0]:''}} {{listData[index].isLeader?remarks[1]:''}}
+      </label>
+    </checkbox-group>
+  </view>
+
+<label class="label" style='margin-top:30px;'>2.选择周次星期</label>
+<view class='showMenu'>
+  <picker bindchange="bindPickerWeekChange" value="{{chooseWeek}}" range="{{week}}" name='whichWeek'>
+    <view class="picker">{{chooseWeek}}</view>
+  </picker>
+  <picker bindchange="bindPickerDayChange" value="{{day[currentDay]}}" range="{{day}}" name='whatDay'>
+    <view class="picker">{{chooseDay}}</view>
+  </picker>
+</view>
+
+<label class="label"> 3.上班人数</label>
+<view class="inputAreaLocal border">
+  <input name="personNum" type="number" placeholder="填写上班人数" maxlength="10"/>
+</view>
+
+<label class="label">4.是否加班</label>
+<view class="inputAreaLocal">
+  <radio-group name="hasExtraWork">
+    <label wx:for="{{radioChoose}}" wx:key="" style='margin-right:20px'>
+      <radio value="{{item.value}}" checked='{{item.value==0?true:false}}'/>{{item.name}}
+  </label>
+</radio-group>
+</view>
+
+<view class="submit"><button type="primary" form-type="submit">确认签到</button></view>
+</form>
+<view class="submit" ><button type="warn" form-type="submit">删除所选签到</button></view>
+</form>
+
+

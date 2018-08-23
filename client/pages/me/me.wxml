@@ -1,0 +1,40 @@
+<!--pages/me/me.wxml-->
+
+<view class="userinfo">
+  <image class="userinfo-avatar" src="{{logged ? userInfo.avatarUrl : '../../image/user-unlogin.png'}}" background-size="cover"></image>
+  <view class="userinfo-view">
+    <button class="userinfo-nickname, userinfo-button" wx:if="{{!logged}}" open-type="getUserInfo" bindgetuserinfo="login">点击登录</button>
+    <text class="userinfo-nickname" style='padding: 14px;' wx:else>{{userInfo.nickName}}</text>
+  </view>
+</view>
+
+<view class="gap"></view>
+<view class="showMenu" style='height:350rpx;'>
+  <view class="menuList" wx:for="{{menu}}" wx:key="">
+    <image class="menuImg" bindtap="bindMenuTap" src="{{item.menuImage}}" data-index='{{index}}'></image>
+    <view class="menuDesc">{{item.descs}}</view>
+  </view>
+</view>
+<view class="gap"></view>
+
+<view class="list">
+  <view class="listText">
+    <text>不要点这里</text>
+  </view>
+</view>
+<view class="list">
+  <view class="listText">
+    <text>这里也不要点</text>
+  </view>
+</view>
+<view class="list">
+  <view class="listText">
+    <text>戳我领红包（骗你的）</text>
+  </view>
+</view>
+<view class="list">
+  <view class="listText">
+    <text>关于我们</text>
+  </view>
+</view>
+

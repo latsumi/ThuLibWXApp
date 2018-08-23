@@ -1,0 +1,49 @@
+<!--pages/toWork/routines/signIn.wxml-->
+<view class='welcome'>
+  <view class='welcomeMotto'>{{period[currentPeriod]}}好，{{name}}！清图打卡为您服务</view>
+  <view class='dates'>{{currentYear}}年{{currentMonth}}月{{currentDate}}日 {{day[currentDay]}}</view>
+  <!--  这里加上天气状况-->
+</view>
+<view class='gap'></view>
+
+<form bindsubmit="save">
+<view  style='margin-top:10px;'>  </view>
+
+<label class="label">1.签到库区</label>
+<view class="inputArea">
+  <radio-group name="library" >
+    <label wx:for="{{radioLibrary}}" wx:key="">
+      <radio value="{{item.value}}" checked='{{item.value==library?true:false}}'/>{{item.name}}
+  </label>
+</radio-group>
+</view>
+
+<label class="label">2.签到班次</label>
+<view class="inputArea">
+  <radio-group name="workType" >
+    <label wx:for="{{classes}}" wx:key="">
+      <radio value="{{index}}" checked='{{index==currentClass?true:false}}'/>{{item}}
+  </label>
+</radio-group>
+</view>
+
+<label class="label">3.工时</label>
+<view class="inputArea">
+  <radio-group name="manHour" >
+    <label wx:for="{{manHour}}" wx:key="">
+      <radio value="{{manHourPost[index]}}" checked='{{index==currentManHour?true:false}}'/>{{item}}
+  </label>
+</radio-group>
+</view>
+
+<view class='inputArea'>
+  <checkbox-group name="remarks">
+      <label wx:for="{{remarks}}" wx:key="" style="margin-right:20px;">
+        <checkbox value="{{remarks[index]}}"/>{{remarks[index]}}
+      </label>
+  </checkbox-group>
+</view>
+<view class="submit"><button type="primary" form-type="submit">提交签到</button></view>
+</form>
+
+

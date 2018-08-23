@@ -1,0 +1,23 @@
+<!--pages/info/dutyForm.wxml-->
+<view class="table">
+  <view class="formTitle">{{formTitle}}</view>
+  <view class="gap"></view>
+  <swiper class="dutySwiper" circular current='{{currentDay-1}}'>
+  <block wx:for="{{week}}" wx:key="" wx:for-item="week" wx:for-index="i">
+    <swiper-item>
+    <view class="week">{{week}}</view>
+    <view class='bg-detail'>
+      <view class="tableRow bg-title">
+        <view class="tableKey leftWidth">班次</view>
+        <view class="tableKey rightWidth">队员</view>
+      </view>
+      <view class="tableRow bg-detail" wx:for="{{classes}}" wx:key="" wx:for-index="j" wx:if="{{j<4}}">
+        <view class="detail leftWidth" wx:if="{{j==0&&i>=5}}">{{classesHoliday[j]}}</view>
+        <view class="detail leftWidth" wx:else>{{item}}</view>
+        <view class="detail rightWidth">11*{{persons[j+4*i]}}</view>
+      </view>
+    </view>
+    </swiper-item>
+  </block>
+  </swiper>
+</view>

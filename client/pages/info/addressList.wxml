@@ -1,0 +1,20 @@
+<!--pages/info/addressList.wxml-->
+
+<view class="table">
+  <view class="formTitle">{{formTitle}}</view>
+  <view class="gap"></view>
+  <view class="descs">{{descs}}</view>
+
+  <view class='bg-detail'>
+    <view class="tableRow bg-title">
+      <view class="tableKey leftWidth">姓名</view>
+      <view class="tableKey rightWidth">学号</view>
+    </view>
+    <block wx:for="{{listData}}" wx:key="" wx:for-index="i">
+      <view class="tableRow bg-detail">
+        <view class="detail leftWidth" bindtap='bindNameTap' data-index='{{i}}'>{{listData[i].name}}</view>
+        <view class="detail rightWidth">{{listData[i].studentNum}}</view>
+      </view>
+    </block>
+  </view>
+</view>

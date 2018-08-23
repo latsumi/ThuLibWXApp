@@ -1,0 +1,15 @@
+<!--pages/info/addressDetail.wxml-->
+
+<view class="table">
+  <view class="descs">{{descs}}</view>
+
+  <view class='bg-detail'>
+    <block wx:for="{{listData}}" wx:key="" wx:for-index="i">
+      <view class="tableRow bg-detail">
+        <view class="detail leftWidth">{{listData[i].key}}</view>
+        <view class="detail rightWidth" wx:if='{{i==4}}' bindtap='bindPhoneTap' style='color: #66ccff;' data-tel='{{listData[i].value}}'>{{listData[i].value}}</view>
+        <view class="detail rightWidth" wx:else>{{listData[i].value}}</view>
+      </view>
+    </block>
+  </view>
+</view>

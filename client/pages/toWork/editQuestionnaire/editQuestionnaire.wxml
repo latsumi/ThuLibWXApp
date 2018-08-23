@@ -1,0 +1,53 @@
+<!--pages/toWork/editQuestionnaire/editQuestionnaire.wxml-->
+
+<form bindsubmit="save">
+<view  style='margin-top:30px;'>  </view>
+
+<label class="label">1.问卷标题</label>
+<view class="log-list border">
+<input name="title" type="text" placeholder="标题" value='{{title}}'/>
+</view>
+
+<label class="label">2.问卷类型</label>
+<view class="log-list" style='padding:10rpx;'>
+    <radio-group bindchange="bindRadioChange" class="radio" name="isClass" >
+     <label wx:for="{{radioType}}" wx:key="">
+        <radio value="{{item.value}}" checked='{{!(isClass^item.value)}}'/>{{item.name}}
+    </label>
+  </radio-group>
+  </view>
+
+<label class="label">3.问卷描述</label>
+<view class="log-list border">
+<textarea name="descript" auto-height placeholder="问卷填写须知，截止日期等等" maxlength="-1" value='{{descript}}'/>
+</view>
+
+<block wx:if="{{!isClass}}">
+  <label class="label">4.问卷要收集的信息(只能填一个问题)</label>
+<view class="log-list border">
+<textarea name="detail" auto-height placeholder="收集微信信息的问卷勿填" maxlength="-1" value='{{detail}}'/>
+</view>
+</block>
+
+<block wx:if="{{isClass}}">
+<label class="label">4.班次选项描述</label>
+<view class="log-list border">
+<textarea name="detail"auto-height placeholder="对班次选项和上班时间的描述" value="{{detail}}" maxlength="-1"/>
+</view>
+
+<label class="label"> 5.选择可报班次</label>
+<view class='label desc'>请按顺序勾上可选项，以保证问卷中选项顺序正确</view>
+<view class="log-list">
+  <checkbox-group class="checkboxGroup" name="canIChoose">
+    <label wx:for="{{canIChooseDefault}}" wx:key="">
+      <checkbox style="margin-bottom:12px;margin-right:5px;" value="{{canIChooseDefault[index].name}}" checked='{{canIChooseDefault[index].checked}}'/>{{canIChooseDefault[index].name}}
+    </label>
+  </checkbox-group>
+</view>
+</block>
+<view class="submit"><button type="primary" form-type="submit">修改</button></view>
+</form>
+
+<form bindsubmit="delQues">
+<view class="submit" ><button type="warn" form-type="submit">删除问卷</button></view>
+</form>

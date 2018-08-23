@@ -1,0 +1,57 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/toWork/toWork",
+    "pages/info/bulletinDetail",
+    "pages/toWork/editBull/addBull",
+    "pages/toWork/editBull/editBull",
+    "pages/toWork/editBull/bullList",
+    "pages/info/dutyForm",
+    "pages/me/me",
+    "pages/me/questionnaireFill",
+    "pages/toWork/editQuestionnaire/addQuestionnaire",
+    "pages/toWork/editQuestionnaire/editQuestionnaire",
+    "pages/toWork/editQuestionnaire/questionnaireView",
+    "pages/toWork/editDutyForm/publishDutyForm",
+    "pages/toWork/editDutyForm/makeDutyForm",
+    "pages/info/addressList",
+    "pages/info/addressDetail",
+    "pages/toWork/routines/signIn",
+    "pages/toWork/leaderWork/checkSignIn",
+    "pages/toWork/editManHour/countManHour",
+    "pages/me/manHourView",
+    "pages/me/bindStudentNum"
+  ],
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#F6F6F6",
+    "navigationBarTitleText": "清小图",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#000000",
+    "borderStyle": "#000",
+    "selectedColor": "#ff9999",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "image/mainpage_unselected.png",
+        "selectedIconPath": "image/mainpage_selected.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/toWork/toWork",
+        "iconPath": "image/toWork_unselected.png",
+        "selectedIconPath": "image/toWork_selected.png",
+        "text": "工作"
+      },
+      {
+        "pagePath": "pages/me/me",
+        "iconPath": "image/me_unselected.png",
+        "selectedIconPath": "image/me_selected.png",
+        "text": "我的"
+      }
+    ]
+  }
+}

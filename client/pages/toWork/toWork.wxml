@@ -1,0 +1,25 @@
+<!--toWork.wxml-->
+<!--普通工作的菜单-->
+<block wx:if="{{authority<3}}">
+  <view class="memberMenu" style='top:{{item.y}}rpx;left:{{item.x}}rpx;' wx:for="{{menu}}" wx:key=''>
+    <image class="menuImg memberMenuImage" bindtap="bindMenuTap" src="{{item.menuImage}}" data-index='{{index}}'></image>
+    <view class="menuDesc memberMenuDesc">{{item.descs}}</view>
+  </view>
+</block>
+<!--负责人和队委见到的菜单-->
+<block wx:if="{{authority>2}}">
+<view class="showMenu" style='margin-top:30px;'>
+  <view class="menuList" wx:for="{{menu}}" wx:key="" style='width:20%'>
+    <image class="menuImg" bindtap="bindMenuTap" src="{{item.menuImage}}" data-index='{{index}}'></image>
+    <view class="menuDesc">{{item.descs}}</view>
+  </view>
+</view>
+<view class="gap" style='margin-bottom:30px;'></view>
+
+<view class="showFunction" wx:for="{{func}}" wx:key="" wx:for-item="itm_i" wx:for-index="i"  style='background-color:{{itm_i.color}}' wx:if="{{i==0||(i>0&&authority>3)}}">
+  <view class="functionList" wx:for="{{itm_i.option}}" wx:key="" wx:for-index="j" wx:for-item="itm_j">
+    <navigator url="{{itm_j.url}}" hover-class="none"><view class="functionDesc">{{itm_j.descs}}</view></navigator>
+  </view>
+</view>
+</block>
+

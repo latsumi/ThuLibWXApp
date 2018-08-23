@@ -1,0 +1,19 @@
+<!--pages/toWork/editBull.wxml-->
+
+<form bindsubmit="save">
+<view  style='margin-top:30px;'>  </view>
+
+<label class="label">标题</label>
+<view class="log-list">
+<input name="title" type="text" value="{{title}}" placeholder="标题"/>
+</view>
+<label class="label">正文</label>
+<view class="log-list">
+<textarea name="detail" value="{{detail}}" auto-height placeholder="输入公告内容" maxlength="-1"/>
+
+</view>
+<view class="submit"><button type="primary" form-type="submit">保存</button></view>
+</form>
+<form bindsubmit="delBull">
+<view class="submit" ><button type="warn" form-type="submit">删除</button></view>
+</form>

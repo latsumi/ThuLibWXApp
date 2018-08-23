@@ -1,0 +1,60 @@
+<!--pages/me/questionnaireFill.wxml-->
+<view class="sumQues">
+  <view class="quesTitle">{{title}}</view>
+  <view style='width:690rpx;margin:12px 0;'><text class="desc">{{descript}}</text></view>
+
+  <form class="form" bindsubmit="save">
+
+  <label class="label"> 1.您的姓名</label>
+  <view class="log-list border">
+    <input name="name" value="{{name}}" placeholder="填写姓名" maxlength="-1"/>
+  </view>
+
+  <label class="label"> 2.学号</label>
+  <view class="log-list border">
+    <input name="studentNum" type="number" value="{{studentNum}}" placeholder="填写学号" maxlength="10"/>
+  </view>
+
+  <label class="label"> 3.来自库区</label>
+  <view class="log-list">
+    <radio-group class="radio" name="library" >
+     <label wx:for="{{radioLibrary}}" wx:key="">
+        <radio value="{{item.value}}"/>{{item.name}}
+    </label>
+  </radio-group>
+  </view>
+
+  <label class="label"> 4.队员类型</label>
+  <view class="log-list">
+   <radio-group class="radio" name="status">
+      <label wx:for="{{radioStatus}}" wx:key="">
+        <radio value="{{item.value}}"/>{{item.name}}
+      </label>
+   </radio-group>
+  </view>
+
+  <!-- 收感想问卷独有问题 -->
+  <block wx:if="{{(!isClass)&&detail!=''}}">
+  <label class="label"> 5.{{detail}}</label>
+  <view class="log-list border-all">
+    <textarea name="answer" value="{{answer}}" style='height:150px;' placeholder="畅所欲言" maxlength="-1"/>
+  </view>
+  </block>
+
+  <!-- 排班问卷独有问题 -->
+  <block wx:if="{{isClass}}">
+  <label class="label"> 5.所报班次</label>
+  <view style='width:690rpx;margin:8px 0;'><text class="desc">{{detail}}</text>
+</view>
+  <view class="log-list">
+    <checkbox-group  class="answer" name="answer">
+      <label wx:for="{{canIChoose}}" wx:key="">
+       <checkbox style="margin-bottom:12px;margin-right:5px;" value="{{canIChoose[index]}}"/>{{canIChoose[index]}}
+     </label>
+    </checkbox-group>
+  </view>
+  </block>
+
+  <view class="submit"><button type="primary" form-type="submit">提交</button></view>
+  </form>
+</view>

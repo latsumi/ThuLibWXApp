@@ -1,0 +1,8 @@
+<!--pages/toWork/editQuestionnaire/questionnaireView.wxml-->
+
+<scroll-view scroll-y="true" wx:for="{{listData}}" wx:for-item="itemName" wx:key="">
+  <view class="list" bindtap='bindViewTap' data-index='{{index}}'>{{itemName.title}}
+    <view class="descs" wx:key='' wx:if='{{authority>3}}'>已填人数: {{itemName.numFilled}}</view>
+</view>
+
+</scroll-view>

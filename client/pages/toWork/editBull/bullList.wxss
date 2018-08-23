@@ -1,0 +1,19 @@
+/* pages/toWork/bullList.wxss */
+
+.list {
+  padding: 20px;
+  text-align: center;
+  border:2px solid black;
+  margin: 10px;
+}
+.top {
+  border:2px solid red;
+}
+.descs {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  height: 80rpx;
+  font-size: 20rpx;
+}

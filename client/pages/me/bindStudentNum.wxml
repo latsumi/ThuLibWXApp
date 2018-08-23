@@ -1,0 +1,26 @@
+<!--pages/me/bindStudentNum.wxml-->
+<view style='width:750rpx;height:300rpx'>
+  <image style='width:100%;height:100%' src="../../image/bindBackground.jpg" mode='aspectFill'>
+    </image>
+</view>
+<view class='sumQues'>
+<form class="form" bindsubmit="save">
+
+  <label class="label"> 姓名</label>
+  <view class="inputArea border-all">
+    <input name="name" value="{{name}}" placeholder="填写姓名" maxlength="-1"/>
+  </view>
+
+  <label class="label"> 学号</label>
+  <view class="inputArea border-all">
+    <input name="studentNum" type="number" value="{{studentNum}}" placeholder="填写学号" maxlength="10"/>
+  </view>
+
+  <label class="label"> 密钥(非队委不用填)</label>
+  <view class="inputArea border-all">
+    <input name="secretKey" value="{{secretKey}}" placeholder="填写密钥" maxlength="-1"/>
+  </view>
+
+  <view class="submit"><button type="primary" form-type="submit">提交</button></view>
+</form>
+</view>

@@ -1,0 +1,13 @@
+<!--pages/me/manHourView.wxml-->
+
+<view class="table">
+  <view class='bg-detail'>
+    <block wx:for="{{listData}}" wx:key="" wx:for-index="i">
+      <view class="tableRow bg-detail">
+        <view class="detail leftWidth">{{listData[i].key}}</view>
+        <view class="detail rightWidth" >{{listData[i].value}}</view>
+      </view>
+    </block>
+  </view>
+  <view class="descs">{{descs}}</view>
+</view>

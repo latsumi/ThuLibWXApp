@@ -1,0 +1,58 @@
+/* pages/info/dutyForm.wxss */
+
+.table {
+  border: 0px solid darkgray;
+  margin-bottom: 200rpx;
+}
+.formTitle {
+  margin: 20rpx 30rpx;
+  width: 690rpx;
+  font-weight:bold;
+  font-size: 40rpx;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  display: flex;
+  flex-direction:row;
+  justify-content: center;
+}
+.dutySwiper {
+  margin: 0 auto;
+  width: 750rpx;
+  height: 1000rpx;
+}
+.tableRow {
+  display: flex;
+  width: 100%;
+  height: auto;
+  padding: 25rpx 0;
+  justify-content: center;
+  align-items: center;
+}
+.tableKey {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+.week {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  height: 80rpx;
+}
+.detail {
+  margin: 0 5px;
+  justify-content: center;
+  text-align: center;
+}
+.leftWidth {
+  width: 50%
+}
+.rightWidth {
+  width: 65%
+}
+.bg-title{
+  background-color: hsl(270, 60%, 80%);
+}
+.bg-detail{
+  background: hsl(270, 95%, 95%);
+}

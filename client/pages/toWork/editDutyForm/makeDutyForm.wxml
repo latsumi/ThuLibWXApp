@@ -1,0 +1,21 @@
+<!--pages/toWork/editDutyForm/makeDutyForm.wxml-->
+
+<form bindsubmit="save">
+<view  style='margin-top:30px;'>  </view>
+
+<label class="label">1.选择初版排班来源问卷</label>
+<picker bindchange="bindPickerChange" value="{{index}}" range="{{listData}}" range-key='title' name='id'>
+    <view class="picker">{{hasChoose}}</view>
+</picker>
+
+<label class="label">2.排班库区</label>
+<view class="inputArea">
+  <radio-group name="library" >
+    <label wx:for="{{radioLibrary}}" wx:key="">
+      <radio value="{{item.value}}"/>{{item.name}}
+  </label>
+</radio-group>
+</view>
+
+<view class="submit"><button type="primary" form-type="submit">开始排班</button></view>
+</form>

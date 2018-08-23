@@ -1,0 +1,22 @@
+<!--pages/toWork/editDutyForm/publishDutyForm.wxml-->
+
+<form bindsubmit="save">
+<view  style='margin-top:30px;'>  </view>
+
+<label class="label">1.标题</label>
+  <view class="inputArea border">
+    <input name="title" value="{{title}}" placeholder="将要发布的排班表标题" maxlength="-1"/>
+  </view>
+
+<label class="label">2.排班库区</label>
+<view class="inputArea">
+  <radio-group name="library" >
+    <label wx:for="{{radioLibrary}}" wx:key="">
+      <radio value="{{item.value}}"/>{{item.name}}
+  </label>
+</radio-group>
+</view>
+
+<view class="submit"><button type="primary" form-type="submit">发布排班表</button></view>
+</form>
+

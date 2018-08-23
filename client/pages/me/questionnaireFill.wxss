@@ -1,0 +1,50 @@
+/* pages/me/questionnaireFill.wxss */
+
+.log-list {
+  display: flex;
+  flex-direction: column;
+  margin: 12px;
+  padding: 20rpx;
+}
+
+.label
+{
+  margin-top: 10px;
+  margin-left: 20px;
+  width: 690rpx;
+}
+.desc {
+  font-size: 30rpx;
+  margin: 10px;
+  padding-bottom: 10px;
+  color: red;
+}
+
+.quesTitle {
+  margin: 100rpx;
+  width: 100%;
+  font-weight:bold;
+  font-size: 45rpx;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  display: flex;
+  flex-direction:row;
+  justify-content: center;
+}
+
+.sumQues {
+  margin: 0 30rpx 200rpx;
+  width: 690rpx;
+  height: 100%;
+  display: flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items: center;
+}
+.form {
+  width: 690rpx;
+}
+.answer{
+  width: 520rpx;
+  margin: 8px;
+}
+

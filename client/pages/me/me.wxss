@@ -1,0 +1,74 @@
+/* pages/me/me.wxss */
+
+page {
+  background: #F6F6F6;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.userinfo {
+  margin-top: 40rpx;
+  height: 300rpx;
+  width: 100%;
+  background: #FFF;
+  border: 1px solid rgba(0, 0, 0, .1);
+  border-left: none;
+  border-right: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 300ms ease;
+}
+.list{
+  margin-top: 40rpx;
+  height: 140rpx;
+  width: 100%;
+  background: #FFF;
+  border: 1px solid rgba(0, 0, 0, .1);
+  border-left: none;
+  border-right: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  transition: all 300ms ease;
+}
+.userinfo-view {
+  width: auto;
+  height: auto;
+  margin: 15rpx 40rpx 5rpx;
+}
+.userinfo-avatar {
+  width: 150rpx;
+  height: 150rpx;
+  margin: 25rpx 40rpx;
+  border-radius: 50%;
+}
+.userinfo-nickname {
+  margin-top: 20rpx;
+  font-size: 35rpx;
+  color: #007AFF;
+}
+.userinfo-button {
+  margin: 10rpx;
+}
+.list {
+  margin-top: 3px;
+  margin-bottom: 8px;
+  height: auto;
+  padding: 0 0 0 40rpx;
+  flex-direction: column;
+  align-items: flex-start;
+  box-sizing: border-box;
+  
+}
+.listText {
+  position: relative;
+  color: #222;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  line-height: 52px;
+  font-size: 34rpx;
+}

@@ -1,0 +1,21 @@
+/* pages/toWork/editBull.wxss */
+
+.log-list {
+  display: flex;
+  flex-direction: column;
+  margin: 8px;
+  padding: 40rpx;
+  border: 2px solid #808080;
+}
+
+.submit
+{
+  padding: 20rpx;
+}
+
+.label
+{
+  margin-left: 20px;
+  margin-top: 5px; 
+}
+

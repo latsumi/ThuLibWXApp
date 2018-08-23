@@ -1,0 +1,25 @@
+<!--pages/toWork/editManHour/countManHour.wxml-->
+<view  style='margin-top:30px;'></view>
+
+<form bindsubmit="save">
+
+<label class="label">1.统计库区</label>
+<view class="inputArea">
+  <radio-group name="library" >
+    <label wx:for="{{radioLibrary}}" wx:key="">
+      <radio value="{{item.value}}"/>{{item.name}}
+  </label>
+</radio-group>
+</view>
+
+<label class="label" style='margin-top:30px;'>2.起讫日期</label>
+<picker bindchange="bindPickerBeginChange" mode='date' value="{{beginValue}}" start='2017-04-01' end='{{currentDate}}' name='begin'>
+  <view class="picker">{{chooseBegin}}</view>
+</picker>
+<picker bindchange="bindPickerEndChange" mode='date' value="{{endValue}}" start='2017-04-01' end='{{currentDate}}' name='end' style='margin:5rpx 0;'>
+  <view class="picker">{{chooseEnd}}</view>
+</picker>
+<view class='gap' style='margin:30rpx'></view>
+
+<view class="submit"><button type="primary" form-type="submit">开始统计</button></view>
+</form>

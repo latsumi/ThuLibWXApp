@@ -1,0 +1,18 @@
+/* pages/toWork/editQuestionnaire/questionnaireView.wxss */
+
+.list {
+  padding: 20px;
+  text-align: center;
+  border:2px solid black;
+  margin: 10px;
+}
+
+.descs {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  height: 40rpx;
+  margin-top: 20rpx;
+  font-size: 20rpx;
+}

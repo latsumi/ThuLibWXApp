@@ -1,0 +1,6 @@
+<!--pages/toWork/bullList.wxml-->
+<view class="descs">{{descs}}</view>
+<scroll-view scroll-y="true" wx:for="{{listData}}" wx:for-item="itemName" wx:key="">
+  <view wx:key='' wx:if='{{index==0}}' class="list top" bindlongpress='bindNoticeTop' bindtap='bindViewTap' data-index='{{index}}'>{{itemName.title}}</view>
+  <view wx:else class="list" bindlongpress='bindNoticeTop' bindtap='bindViewTap' data-index='{{index}}'>{{itemName.title}}</view>
+</scroll-view>
