@@ -1,1 +1,5 @@
-{}
+{
+  "usingComponents": {
+    "zy-modal": "../../component/zy-modal/zy-modal"
+  }
+}

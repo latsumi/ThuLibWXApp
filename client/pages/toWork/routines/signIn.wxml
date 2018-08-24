@@ -1,6 +1,6 @@
 <!--pages/toWork/routines/signIn.wxml-->
 <view class='welcome'>
-  <view class='welcomeMotto'>{{period[currentPeriod]}}好，{{name}}！清图打卡为您服务</view>
+  <view class='welcomeMotto'>{{period[currentPeriod]}}好，{{name}}！清小图为您服务</view>
   <view class='dates'>{{currentYear}}年{{currentMonth}}月{{currentDate}}日 {{day[currentDay]}}</view>
   <!--  这里加上天气状况-->
 </view>

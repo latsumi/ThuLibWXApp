@@ -18,14 +18,18 @@ Page({
     authority: '',
     name: '',
     library: '',
+    modalHidden: true,
+    modalChoose: 0,
+    imageUrl: '../../image/kunbaby.jpeg',
     menu:[
       { menuImage: "../../image/questionnaire.png", descs: "填写问卷" },
       { menuImage: "../../image/manHour.png", descs: "工时查看" },
       { menuImage: "../../image/bindingNum.png", descs: "绑定学号" },
       { menuImage: "../../image/messageBox.png", descs: "留言" },
-      { menuImage: "../../image/beMember.png", descs: "成为队员" },
-      { menuImage: "../../image/beLeader.png", descs: "成为负责人" },
-      { menuImage: "../../image/beAdmin.png", descs: "成为管理员" },
+      //下面是测试用代码，用来调整权限值
+      // { menuImage: "../../image/beMember.png", descs: "成为队员" },
+      // { menuImage: "../../image/beLeader.png", descs: "成为负责人" },
+      // { menuImage: "../../image/beAdmin.png", descs: "成为管理员" },
     ]
 
   },
@@ -115,7 +119,31 @@ Page({
       })
     }
   },
+  showAction: function () {
+    this.setData({
+      modalChoose: 0,
+      modalHidden: false,
+    })
+  },
+  showActionAbout: function () {
+    this.setData({
+      modalChoose: 1,
+      modalHidden: false,
+    })
+  },
+  modalCandel: function () {
+    // do something
+    this.setData({
+      modalHidden: true,
+    })
+  },
 
+  modalConfirm: function () {
+    // do something
+    this.setData({
+      modalHidden: true,
+    })
+  },
   
   /**
    * 生命周期函数--监听页面加载
@@ -140,8 +168,13 @@ Page({
 
   bindMenuTap: function (event) {
     var index = event.target.dataset.index
-    if (app.globalData.authority < 1&&index<4) {
-      util.showFail('请先登录', '大哥你谁啊？')
+    if (app.globalData.authority < 2 && index < 4 && !(app.globalData.authority == 1&&index==2)) {
+      if (app.globalData.authority < 1){
+        util.showFail('请先登录', '小图不认识你 ~(＞_＜)~')
+      }
+      else{
+        util.showFail('请先绑定学号', '小图不认识你 ~(＞_＜)~')
+      }
     }
     else {
       switch(index)
@@ -167,33 +200,40 @@ Page({
             })
           break;
         }
-        case 3:
-          {
-            wx.makePhoneCall({
-              phoneNumber: '18813139066',
-            })
-            break;
-          }
-        case 4:
+        // case 3:
+        //   {
+        //     wx.makePhoneCall({
+        //       phoneNumber: '18813139066',
+        //     })
+        //     break;
+        //   }
+        // case 4:
+        // {
+        //   app.globalData.authority = 2;
+        //   util.showSuccess("权限等级:2");
+        //   break;
+        // }
+        // case 5:
+        //   {
+        //     app.globalData.authority = 3;
+        //     util.showSuccess("权限等级:3");
+        //     break;
+        //   }
+        // case 6:
+        //   {
+        //     app.globalData.authority = 4;
+        //     util.showSuccess("权限等级:4");
+        //     break;
+        //   }
+        default:
         {
-          app.globalData.authority = 2;
-          util.showSuccess("权限等级:2");
+          wx.showModal({
+            title: '施工中',
+            content: '敬请期待',
+            showCancel: false
+          })
           break;
         }
-        case 5:
-          {
-            app.globalData.authority = 3;
-            util.showSuccess("权限等级:3");
-            break;
-          }
-        case 6:
-          {
-            app.globalData.authority = 4;
-            util.showSuccess("权限等级:4");
-            break;
-          }
-        default:
-          break;
       }
     }
   },

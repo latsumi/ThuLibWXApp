@@ -43,7 +43,7 @@ function jumpToLogin(url) {
   wx.hideToast();
   wx.showModal({
     title: '请先登录',
-    content: '大哥你谁啊？',
+    content: '小图不认识你~(＞_＜)~',
     confirmText: '去登录',
     showCancel: false,
     success(res) {
@@ -81,7 +81,25 @@ var showNetworkFail = () => {
     }
   })
 }
+/**
+ * 将小程序的API封装成支持Promise的API
+ * @params fn {Function} 小程序原始API，如wx.login
+ */
+const wxPromisify = fn => {
+  return function (obj = {}) {
+    return new Promise((resolve, reject) => {
+      obj.success = function (res) {
+        resolve(res)
+      }
+
+      obj.fail = function (res) {
+        reject(res)
+      }
+
+      fn(obj)
+    })
+  }
+}
 
 
-
-module.exports = { formatTime, showBusy, showSuccess, showModel, jumpToLogin: jumpToLogin, showFail, showFailShort, showNetworkFail }
+module.exports = { formatTime, showBusy, showSuccess, showModel, jumpToLogin: jumpToLogin, showFail, showFailShort, showNetworkFail, wxPromisify }

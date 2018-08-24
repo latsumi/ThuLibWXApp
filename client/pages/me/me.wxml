@@ -9,7 +9,7 @@
 </view>
 
 <view class="gap"></view>
-<view class="showMenu" style='height:350rpx;'>
+<view class="showMenu" style='height:175rpx;'>
   <view class="menuList" wx:for="{{menu}}" wx:key="">
     <image class="menuImg" bindtap="bindMenuTap" src="{{item.menuImage}}" data-index='{{index}}'></image>
     <view class="menuDesc">{{item.descs}}</view>
@@ -18,21 +18,20 @@
 <view class="gap"></view>
 
 <view class="list">
-  <view class="listText">
+  <view class="listText" bindtap='showAction'>
     <text>不要点这里</text>
   </view>
 </view>
-<view class="list">
-  <view class="listText">
-    <text>这里也不要点</text>
-  </view>
-</view>
-<view class="list">
-  <view class="listText">
-    <text>戳我领红包（骗你的）</text>
-  </view>
-</view>
-<view class="list">
+<zy-modal title='ε٩(๑> ₃ <)۶з' hidden="{{modalHidden}}" bindconfirm="modalConfirm" bindcancel="modalCandel" confirmText="点赞">
+  <image wx:if="{{!modalChoose}}"style="width: 600rpx;" src="{{imageUrl}}" mode='aspectFill'></image>
+  <block wx:else>  
+    <view>清小华 ver1.0.0</view>
+    <view>清华大学图书馆助理分队</view>
+    <view>2018.8</view>
+  </block>
+
+</zy-modal>
+<view class="list" bindtap='showActionAbout'>
   <view class="listText">
     <text>关于我们</text>
   </view>
