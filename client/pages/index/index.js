@@ -42,8 +42,13 @@ Page({
 
   bindMenuTap: function(event) {
     var index = event.target.dataset.index
-    if (app.globalData.authority < 1) {
-      util.jumpToLogin('../me/me')
+    if (app.globalData.authority < 2) {
+      if (app.globalData.authority < 1) {
+        util.jumpToLogin('../me/me', false)
+      }
+      else {
+        util.jumpToLogin('../me/me', true)
+      }
     }
     else{
       switch(index){

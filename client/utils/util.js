@@ -39,12 +39,21 @@ var showModel = (title, content) => {
 }
 
 //跳转到登录页面
-function jumpToLogin(url) {
+function jumpToLogin(url, hasLogged) {
   wx.hideToast();
+  var title, confirmText
+  if (hasLogged){
+    title = '请绑定学号'
+    confirmText = '去绑定'
+  }
+  else{
+    title = '请先登录'
+    confirmText = '去登录'
+  }
   wx.showModal({
-    title: '请先登录',
+    title: title,
     content: '小图不认识你~(＞_＜)~',
-    confirmText: '去登录',
+    confirmText: confirmText,
     showCancel: false,
     success(res) {
       wx.switchTab({

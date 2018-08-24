@@ -92,8 +92,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if (app.globalData.authority < 1) {
-      util.jumpToLogin('../me/me')
+    if (app.globalData.authority < 2) {
+      if (app.globalData.authority < 1){
+        util.jumpToLogin('../me/me', false)
+      }
+      else{
+        util.jumpToLogin('../me/me', true)
+      }
     }
     else{
       this.setData({
