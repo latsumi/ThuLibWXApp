@@ -24,6 +24,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (res) {
+    wx.showToast({
+      title: '正在加载',
+      icon: 'loading',
+      duration: 500
+    })
     var str = res.urlFrom == 0 ? '社科库' : '科技库'
     wx.setNavigationBarTitle({//动态设置当行栏标题
       title: '通讯录'

@@ -8,5 +8,6 @@
 	},
 	"appid": "wxb7411aeba820a5e8",
 	"projectname": "ThuLibWXApp",
+	"compileType": "miniprogram",
 	"condition": {}
 }
