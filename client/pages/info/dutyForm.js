@@ -1,4 +1,5 @@
 // pages/info/dutyForm.js
+var http = require('../../utils/http')
 var util = require('../../utils/util.js');  
 const app = getApp();
 Page({
@@ -8,25 +9,28 @@ Page({
    */
   data: {
     urlFrom: '',
-    formTitle:'2018年春季学期社科库第2-8周排班表',
-    persons: [
-      "吴智光 邵宗义 于洋懿 张雨萌 李焕星",
-      "萧霭静 盛忠凯 李颖柯 郭一橙 俞发磊 耿耀君 孙立猛",
-      "陈九成 王杰 马晓辉 郑在文 张丁月 杨哲 王玉 冉林鑫",
-      "周杰伦 林俊杰 潘玮柏 陈奕迅 一定要 凑够了 八个人 有时候 九个人",
+    // formTitle:'2018年春季学期社科库第2-8周排班表',
+    // persons: [
+    //   "吴智光 邵宗义 于洋懿 张雨萌 李焕星",
+    //   "萧霭静 盛忠凯 李颖柯 郭一橙 俞发磊 耿耀君 孙立猛",
+    //   "陈九成 王杰 马晓辉 郑在文 张丁月 杨哲 王玉 冉林鑫",
+    //   "周杰伦 林俊杰 潘玮柏 陈奕迅 一定要 凑够了 八个人 有时候 九个人",
 
-      "周磊 次仁曲吉 葛书源 涂俊 李璐效",
-      "2",
-      "3",
-      "4",
+    //   "周磊 次仁曲吉 葛书源 涂俊 李璐效",
+    //   "2",
+    //   "3",
+    //   "4",
+    // ],
+    formTitle:'',
+    persons: [],
+    isHoliday: false,
 
-    ],
     week: ["周一","周二","周三","周四","周五","周六","周日"],
     classes: ["早班   8:00-9:30", "午班 13:00-15:00", "晚一 18:00-20:00", "晚二 20:10-22:10",],
     classesHoliday: ["早班  9:00-11:00", "午班 15:00-17:00",],
-  },
     currentDay: '', //当天星期
-
+    descs: '每个班的第一位队员是班次的负责人，请假替班请私信负责人',
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -54,7 +58,23 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    var that = this;
+    var library = that.data.urlFrom;
+    http.POST({
+      url: "",  //待填
+      data: { library: library },
+      success: function (res) {
+        console.log("返回值为 ", res.data.data);
+        that.setData({
+          formTitle: res.data.data[0].title,
+          persons: res.data.data[0].persons,
+          isHoliday: res.data.data[0].isHoliday,
+        })
+      },
+      fail: function (res) {
+        util.showFail('网络错误', '请稍后再试')
+      }, complete: function (res) { },
+    })
   },
 
   /**

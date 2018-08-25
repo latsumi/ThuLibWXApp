@@ -43,6 +43,7 @@ Page({
       data: { name: that.data.name, studentNum: that.data.studentNum },
       success: function (res) {
         console.log(res.data.data)
+        //待修改，先组装listData再setData
         for (var x in res.data.data[0]) {
           for(var j=0;j<that.data.listData.length;j++){
             if (that.data.listData[j].name==x)
