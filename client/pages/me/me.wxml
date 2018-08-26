@@ -25,7 +25,7 @@
 <zy-modal title='ε٩(๑> ₃ <)۶з' hidden="{{modalHidden}}" bindconfirm="modalConfirm" bindcancel="modalCandel" confirmText="点赞">
   <image wx:if="{{!modalChoose}}"style="width: 600rpx;" src="{{imageUrl}}" mode='aspectFill'></image>
   <block wx:else>  
-    <view>清小华 ver1.0.0</view>
+    <view>清小图 ver1.0.0</view>
     <view>清华大学图书馆助理分队</view>
     <view>2018.8</view>
   </block>

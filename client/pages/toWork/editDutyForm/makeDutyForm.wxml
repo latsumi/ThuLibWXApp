@@ -8,13 +8,27 @@
     <view class="picker">{{hasChoose}}</view>
 </picker>
 
-<label class="label">2.排班库区</label>
+<label class="label">2.排班表标题</label>
+<view class="inputArea border">
+  <input name="title" value="{{title}}" placeholder="生成的排班表标题" maxlength="-1"/>
+</view>
+
+<label class="label">3.排班库区</label>
 <view class="inputArea">
   <radio-group name="library" >
     <label wx:for="{{radioLibrary}}" wx:key="">
       <radio value="{{item.value}}"/>{{item.name}}
   </label>
-</radio-group>
+  </radio-group>
+</view>
+
+<label class="label">4.是否是假期排班(每天两个班)</label>
+<view class="inputArea">
+  <radio-group name="isHoliday" >
+    <label wx:for="{{radioHoliday}}" wx:key="">
+      <radio value="{{item.value}}" checked='{{item.value==false?true:false}}'/>{{item.name}}
+  </label>
+  </radio-group>
 </view>
 
 <view class="submit"><button type="primary" form-type="submit">开始排班</button></view>
