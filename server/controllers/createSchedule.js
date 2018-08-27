@@ -636,7 +636,7 @@ module.exports = async ctx => {
           });
         }
       });
-      await mysql(list_name).insert({title: name_table, library: query.library, question_id: query.id, isHoliday: query.isHoliday, isOrigin: 1})
+      await mysql(list_name).insert({title: query.title, library: query.library, question_id: query.id, isHoliday: query.isHoliday, isOrigin: 1})
 			ctx.state.data = { res, schedule, info }
 		}
 	}
