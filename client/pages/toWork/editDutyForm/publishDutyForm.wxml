@@ -15,7 +15,7 @@
 <view class="inputArea">
   <radio-group bindchange="bindRadioChange" name="library" >
     <label wx:for="{{radioLibrary}}" wx:key="">
-      <radio value="{{item.value}}"/>{{item.name}}
+      <radio value="{{item.value}}" checked='{{item.value==0?true:false}}'/>{{item.name}}
   </label>
 </radio-group>
 </view>
