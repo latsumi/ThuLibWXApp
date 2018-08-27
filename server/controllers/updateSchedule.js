@@ -10,8 +10,8 @@ module.exports = async ctx => {
 	if (ctx.method === 'POST') {
 		const query = ctx.request.body
   }
-  var name_table = "Schedule" + query.id.toString() + "_" + query.library.toString() + "_1"
-  //--------------------------for test
+  let res = await ('Schedule_List').where({ id: query.id }).select('title')
+  var name_table = res[0].title
   var num;
   var res;
   //--------------------------

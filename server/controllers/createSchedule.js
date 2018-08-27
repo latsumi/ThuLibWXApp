@@ -618,6 +618,21 @@ module.exports = async ctx => {
       }
 			// await mysql(name_table).where({ theClass: theclass }).update()	//待补充
 			//------------------------------------------------------------------
+      let list_name = "Schedule_List"
+      await DB.schema.hasTable(list_name).then(function (exists) {
+        if (!exists) {
+          return DB.schema.createTable(list_name, function (table) {
+            table.increments('id');
+            table.string('title', 100).notNullable();
+            table.integer('library', 11);
+            table.integer('question_id', 11);//the number of teammember
+            table.boolean('isHoliday');
+            table.boolean('isOrigin');
+            table.timestamp(false, true)
+          });
+        }
+      });
+      await mysql(list_name).insert({title: name_table, library: query.library, question_id: query.id, isHoliday: query.isHoliday, isOrigin: 1})
 			ctx.state.data = { res, schedule, info }
 		}
 	}

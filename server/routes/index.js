@@ -41,45 +41,50 @@ router.get('/test', controllers.test)
 
 router.get('/listNoticeInfo', controllers.listNoticeInfo)
 
-
-//router.get('/writeNoticeInfo', controllers.writeNoticeInfo)
+router.get('/writeNoticeInfo', controllers.writeNoticeInfo)
 router.post('/writeNoticeInfo', controllers.writeNoticeInfo)
 
 router.get('/delNoticeInfo', controllers.delNoticeInfo)
 router.post('/delNoticeInfo', controllers.delNoticeInfo)
 
-//router.get('/updateNoticeInfo', controllers.updateNoticeInfo)
+router.get('/updateNoticeInfo', controllers.updateNoticeInfo)
 router.post('/updateNoticeInfo', controllers.updateNoticeInfo)
+
 router.post('/topNoticeInfo',controllers.topNoticeInfo)
 
 //about question
 router.get('/listQues', controllers.listQues)
 
-//router.get('/writeQues', controllers.writeQues)
+router.get('/writeQues', controllers.writeQues)
 router.post('/writeQues', controllers.writeQues)
 
-//router.get('/delQues', controllers.delQues)
+router.get('/delQues', controllers.delQues)
 router.post('/delQues', controllers.delQues)
 
-//router.get('/updateQues', controllers.updateQues)
+router.get('/updateQues', controllers.updateQues)
 router.post('/updateQues', controllers.updateQues)
-
-router.post('/getStatus', controllers.getStatus)
-router.post('/getAddressList', controllers.getAddressList)
-router.post('/getStudentInfo', controllers.getStudentInfo)
 
 router.post('/upAnswerInfo', controllers.upAnswerInfo)
 
-router.get('/listSchedule', controllers.listSchedule)
-router.post('/updateSchedule', controllers.updateSchedule)
+// about schedule
 router.post('/createSchedule', controllers.createSchedule)
+router.post('/getScheduleList', controllers.getScheduleList)
+router.post('/releaseSchedule', controllers.releaseSchedule)
+router.post('/listSchedule', controllers.listSchedule)
+router.post('/updateSchedule', controllers.updateSchedule)
 
+// about user info
+router.post('/getStatus', controllers.getStatus)
+router.post('/getAddressList', controllers.getAddressList)
+router.post('/getStudentInfo', controllers.getStudentInfo)
 router.post('/bindInfo', controllers.bindInfo)
 
+// about signin
 router.post('/signinTable',controllers.signinTable)
 router.get('/listSigninTable',controllers.listSigninTable)
 router.post('/affirmSigninTable',controllers.affirmSigninTable)
 router.post('/delSigninInfo',controllers.delSigninInfo)
 
+// about manhour
 router.post('/calcManHour', controllers.calcManHour)
 router.post('/getManHour',controllers.getManHour)
