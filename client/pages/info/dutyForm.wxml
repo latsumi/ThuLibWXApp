@@ -1,7 +1,11 @@
 <!--pages/info/dutyForm.wxml-->
 <view class="table">
-  <view class="formTitle">{{formTitle}}</view>
+<!--下面是排班表的标题，可选择查看已发布的该库区终版排班表-->
+<picker bindchange="bindPickerChange" value="{{index}}" range="{{listData}}" range-key='title' name='id'>
+  <view class="picker">{{hasChoose}}</view>
+</picker>
   <view class="gap"></view>
+
   <swiper class="dutySwiper" circular current='{{currentDay-1}}'>
   <block wx:for="{{week}}" wx:key="" wx:for-item="week" wx:for-index="i">
     <swiper-item>
@@ -26,7 +30,8 @@
         </view>
       </block>
       </view>
-    <view class="descs">{{descs}}</view>
+    <view class="descs">{{descs1}}</view>
+    <view class="descs">{{descs2}}</view>
     </swiper-item>
   </block>
   </swiper>

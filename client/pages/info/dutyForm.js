@@ -3,12 +3,13 @@ var http = require('../../utils/http')
 var util = require('../../utils/util.js');  
 const app = getApp();
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
     urlFrom: '',
+    hasChoose: '',
+    listData: [],
     // formTitle:'2018年春季学期社科库第2-8周排班表',
     // persons: [
     //   "吴智光 邵宗义 于洋懿 张雨萌 李焕星",
@@ -21,16 +22,51 @@ Page({
     //   "3",
     //   "4",
     // ],
-    formTitle:'',
     persons: [],
-    isHoliday: false,
+    isHoliday: '',
 
     week: ["周一","周二","周三","周四","周五","周六","周日"],
     classes: ["早班   8:00-9:30", "午班 13:00-15:00", "晚一 18:00-20:00", "晚二 20:10-22:10",],
     classesHoliday: ["早班  9:00-11:00", "午班 15:00-17:00",],
     currentDay: '', //当天星期
-    descs: '每个班的第一位队员是班次的负责人，请假替班请私信负责人',
+    descs1: '*点击排班表标题可以查看历史排班表',
+    descs2: '*每个班的第一位队员是班次的负责人，请假替班请私信负责人',
   },
+
+  bindPickerChange: function (e) {
+    wx.showToast({
+      title: '正在加载',
+      icon: 'loading',
+      duration: 800
+    })
+    var id = e.detail.value;
+    var hasChoose = this.data.listData[id].title;
+    var formId = this.data.listData[id].id;
+    console.log('现在选择的是：' + hasChoose)
+    this.setData({
+      hasChoose: hasChoose
+    })
+    //根据选择的排班表展示
+    http.POST({
+      url: "",  //待填
+      data: {
+        id: formId,
+        library: this.data.urlFrom
+      },
+      success: function (res) {
+        console.log("返回值为 ", res.data.data);
+        that.setData({
+          formTitle: res.data.data[0].title,
+          persons: res.data.data[0].persons,
+          isHoliday: res.data.data[0].isHoliday,
+        })
+      },
+      fail: function (res) {
+        util.showFail('网络错误', '请稍后再试')
+      }, complete: function (res) { },
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -60,9 +96,13 @@ Page({
   onShow: function () {
     var that = this;
     var library = that.data.urlFrom;
+    //获取最新的该库区排班表
     http.POST({
-      url: "",  //待填
-      data: { library: library },
+      url: "listSchedule",  //待填
+      data: { 
+        id: '',
+        library: library
+      },
       success: function (res) {
         console.log("返回值为 ", res.data.data);
         that.setData({
@@ -75,7 +115,30 @@ Page({
         util.showFail('网络错误', '请稍后再试')
       }, complete: function (res) { },
     })
+    //获取该库区排班表列表
+    http.POST({
+      url: '', //待填
+      data: { isOrigin: false },
+      success: function (res) {
+        var data = res.data.data
+        //只保留该库区的排班表
+        for (var i = 0; i < data.length; i++) {
+          if (!(data[i].library==that.data.urlFrom)) {
+            data.splice(i, 1)
+            i--
+          }
+        }
+        console.log(data)
+        that.setData({
+          listData: data,
+        })
+      },
+      fail: function (res) {
+        util.showFail('网络错误', '请稍后再试')
+      }, complete: function (res) { },
+    })
   },
+  
 
   /**
    * 生命周期函数--监听页面隐藏

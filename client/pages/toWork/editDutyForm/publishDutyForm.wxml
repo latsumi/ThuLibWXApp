@@ -3,14 +3,17 @@
 <form bindsubmit="save">
 <view  style='margin-top:30px;'>  </view>
 
-<label class="label">1.标题</label>
-  <view class="inputArea border">
-    <input name="title" value="{{title}}" placeholder="将要发布的排班表标题" maxlength="-1"/>
-  </view>
+<label class="label">1.选择要发布的排班表</label>
+<picker wx:if="{{library==0}}" bindchange="bindPickerChange" value="{{index}}" range="{{listData0}}" range-key='title' name='id'>
+    <view class="picker">{{hasChoose}}</view>
+</picker>
+<picker wx:else bindchange="bindPickerChange" value="{{index}}" range="{{listData1}}" range-key='title' name='id'>
+    <view class="picker">{{hasChoose}}</view>
+</picker>
 
-<label class="label">2.排班库区</label>
+<label class="label">2.选择库区</label>
 <view class="inputArea">
-  <radio-group name="library" >
+  <radio-group bindchange="bindRadioChange" name="library" >
     <label wx:for="{{radioLibrary}}" wx:key="">
       <radio value="{{item.value}}"/>{{item.name}}
   </label>
