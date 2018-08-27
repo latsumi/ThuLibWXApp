@@ -525,7 +525,7 @@ module.exports = async ctx => {
 	}
 
 	// var name_table = "Schedule" + query.id.toString() + "_" + query.library.toString()
-  var name_table = query.title
+  var name_table = "duty_" + query.title
 	//var name_table = query.name
 	let classes_to_choose = await mysql('Question_Info').where({id: query.id}).select('canIChoose')
 	
