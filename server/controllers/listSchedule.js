@@ -8,7 +8,5 @@ module.exports = async ctx => {
   let res = await('Schedule_List').where({id: query.id}).select('title', 'isHoliday')
   var name_table = res[0].title
   var isHoliday = res[0].isHoliday
-	var res = await mysql(name_table).select('*').then(res =>{
-		ctx.state.data = {res, name_table, isHoliday}
-	})
+  ctx.state.data = {res, name_table, isHoliday}
 }

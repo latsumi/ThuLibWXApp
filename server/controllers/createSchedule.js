@@ -598,9 +598,13 @@ module.exports = async ctx => {
         for (var j = 0; j < class_info.mem_num - 1; j++) {
           mem_list[j] = class_info.class_mem[j+1];
         }
+        let mem_num = class_info.mem_num - 1
+        if(mem_num <=0 ){
+          mem_num = 0
+        }
 				await mysql(name_table).where({theClass: class_info.class_name})
 					.update({
-						mem_num: class_info.mem_num - 1, 
+						mem_num: mem_num, 
 						leader_name: class_info.leader,
 						hasleader: class_info.hasLeader,
             member1_name: mem_list[0],
@@ -628,7 +632,7 @@ module.exports = async ctx => {
             table.integer('question_id', 11);//the number of teammember
             table.boolean('isHoliday');
             table.boolean('isOrigin');
-            table.timestamp(false, true)
+            table.timestamps(false, true);
           });
         }
       });
