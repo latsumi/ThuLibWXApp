@@ -531,17 +531,14 @@ module.exports = async ctx => {
 	
 	//must exist the question info
 	//The formatting requirements of the parse are too high
-	if (classes_to_choose == 0){
+	if (classes_to_choose.length == 0){
 		ctx.state.data = "不存在该问卷"
 	}
 	else {
-		var a = JSON.stringify(classes_to_choose)
-		var arr = a.toString().split("\"")
-		if (arr[2] == ":null}]"){
+    if (classes_to_choose[0].canIChoose == null){
 			ctx.state.data = "该问卷不存在可选班次"
 		} else {
-			var array = arr[3].split(",")
-			
+			var array = classes_to_choose[0].canIChoose.split(",")
 			await DB.schema.hasTable(name_table).then(function (exists) {
 				if (!exists) {
 					return DB.schema.createTable(name_table, function (table) {
@@ -571,11 +568,22 @@ module.exports = async ctx => {
 						table.string('member9_studentNum', 30);
 						table.string('member10_name', 30);
 						table.string('member10_studentNum', 30);
+            table.integer('max_num', 11);
 					});
 				}
 			});
+      
 			for (var i=0; i<array.length;i++){
-				await mysql(name_table).insert({ theClass: array[i] });
+        var max
+        let class_name = array[i]
+        switch(class_name[1]){
+          case 'A': { max = 8; break }
+          case 'B': { max = 8; break }
+          case 'C': { max = 8; break }
+          case 'D': { max = 10; break }
+          default: { max = 0; break }
+        }
+				await mysql(name_table).insert({ theClass: array[i], max_num: max });
 			}
 
 			var answer_table = "QuestionAnswer" + query.id.toString()
@@ -632,12 +640,15 @@ module.exports = async ctx => {
             table.integer('question_id', 11);//the number of teammember
             table.boolean('isHoliday');
             table.boolean('isOrigin');
-            table.timestamps(false, true);
+            table.dateTime('created_at').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP'))
+            table.dateTime('updated_at').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'))
           });
         }
       });
-      await mysql(list_name).insert({title: query.title, library: query.library, question_id: query.id, isHoliday: query.isHoliday, isOrigin: 1})
-			ctx.state.data = { res, schedule, info }
+      if (!await mysql(list_name).where({ title: query.title, library: query.library, question_id: query.id, isHoliday: query.isHoliday}).update({isOrigin: 1})){
+        await mysql(list_name).insert({title: query.title, library: query.library, question_id: query.id, isHoliday: query.isHoliday, isOrigin: 1})
+      }
+      ctx.state.data = { res, schedule, info }
 		}
 	}
 }

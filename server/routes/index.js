@@ -36,34 +36,24 @@ module.exports = router
 
 router.get('/test', controllers.test)
 
-
 //about notice
-
 router.get('/listNoticeInfo', controllers.listNoticeInfo)
-
 router.get('/writeNoticeInfo', controllers.writeNoticeInfo)
 router.post('/writeNoticeInfo', controllers.writeNoticeInfo)
-
 router.get('/delNoticeInfo', controllers.delNoticeInfo)
 router.post('/delNoticeInfo', controllers.delNoticeInfo)
-
 router.get('/updateNoticeInfo', controllers.updateNoticeInfo)
 router.post('/updateNoticeInfo', controllers.updateNoticeInfo)
-
 router.post('/topNoticeInfo',controllers.topNoticeInfo)
 
 //about question
 router.get('/listQues', controllers.listQues)
-
 router.get('/writeQues', controllers.writeQues)
 router.post('/writeQues', controllers.writeQues)
-
 router.get('/delQues', controllers.delQues)
 router.post('/delQues', controllers.delQues)
-
 router.get('/updateQues', controllers.updateQues)
 router.post('/updateQues', controllers.updateQues)
-
 router.post('/upAnswerInfo', controllers.upAnswerInfo)
 
 // about schedule
