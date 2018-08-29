@@ -57,17 +57,30 @@ Page({
       data: {openId: openId},
       success: function (res) {
         console.log('返回值为：', res.data.data)
+        var temp = [
+          { name: 'name', key: '姓名', value: '' },
+          { name: 'studentNum', key: '学号', value: '' },
+          { name: 'nowHour', key: '本周总工时(h)', value: '' },
+          { name: 'nowHelp', key: '本周替班次数', value: '' },
+          { name: 'nowLeader', key: '本周负责班数', value: '' },
+          { name: 'prevHour', key: '上周总工时(h)', value: '' },
+          { name: 'prevHelp', key: '上周替班次数', value: '' },
+          { name: 'prevLeader', key: '上周负责班数', value: '' },]
         for (var x in res.data.data) {
           for (var j = 0; j < that.data.listData.length; j++) {
             if (that.data.listData[j].name == x) {
-              var str1 = 'listData[' + j + '].value'
-              that.setData({
-                [str1]: res.data.data[x]
-              })
+              // var str1 = 'listData[' + j + '].value'
+              // that.setData({
+              //   [str1]: res.data.data[x]
+              // })
+              temp[j].value = res.data.data[x]
               break;
             }
           }
         }
+        that.setData({
+          listData: temp
+        })
       },
       fail: function (res) {
         util.showNetworkFail()

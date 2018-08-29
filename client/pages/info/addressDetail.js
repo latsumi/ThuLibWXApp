@@ -43,19 +43,32 @@ Page({
       data: { name: that.data.name, studentNum: that.data.studentNum },
       success: function (res) {
         console.log(res.data.data)
-        //待修改，先组装listData再setData
+        //修改完成，先组装listData再setData
+        temp = [
+          { name: 'name', key: '姓名', value: '' },
+          { name: 'studentNum', key: '学号', value: '' },
+          { name: 'sex', key: '性别', value: '' },
+          { name: 'department', key: '院系', value: '' },
+          { name: 'tel', key: '手机', value: '' },
+          { name: 'mail', key: '邮箱', value: '' },
+          { name: 'address', key: '住址', value: '' },
+          { name: 'status', key: '备注', value: '' },]
         for (var x in res.data.data[0]) {
           for(var j=0;j<that.data.listData.length;j++){
             if (that.data.listData[j].name==x)
             {
-              var str1 = 'listData[' + j + '].value'
-              that.setData({
-                [str1]: res.data.data[0][x]
-              })
+              // var str1 = 'listData[' + j + '].value'
+              // that.setData({
+              //   [str1]: res.data.data[0][x]
+              // })
+              temp[j].value = res.data.data[x]
               break;
             }
           }
         }
+        that.setData({
+          listData: temp
+        })
       },
       fail: function (res) {
         util.showNetworkFail()
