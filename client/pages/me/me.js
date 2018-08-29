@@ -137,7 +137,6 @@ Page({
       modalHidden: true,
     })
   },
-
   modalConfirm: function () {
     // do something
     this.setData({
@@ -165,7 +164,14 @@ Page({
   onShow: function () {
   
   },
-
+  onPullDownRefresh: function () {
+    wx.showNavigationBarLoading() //在标题栏中显示加载
+    var that = this
+    that.checkStatus(that)  //刷新用户status
+    util.showSuccess('刷新成功')
+    wx.hideNavigationBarLoading() //完成停止加载
+    wx.stopPullDownRefresh() //停止下拉刷新
+  },
   bindMenuTap: function (event) {
     var index = event.target.dataset.index
     if (app.globalData.authority < 2 && index < 4 && !(app.globalData.authority == 1&&index==2)) {
