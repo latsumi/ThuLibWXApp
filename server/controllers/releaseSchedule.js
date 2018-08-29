@@ -56,7 +56,7 @@ module.exports = async ctx => {
     }
     if (info == "SUCCESS_PUBLISHED"){
       if (await mysql('Schedule_List').where({ id: query.id }).update({ isOrigin: 0 })){
-        ctx.state.data = {info, name_table}
+        ctx.state.data = info
       }else{
         ctx.state.data = "ERR_SQL_UPDATE"
       }    

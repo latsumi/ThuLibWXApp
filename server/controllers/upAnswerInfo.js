@@ -65,17 +65,26 @@ module.exports = async ctx => {
 	let haveIt = await mysql(name_table).where({ name: query.name, studentNum: query.studentNum, library: query.library })
 	if (res.length != 0){
 		if(haveIt == 0){
-      if((query.library == res.library && res.library != 2) || res.library == 2){
-        await mysql(name_table).insert({ name: query.name, studentNum: query.studentNum, library: query.library, status: query.status, isClass: query.isClass, answer: query.answer })
-        let num = await mysql('Question_Info').where({ id: query.id }).select('numFilled')
-        let n = num[0].numFilled + 1
-        await mysql('Question_Info').where({ id: query.id }).update({ numFilled: n })
+      if((query.library == res[0].library && res[0].library != 2) || res[0].library == 2){
+        if ((res[0].grade == 2 && query.status > 0) || (res[0].grade > 2 && query.status == 0)){
+          await mysql(name_table).insert({ name: query.name, studentNum: query.studentNum, library: query.library, status: query.status, isClass: query.isClass, answer: query.answer })
+          let num = await mysql('Question_Info').where({ id: query.id }).select('numFilled')
+          let n = num[0].numFilled + 1
+          await mysql('Question_Info').where({ id: query.id }).update({ numFilled: n })
+          ctx.state.data = "SUCCESS_FILLED"
+        }else{
+          ctx.state.data = "ERR_WRONG_GRADE"
+        }
+        
+      }else{
+        ctx.state.data = "ERR_WRONG_LIBRARY"
       }
 		}else{
       await mysql(name_table).where({ name: query.name, studentNum: query.studentNum, library: query.library }).update({ status: query.status,  isClass: query.isClass,  answer: query.answer })
+      ctx.state.data = "SUCCESS_FILLED"
 		}
-    ctx.state.data = res
+    
 	}else{
-    ctx.state.data = "no this member"
+    ctx.state.data = "ERR_WRONG_INFO"
   }
 }

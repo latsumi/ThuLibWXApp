@@ -8,7 +8,7 @@ module.exports = async ctx => {
 	const query = ctx.request.body
   var res
   if(!query.id){
-    res = await mysql('Schedule_List').where({ library: query.library }).select('title', 'isHoliday').orderBy('updated_at', 'desc')
+    res = await mysql('Schedule_List').where({ library: query.library, isOrigin: 0 }).select('title', 'isHoliday').orderBy('updated_at', 'desc')
   }else{
     res = await mysql('Schedule_List').where({ id: query.id, library: query.library }).select('title', 'isHoliday')
   }
