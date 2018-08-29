@@ -19,7 +19,7 @@ Page({
     name: '',
     library: '',
     modalHidden: true,
-    modalChoose: 0,
+    modalChoose: 0, //0:点击的是‘不要点这里’；1:点击的是‘关于我们’
     imageUrl: '../../image/kunbaby.jpeg',
     menu:[
       { menuImage: "../../image/questionnaire.png", descs: "填写问卷" },
@@ -132,13 +132,15 @@ Page({
     })
   },
   modalCandel: function () {
-    // do something
+    if (this.data.modalChoose == 0){
+      util.showFailShort('Big KUN is \r\nwatching you!')
+    }
     this.setData({
       modalHidden: true,
     })
   },
   modalConfirm: function () {
-    // do something
+      util.showFailShort('（<ゝω・）Kira! ☆')
     this.setData({
       modalHidden: true,
     })
