@@ -1,5 +1,7 @@
 {
   "usingComponents": {
     "zy-modal": "../../component/zy-modal/zy-modal"
-  }
+  },
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark"
 }

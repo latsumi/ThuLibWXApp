@@ -89,6 +89,9 @@ Page({
                     }
                   case 'SUCCESS_PUBLISHED':
                     {
+                      wx.navigateBack({
+                        delta: 1
+                      })
                       util.showSuccess('发布成功！')
                       break;
                     }
