@@ -531,9 +531,9 @@ module.exports = async ctx => {
 			ctx.state.data = "该问卷不存在可选班次"
 		} else {
 			var array = classes_to_choose[0].canIChoose.split(",")
-			await DB.schema.hasTable(name_table).then(function (exists) {
-				if (!exists) {
-					DB.schema.createTable(name_table, function (table) {
+      let has_table = await DB.schema.hasTable(name_table)
+      if(!has_table){
+        await DB.schema.createTable(name_table, function (table) {
 						table.increments('id');
 						table.string('theClass',100).notNullable();
 						table.integer('mem_num', 11);//the number of teammember
@@ -572,10 +572,54 @@ module.exports = async ctx => {
               case 'D': { max = 10; break }
               default: { max = 0; break }
             }
-            mysql(name_table).insert({ theClass: array[i], max_num: max });
+            await mysql(name_table).insert({ theClass: array[i], max_num: max });
           }
 				}
-			});
+			// await DB.schema.hasTable(name_table).then(function (exists) {
+			// 	if (!exists) {
+			// 		return DB.schema.createTable(name_table, function (table) {
+			// 			table.increments('id');
+			// 			table.string('theClass',100).notNullable();
+			// 			table.integer('mem_num', 11);//the number of teammember
+			// 			table.boolean('hasleader');
+			// 			table.string('leader_name',30);
+			// 			table.string('leader_studentNum', 30);
+			// 			table.string('member1_name', 30);
+			// 			table.string('member1_studentNum', 30);
+			// 			table.string('member2_name', 30);
+			// 			table.string('member2_studentNum', 30);
+			// 			table.string('member3_name', 30);
+			// 			table.string('member3_studentNum', 30);
+			// 			table.string('member4_name', 30);
+			// 			table.string('member4_studentNum', 30);
+			// 			table.string('member5_name', 30);
+			// 			table.string('member5_studentNum', 30);
+			// 			table.string('member6_name', 30);
+			// 			table.string('member6_studentNum', 30);
+			// 			table.string('member7_name', 30);
+			// 			table.string('member7_studentNum', 30);
+			// 			table.string('member8_name', 30);
+			// 			table.string('member8_studentNum', 30);
+			// 			table.string('member9_name', 30);
+			// 			table.string('member9_studentNum', 30);
+			// 			table.string('member10_name', 30);
+			// 			table.string('member10_studentNum', 30);
+      //       table.integer('max_num', 11);
+			// 		});
+      //     for (var i = 0; i < array.length; i++) {
+      //       var max
+      //       let class_name = array[i]
+      //       switch (class_name[1]) {
+      //         case 'A': { max = 8; break }
+      //         case 'B': { max = 8; break }
+      //         case 'C': { max = 8; break }
+      //         case 'D': { max = 10; break }
+      //         default: { max = 0; break }
+      //       }
+      //       mysql(name_table).insert({ theClass: array[i], max_num: max });
+      //     }
+			// 	}
+			// });
       // 
 			var answer_table = "QuestionAnswer" + query.id.toString()
 			res = await mysql(answer_table).where({library: query.library}).select('*')
