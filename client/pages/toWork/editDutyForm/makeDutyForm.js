@@ -14,8 +14,8 @@ Page({
       { name: '科技', value: '1' },
     ],
     radioHoliday: [
-      { name: '是', value: true },
-      { name: '否', value: false },
+      { name: '是', value: '1' },
+      { name: '否', value: '0' },
     ],
   },
 
@@ -54,6 +54,7 @@ Page({
               url: "createSchedule",
               data: data,
               success: function (res) {
+                console.log(res.data)
                 wx.navigateBack({
                   delta: 1
                 })

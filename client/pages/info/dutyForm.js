@@ -29,7 +29,7 @@ Page({
     classes: ["早班   8:00-9:30", "午班 13:00-15:00", "晚一 18:00-20:00", "晚二 20:10-22:10",],
     classesHoliday: ["早班  9:00-11:00", "午班 15:00-17:00",],
     currentDay: '', //当天星期
-    descs1: '*点击排班表标题可以查看历史排班表',
+    descs1: '*左右滑动查看其他时间排班，点击排班表标题查看历史排班表',
     descs2: '*每个班的第一位队员是班次的负责人，请假替班请私信负责人',
   },
 
@@ -39,26 +39,27 @@ Page({
       icon: 'loading',
       duration: 800
     })
+    var that = this
     var id = e.detail.value;
     var hasChoose = this.data.listData[id].title;
     var formId = this.data.listData[id].id;
     console.log('现在选择的是：' + hasChoose)
+    console.log('现在选择的id是：' + formId)
     this.setData({
       hasChoose: hasChoose
     })
     //根据选择的排班表展示
     http.POST({
-      url: "",  //待填
+      url: "listSchedule",
       data: {
         id: formId,
         library: this.data.urlFrom
       },
       success: function (res) {
-        console.log("返回值为 ", res.data.data);
+        console.log("返回值为 ", res.data);
         that.setData({
-          formTitle: res.data.data[0].title,
-          persons: res.data.data[0].persons,
-          isHoliday: res.data.data[0].isHoliday,
+          persons: res.data.data.person,
+          isHoliday: res.data.data.isHoliday,
         })
       },
       fail: function (res) {
@@ -96,19 +97,21 @@ Page({
   onShow: function () {
     var that = this;
     var library = that.data.urlFrom;
+    console.log(library);
+
     //获取最新的该库区排班表
     http.POST({
-      url: "listSchedule",  //待填
+      url: "listSchedule",
       data: { 
         id: '',
         library: library
       },
       success: function (res) {
-        console.log("返回值为 ", res.data.data);
+        console.log("返回值为 ", res.data);
         that.setData({
-          formTitle: res.data.data[0].title,
-          persons: res.data.data[0].persons,
-          isHoliday: res.data.data[0].isHoliday,
+          hasChoose: res.data.data.title,
+          persons: res.data.data.person,
+          isHoliday: res.data.data.isHoliday,
         })
       },
       fail: function (res) {
@@ -117,8 +120,8 @@ Page({
     })
     //获取该库区排班表列表
     http.POST({
-      url: '', //待填
-      data: { isOrigin: false },
+      url: 'getScheduleList',
+      data: { isOrigin: 0 },
       success: function (res) {
         var data = res.data.data
         //只保留该库区的排班表
@@ -128,7 +131,6 @@ Page({
             i--
           }
         }
-        console.log(data)
         that.setData({
           listData: data,
         })

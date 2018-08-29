@@ -59,15 +59,42 @@ Page({
         content: '确定提交问卷吗？',
         success: function (res) {
           if (res.confirm) {
-            util.showBusy('正在提交……')
+            util.showBusy('正在提交')
             http.POST({
               url: "upAnswerInfo",
               data: data,
               success: function (res) {
-                wx.navigateBack({
-                  delta: 1
-                })
-                util.showSuccess('提交成功！')
+                console.log("提交问卷的返回值为 ", res.data.data);
+                switch (res.data.data) {
+                  case 'SUCCESS_FILLED':
+                    {
+                      wx.navigateBack({
+                        delta: 1
+                      })
+                      util.showSuccess('提交成功！')
+                      break;
+                    }
+                  case 'ERR_WRONG_INFO':
+                    {
+                      util.showFailShort('姓名学号有误!')
+                      break;
+                    }
+                  case 'ERR_WRONG_LIBRARY':
+                    {
+                      util.showFailShort('库区信息有误!')
+                      break;
+                    }
+                  case 'ERR_WRONG_GRADE':
+                    {
+                      util.showSuccess('队员类型有误!')
+                      break;
+                    }
+                  default:
+                    {
+                      util.showFail('提交失败', '请稍后再试')
+                      break;
+                    }
+                }
               },
               fail: function (res) {
                 util.showFail('提交失败', '请稍后再试')

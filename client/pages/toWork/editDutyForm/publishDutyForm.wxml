@@ -3,22 +3,22 @@
 <form bindsubmit="save">
 <view  style='margin-top:30px;'>  </view>
 
-<label class="label">1.选择要发布的排班表</label>
+<label class="label">1.选择库区</label>
+<view class="inputArea">
+  <radio-group bindchange="bindRadioChange" name="library" >
+    <label wx:for="{{radioLibrary}}" wx:key="">
+      <radio value="{{item.value}}" checked='{{item.value==0?true:false}}'/>{{item.name}}
+    </label>  
+  </radio-group>
+</view>
+
+<label class="label">2.选择要发布的排班表</label>
 <picker wx:if="{{library==0}}" bindchange="bindPickerChange" value="{{index}}" range="{{listData0}}" range-key='title' name='id'>
     <view class="picker">{{hasChoose}}</view>
 </picker>
 <picker wx:else bindchange="bindPickerChange" value="{{index}}" range="{{listData1}}" range-key='title' name='id'>
     <view class="picker">{{hasChoose}}</view>
 </picker>
-
-<label class="label">2.选择库区</label>
-<view class="inputArea">
-  <radio-group bindchange="bindRadioChange" name="library" >
-    <label wx:for="{{radioLibrary}}" wx:key="">
-      <radio value="{{item.value}}" checked='{{item.value==0?true:false}}'/>{{item.name}}
-  </label>
-</radio-group>
-</view>
 
 <view class="submit"><button type="primary" form-type="submit">发布排班表</button></view>
 </form>
