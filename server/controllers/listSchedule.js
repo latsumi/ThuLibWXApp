@@ -8,15 +8,15 @@ module.exports = async ctx => {
 	const query = ctx.request.body
   var res
   if(!query.id){
-    res = await mysql('Schedule_List').where({ library: query.library, isOrigin: 0 }).select('title', 'isHoliday').orderBy('updated_at', 'desc')
+    res = await mysql('Schedule_List').where({ library: query.library, isOrigin: 0 }).select('title', 'isTwoClass').orderBy('updated_at', 'desc')
   }else{
-    res = await mysql('Schedule_List').where({ id: query.id, library: query.library }).select('title', 'isHoliday')
+    res = await mysql('Schedule_List').where({ id: query.id, library: query.library }).select('title', 'isTwoClass')
   }
   if (res.length != 0) {
     title = res[0].title
     var name_table = "duty_" + res[0].title
     let schedule = await mysql(name_table).select('*')
-    var isHoliday = res[0].isHoliday
+    var isTwoClass = res[0].isTwoClass
     let person = Array(schedule.length)
     let mem_num
     let hasleader
@@ -61,7 +61,7 @@ module.exports = async ctx => {
         }
       }
     }
-    ctx.state.data = { person, title, isHoliday }
+    ctx.state.data = { person, title, isTwoClass }
   }else{
     ctx.state.data = 0
   }

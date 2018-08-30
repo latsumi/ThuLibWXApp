@@ -641,6 +641,7 @@ module.exports = async ctx => {
             table.integer('library', 11);
             table.integer('question_id', 11);//the number of teammember
             table.boolean('isHoliday');
+            table.boolean('isTwoClass');
             table.boolean('isOrigin');
             table.dateTime('created_at').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP'))
             table.dateTime('updated_at').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'))
@@ -648,8 +649,8 @@ module.exports = async ctx => {
         }
       });
 // <<<<<<< HEAD
-      if (!await mysql(list_name).where({ title: query.title, library: query.library, question_id: query.id, isHoliday: query.isHoliday}).update({isOrigin: 1})){
-        await mysql(list_name).insert({title: query.title, library: query.library, question_id: query.id, isHoliday: query.isHoliday, isOrigin: 1})
+      if (!await mysql(list_name).where({ title: query.title, library: query.library, question_id: query.id, isHoliday: query.isHoliday, isTwoClass: query.isTwoClass}).update({isOrigin: 1})){
+        await mysql(list_name).insert({title: query.title, library: query.library, question_id: query.id, isHoliday: query.isHoliday, isTwoClass: query.isTwoClass, isOrigin: 1})
       }
       ctx.state.data = { res, schedule, info }
 // >>>>>>> c6d64200822d6013a7e8625b2d1e61564bacc6d0
