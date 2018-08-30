@@ -643,8 +643,8 @@ module.exports = async ctx => {
             table.boolean('isHoliday');
             table.boolean('isTwoClass');
             table.boolean('isOrigin');
-            table.dateTime('created_at').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP'))
-            table.dateTime('updated_at').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'))
+            table.dateTime('created_at').notNullable().defaultTo(DB.raw('CURRENT_TIMESTAMP'));
+            table.dateTime('updated_at').notNullable().defaultTo(DB.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
           });
         }
       });
