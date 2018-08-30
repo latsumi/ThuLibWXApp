@@ -44,7 +44,7 @@ Page({
       success: function (res) {
         console.log(res.data.data)
         //修改完成，先组装listData再setData
-        temp = [
+        var temp = [
           { name: 'name', key: '姓名', value: '' },
           { name: 'studentNum', key: '学号', value: '' },
           { name: 'sex', key: '性别', value: '' },
@@ -61,7 +61,7 @@ Page({
               // that.setData({
               //   [str1]: res.data.data[0][x]
               // })
-              temp[j].value = res.data.data[x]
+              temp[j].value = res.data.data[0][x]
               break;
             }
           }
