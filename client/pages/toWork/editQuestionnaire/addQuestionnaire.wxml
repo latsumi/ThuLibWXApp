@@ -9,7 +9,7 @@
 
 <label class="label">2.问卷类型</label>
 <view class="log-list" style='padding:10rpx;'>
-    <radio-group bindchange="bindRadioChange" class="radio" name="isClass" >
+    <radio-group bindchange="bindIsClassChange" class="radio" name="isClass" >
      <label wx:for="{{radioType}}" wx:key="">
         <radio value="{{item.value}}"/>{{item.name}}
     </label>
@@ -29,12 +29,21 @@
 </block>
 
 <block wx:if="{{isClass}}">
-<label class="label">4.班次选项描述</label>
+<label class="label">4.是否有最少报班限制(4个班)</label>
+<view class="log-list" style='padding:10rpx;'>
+    <radio-group bindchange="bindLimitChange" class="radio" name="hasMinLimit" >
+     <label wx:for="{{radioLimit}}" wx:key="">
+        <radio value="{{item.value}}" checked='{{item.value==false?true:false}}'/>{{item.name}}
+    </label>
+  </radio-group>
+</view>
+
+<label class="label">5.班次选项描述</label>
 <view class="log-list border">
 <textarea name="detail"auto-height placeholder="对班次选项和上班时间的描述" value="{{detail}}" maxlength="-1"/>
 </view>
 
-<label class="label"> 5.选择可报班次</label>
+<label class="label"> 6.选择可报班次</label>
 <view class='label desc'>请按顺序勾上可选项，以保证问卷中选项顺序正确</view>
 <view class="log-list">
   <label>
