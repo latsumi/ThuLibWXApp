@@ -702,7 +702,7 @@ function arrange_member(isHoliday) {
               if (mem[mem_].CanBeChoose[c] == 1) {
                 if (class_s_info[c].need_mem > 0) {
                   schedule[c].mem_num++;
-                  t = schedule[c].mem_num;
+                  var t = schedule[c].mem_num;
                   schedule[c].class_mem[t] = mem[mem_].name;
                   schedule[c].mem_student_num[t] = mem[mem_].studentNum;
                   class_s_info[c].mem_choice_num--;
@@ -728,8 +728,8 @@ function arrange_member(isHoliday) {
           }
         }
       }
-      sort_class_by_mem(class_, i + 1);
     }
+    sort_class_by_mem(class_, i + 1);
     for (var i = 1; i < class_s_info.length; i++) {
       sort_mem(class_s_info[class_[i]].mem_choice, isHoliday);
       var j = 1;
@@ -752,7 +752,7 @@ function arrange_member(isHoliday) {
               if (mem[mem_].CanBeChoose[c] == 1) {
                 if (class_s_info[c].need_mem > 0) {
                   schedule[c].mem_num++;
-                  t = schedule[c].mem_num;
+                  var t = schedule[c].mem_num;
                   schedule[c].class_mem[t] = mem[mem_].name;
                   schedule[c].mem_student_num[t] = mem[mem_].studentNum;
                   class_s_info[c].mem_choice_num--;
