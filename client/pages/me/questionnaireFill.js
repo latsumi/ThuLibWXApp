@@ -14,6 +14,8 @@ Page({
     descript: "",//标题下的描述
     detail: "",//第5题对于班次细节的描述,或是信息收集问卷的问题
     isClass: false,//是否是排班问卷
+    hasWork: true,
+    hasMinLimit: '',
     canIChoose: [],
     radioLibrary: [
       { name: '社科', value: '0' },
@@ -24,9 +26,19 @@ Page({
       { name: '老队员', value: '1' },
       { name: '新队员', value: '2' },
     ],
+    radioHasWork: [
+      { name: '是', value: '1' },
+      { name: '否', value: '0' },
+    ],
     
   },
   
+  bindHasWorkChange: function (e) {
+    console.log("选择项的value是： ", e.detail.value)
+    this.setData({
+      hasWork: (e.detail.value > 0) ? true : false,//是否选择上班
+    })
+  },
   save: function (e) {
     var data = e.detail.value;
     data.openId = app.globalData.userInfo.openId;
@@ -54,6 +66,12 @@ Page({
       }
     }
     else {
+      if (!data.canIChoose == false && data.isClass == 1) {
+        if (data.canIChoose.length < 4 && this.data.hasMinLimit == true) {
+          util.showFailShort('可选班次不足四个！')
+          return
+        }
+      }
       wx.showModal({
         title: '提示',
         content: '确定提交问卷吗？',
@@ -124,6 +142,7 @@ Page({
       descript: res.descript,//标题下的描述
       detail: res.detail,//第5题对于班次细节的描述,或是信息收集问卷的问题
       isClass: JSON.parse(res.isClass),//是否是排班问卷
+      hasMinLimit: JSON.parse(res.hasMinLimit),//是否有最低报班限制
     })
     if ((!(res.canIChoose == null)) && this.data.isClass) {
       this.setData({

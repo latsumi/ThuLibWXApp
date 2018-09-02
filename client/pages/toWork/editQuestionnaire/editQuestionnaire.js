@@ -47,24 +47,22 @@ Page({
       isClass: JSON.parse(res.isClass),//是否是排班问卷
       hasMinLimit: JSON.parse(res.hasMinLimit),
     })
-    if (this.data.isClass)
+    if (!(res.canIChoose == null) && this.data.isClass)
     {
-      if (!(res.canIChoose == null)){
-        this.setData({
-          canIChoose: JSON.parse(res.canIChoose),
-        })
-        for (var i = 0; i < this.data.canIChoose.length; i++) {
-          for (var j = 0; j < 28; j++) {
-            if (this.data.canIChoose[i] == this.data.canIChooseDefault[j].name) {
-              var str = 'canIChooseDefault[' + j + '].checked'
-              this.setData({
-                [str]: true,
-              })
-              break;
-            }
+      this.setData({
+        canIChoose: JSON.parse(res.canIChoose),
+      })
+      for (var i = 0; i < this.data.canIChoose.length; i++) {
+        for (var j = 0; j < 28; j++) {
+          if (this.data.canIChoose[i] == this.data.canIChooseDefault[j].name) {
+            var str = 'canIChooseDefault[' + j + '].checked'
+            this.setData({
+              [str]: true,
+            })
+            break;
           }
         }
-      }      
+      }    
     }
   },
   bindIsClassChange: function (e) {

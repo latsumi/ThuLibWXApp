@@ -23,8 +23,7 @@ Page({
       canIChoose = item.canIChoose.split(',')
     }
     if (item.hasMinLimit == null){
-      console.log('yes')
-      var hasMinLimit = true
+      var hasMinLimit = false
     }
     else{
       var hasMinLimit = item.hasMinLimit
