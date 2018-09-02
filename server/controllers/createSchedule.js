@@ -616,9 +616,6 @@ function arrange_leader(isHoliday) {
   if(!isHoliday){
     for (var i = 1; i < class_s_info.length; i++) {
       if (class_s_info[class_[i]].leader_choice_num == 0 || schedule[class_[i]].hasLeader == 1) {
-        if (class_s_info[class_[i]].leader_choice_num == 0) {
-          schedule[class_[i]].leader = "lack";
-        }
         continue;
       }
       else {
@@ -653,9 +650,6 @@ function arrange_leader(isHoliday) {
   else{
     for (var i = 1; i < class_s_info.length; i++) {
       if (class_s_info[i].leader_choice_num == 0 || schedule[i].hasLeader == 1) {
-        if (class_s_info[i].leader_choice_num == 0) {
-          schedule[i].leader = "lack";
-        }
         continue;
       }
       else {
@@ -675,6 +669,11 @@ function arrange_leader(isHoliday) {
           }
         }
       }
+    }
+  }
+  for (var i = 1; i < class_s_info.length; i++) {
+    if (schedule[class_[i]].leader == '') {
+      schedule[class_[i]].leader = "lack";
     }
   }
 }
