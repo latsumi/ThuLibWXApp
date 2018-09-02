@@ -16,14 +16,14 @@
         <view class="tableKey rightWidth">队员</view>
       </view>
       <!--根据是否是假期排班表(一天两个班)来选择显示block-->
-      <block wx:if="{{!isHoliday}}">
+      <block wx:if="{{!isTwoClass}}">
         <view class="tableRow bg-detail" wx:for="{{classes}}" wx:key="" wx:for-index="j" wx:if="{{j<4}}">
           <view class="detail leftWidth" wx:if="{{j==0&&i>=5}}">{{classesHoliday[j]}}</view>
           <view class="detail leftWidth" wx:else>{{item}}</view>
           <view class="detail rightWidth">{{persons[j+4*i]}}</view>
         </view>
       </block>
-      <block wx:if="{{isHoliday}}">
+      <block wx:if="{{isTwoClass}}">
         <view class="tableRow bg-detail" wx:for="{{classesHoliday}}" wx:key="" wx:for-index="j" wx:if="{{j<2}}">
           <view class="detail leftWidth">{{item}}</view>
           <view class="detail rightWidth">{{persons[j+2*i]}}</view>

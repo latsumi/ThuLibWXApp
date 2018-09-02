@@ -22,9 +22,18 @@
   </radio-group>
 </view>
 
-<label class="label">4.是否是假期排班(每天两个班)</label>
+<label class="label">4.是否是假期排班(每个人班数无上限)</label>
 <view class="inputArea">
   <radio-group name="isHoliday" >
+    <label wx:for="{{radioHoliday}}" wx:key="">
+      <radio value="{{item.value}}" checked='{{item.value==false?true:false}}'/>{{item.name}}
+  </label>
+  </radio-group>
+</view>
+
+<label class="label">5.是否每天两个班</label>
+<view class="inputArea">
+  <radio-group name="isTwoClass" >
     <label wx:for="{{radioHoliday}}" wx:key="">
       <radio value="{{item.value}}" checked='{{item.value==false?true:false}}'/>{{item.name}}
   </label>

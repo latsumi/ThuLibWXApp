@@ -23,7 +23,7 @@ Page({
     //   "4",
     // ],
     persons: [],
-    isHoliday: '',
+    isTwoClass: '',
 
     week: ["周一","周二","周三","周四","周五","周六","周日"],
     classes: ["早班   8:00-9:30", "午班 13:00-15:00", "晚一 18:00-20:00", "晚二 20:10-22:10",],
@@ -59,7 +59,7 @@ Page({
         console.log("返回值为 ", res.data);
         that.setData({
           persons: res.data.data.person,
-          isHoliday: res.data.data.isHoliday,
+          isTwoClass: res.data.data.isTwoClass,
         })
       },
       fail: function (res) {
@@ -111,7 +111,7 @@ Page({
         that.setData({
           hasChoose: res.data.data.title,
           persons: res.data.data.person,
-          isHoliday: res.data.data.isHoliday,
+          isTwoClass: res.data.data.isTwoClass,
         })
       },
       fail: function (res) {
