@@ -891,7 +891,7 @@ module.exports = async ctx => {
         }
       }
       var answer_table = "QuestionAnswer" + query.id.toString()
-      res = await mysql(answer_table).where({ library: query.library }).select('*')
+      res = await mysql(answer_table).where({ library: query.library, hasWork: 1 }).select('*')
 
 
       //根据res解析出同学姓名&学号&status&classes调用排班算法进行排班

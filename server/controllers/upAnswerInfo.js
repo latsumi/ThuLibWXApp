@@ -38,10 +38,9 @@ module.exports = async ctx => {
 				table.string('status', 30).notNullable();
 				table.boolean('isClass').notNullable();
 				table.string('answer', 2048);
-			});/*.then(res => {
-				process.exit()
-				//ctx.state.data = {query,name_table}
-			})*/
+				table.boolean('hasWork').notNullable();
+				table.string('remark', 1024);
+			});
 		}
 	});
 	/*
@@ -67,7 +66,7 @@ module.exports = async ctx => {
 		if(haveIt == 0){
       if((query.library == res[0].library && res[0].library != 2) || res[0].library == 2){
         if ((res[0].grade == 2 && query.status > 0) || (res[0].grade > 2 && query.status == 0)){
-          await mysql(name_table).insert({ name: query.name, studentNum: query.studentNum, library: query.library, status: query.status, isClass: query.isClass, answer: query.answer })
+          await mysql(name_table).insert({ name: query.name, studentNum: query.studentNum, library: query.library, status: query.status, isClass: query.isClass, answer: query.answer, hasWork: query.hasWork, remark: query.remark })
           let num = await mysql('Question_Info').where({ id: query.id }).select('numFilled')
           let n = num[0].numFilled + 1
           await mysql('Question_Info').where({ id: query.id }).update({ numFilled: n })
@@ -80,7 +79,7 @@ module.exports = async ctx => {
         ctx.state.data = "ERR_WRONG_LIBRARY"
       }
 		}else{
-      await mysql(name_table).where({ name: query.name, studentNum: query.studentNum, library: query.library }).update({ status: query.status,  isClass: query.isClass,  answer: query.answer })
+      await mysql(name_table).where({ name: query.name, studentNum: query.studentNum, library: query.library }).update({ status: query.status,  isClass: query.isClass,  answer: query.answer, hasWork: query.hasWork, remark: query.remark })
       ctx.state.data = "SUCCESS_FILLED"
 		}
     
