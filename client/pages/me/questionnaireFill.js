@@ -46,7 +46,7 @@ Page({
     data.isClass = this.data.isClass;
     console.log("所提交的值为 ", data);
 
-    if (data.name === '' || data.studentNum === '' || data.library === '' || data.status === '' || (data.classes == false && data.isClass == 1)) {
+    if (data.name === '' || data.studentNum === '' || data.library === '' || data.status === '' || (data.answer == false && data.isClass == 1)) {
       if (data.name === '')
         util.showFailShort('请填写姓名！')
       else {
@@ -66,9 +66,9 @@ Page({
       }
     }
     else {
-      if (!data.canIChoose == false && data.isClass == 1) {
-        if (data.canIChoose.length < 4 && this.data.hasMinLimit == true) {
-          util.showFailShort('可选班次不足四个！')
+      if (!data.answer == false && data.isClass == 1) {
+        if (data.answer.length < 4 && this.data.hasMinLimit == true) {
+          util.showFailShort('选择班次不足四个！')
           return
         }
       }
@@ -104,7 +104,7 @@ Page({
                     }
                   case 'ERR_WRONG_GRADE':
                     {
-                      util.showSuccess('队员类型有误!')
+                      util.showFailShort('队员类型有误!')
                       break;
                     }
                   default:
