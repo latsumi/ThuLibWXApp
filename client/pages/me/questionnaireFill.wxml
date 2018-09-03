@@ -43,17 +43,34 @@
 
   <!-- 排班问卷独有问题 -->
   <block wx:if="{{isClass}}">
-  <label class="label"> 5.所报班次</label>
-  <view style='width:690rpx;margin:8px 0;'><text class="desc">{{detail}}</text>
-</view>
+  <label class="label"> 5.是否上班</label>
   <view class="log-list">
-    <checkbox-group  class="answer" name="answer">
-      <label wx:for="{{canIChoose}}" wx:key="">
-       <checkbox style="margin-bottom:12px;margin-right:5px;" value="{{canIChoose[index]}}"/>{{canIChoose[index]}}
-     </label>
-    </checkbox-group>
+    <radio-group class="radio" name="hasWork" bindchange="bindHasWorkChange" >
+     <label wx:for="{{radioHasWork}}" wx:key="">
+        <radio value="{{item.value}}" checked='{{item.value==true?true:false}}'/>{{item.name}}
+    </label>
+  </radio-group>
   </view>
+    <!-- 选择上班才会出现 -->
+    <block wx:if="{{hasWork}}">
+    <label class="label"> 6.所报班次</label>
+    <view style='width:690rpx;margin:8px 0;'><text class="desc">{{detail}}</text>
+  </view>
+    <view class="log-list">
+      <checkbox-group  class="answer" name="answer">
+        <label wx:for="{{canIChoose}}" wx:key="">
+        <checkbox style="margin-bottom:12px;margin-right:5px;" value="{{canIChoose[index]}}"/>{{canIChoose[index]}}
+      </label>
+      </checkbox-group>
+    </view>
+    </block>
   </block>
+
+  <label class="label" wx:if="{{hasWork&&isClass}}"> 7.还有什么想说的吗</label>
+  <label class="label" wx:if="{{!hasWork||!isClass}}"> 6.还有什么想说的吗</label>
+  <view class="log-list border-all">
+    <textarea name="remark" value="{{remark}}" style='height:150px;' placeholder="脑洞、疑问、诉求都可以写在这里哦！(づ￣ 3￣)づ" maxlength="-1"/>
+  </view>
 
   <view class="submit"><button type="primary" form-type="submit">提交</button></view>
   </form>

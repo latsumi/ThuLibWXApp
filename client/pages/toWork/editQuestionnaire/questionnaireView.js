@@ -22,8 +22,14 @@ Page({
       var canIChoose = new Array()
       canIChoose = item.canIChoose.split(',')
     }
+    if (item.hasMinLimit == null){
+      var hasMinLimit = false
+    }
+    else{
+      var hasMinLimit = item.hasMinLimit
+    }
     wx.navigateTo({
-      url: this.data.urlTo + '?title=' + item.title + '&id=' + item.id + '&descript=' + item.descript + '&detail=' + item.detail + '&isClass=' + JSON.stringify(item.isClass) + '&canIChoose=' + JSON.stringify(canIChoose),
+      url: this.data.urlTo + '?title=' + item.title + '&id=' + item.id + '&descript=' + item.descript + '&detail=' + item.detail + '&isClass=' + JSON.stringify(item.isClass) + '&canIChoose=' + JSON.stringify(canIChoose) + '&hasMinLimit=' + JSON.stringify(hasMinLimit),
     })
   },
   /**
