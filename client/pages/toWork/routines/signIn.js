@@ -80,10 +80,19 @@ Page({
               url: "signinTable",
               data: data,
               success: function (res) {
-                wx.navigateBack({
-                  delta: 1
+                console.log(res.data)
+                wx.hideToast()
+                wx.showModal({
+                  title: '签到',
+                  content: '提交成功!',
+                  confirmText: '确认',
+                  showCancel: false,
+                  success(res) {
+                    wx.navigateBack({
+                      delta: 1
+                    })
+                  }
                 })
-                util.showSuccess('提交成功！')
               },
               fail: function (res) {
                 util.showFail('提交失败', '请稍后再试')
