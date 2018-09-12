@@ -69,7 +69,7 @@
   <label class="label" wx:if="{{hasWork&&isClass}}"> 7.还有什么想说的吗</label>
   <label class="label" wx:if="{{!hasWork||!isClass}}"> 6.还有什么想说的吗</label>
   <view class="log-list border-all">
-    <textarea name="remark" value="{{remark}}" style='height:150px;' placeholder="脑洞、疑问、诉求都可以写在这里哦！(づ￣ 3￣)づ" maxlength="-1"/>
+    <textarea name="remark" value="{{remark}}" style='height:150px;' placeholder="脑洞、疑问、诉求都可以写在这里哦！\r\n(づ￣ 3￣)づ" maxlength="-1"/>
   </view>
 
   <view class="submit"><button type="primary" form-type="submit">提交</button></view>

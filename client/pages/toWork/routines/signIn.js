@@ -34,6 +34,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.showToast({
+      title: '正在加载',
+      icon: 'loading',
+      duration: 500
+    }),
     wx.setNavigationBarTitle({
       title: '签到'
     })

@@ -27,7 +27,7 @@ Page({
     wx.showToast({
       title: '正在加载',
       icon: 'loading',
-      duration: 500
+      duration: 800
     }),
     wx.setNavigationBarTitle({//动态设置当行栏标题
       title: '工时查看'

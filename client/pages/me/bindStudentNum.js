@@ -18,6 +18,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.showToast({
+      title: '正在加载',
+      icon: 'loading',
+      duration: 800
+    }),
     wx.setNavigationBarTitle({//动态设置当行栏标题
       title: '绑定学号'
     })
