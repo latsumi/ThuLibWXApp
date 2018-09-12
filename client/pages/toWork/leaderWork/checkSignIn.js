@@ -89,11 +89,27 @@ Page({
               url: "affirmSigninTable",
               data: data,
               success: function (res) {
-                console.log(res.data.data)
-                wx.navigateBack({
-                  delta: 1
-                })
-                util.showSuccess('提交成功！')
+                console.log(res.data)
+                switch (res.data.data) {
+                  case 'person num not match, please rechoose':
+                    {
+                      util.showFailShort('提交人数不符!')
+                      break;
+                    }
+                  case 'success':
+                    {
+                      wx.navigateBack({
+                        delta: 1
+                      })
+                      util.showSuccess('提交成功！')
+                      break;
+                    }
+                  default:
+                    {
+                      util.showFail('提交失败', '请稍后再试')
+                      break;
+                    }
+                }
               },
               fail: function (res) {
                 util.showFail('提交失败', '请稍后再试')
