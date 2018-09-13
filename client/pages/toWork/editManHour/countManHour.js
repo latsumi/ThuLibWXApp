@@ -73,10 +73,18 @@ Page({
                 url: "calcmanHour",
                 data: data,
                 success: function (res) {
-                  wx.navigateBack({
-                    delta: 1
+                  wx.hideToast()
+                  wx.showModal({
+                    title: '提示',
+                    content: '统计完成!',
+                    confirmText: '确认',
+                    showCancel: false,
+                    success(res) {
+                      wx.navigateBack({
+                        delta: 1
+                      })
+                    }
                   })
-                  util.showSuccess('统计完成！')
                 },
                 fail: function (res) {
                   util.showFail('提交失败', '请稍后再试')

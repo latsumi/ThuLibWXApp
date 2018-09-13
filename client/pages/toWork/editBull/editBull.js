@@ -43,10 +43,18 @@ Page({
             url: "delNoticeInfo",
             data: { id: id },
             success: function (res) {
-              wx.navigateBack({
-                delta: 1
+              wx.hideToast()
+              wx.showModal({
+                title: '提示',
+                content: '已删除',
+                confirmText: '确认',
+                showCancel: false,
+                success(res) {
+                  wx.navigateBack({
+                    delta: 1
+                  })
+                }
               })
-              util.showSuccess('已删除')
             },
             fail: function (res) {
                 util.showFail('删除失败', '请稍后再试')
@@ -66,7 +74,7 @@ Page({
       content: '确定修改吗？',
       success: function (res) {
         if (res.confirm) {
-          util.showBusy('提交中...')
+          util.showBusy('提交中')
           http.POST({
             url: "updateNoticeInfo",
             data: {
@@ -75,10 +83,18 @@ Page({
               id: id,
             },
             success: function (res) {
-              wx.navigateBack({
-                delta: 1
+              wx.hideToast()
+              wx.showModal({
+                title: '提示',
+                content: '修改成功',
+                confirmText: '确认',
+                showCancel: false,
+                success(res) {
+                  wx.navigateBack({
+                    delta: 1
+                  })
+                }
               })
-              util.showSuccess('修改成功')
             },
             fail: function (res) {
               util.showFail('提交失败', '请稍后再试')

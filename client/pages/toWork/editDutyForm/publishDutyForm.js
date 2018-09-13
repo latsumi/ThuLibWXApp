@@ -89,10 +89,18 @@ Page({
                     }
                   case 'SUCCESS_PUBLISHED':
                     {
-                      wx.navigateBack({
-                        delta: 1
+                      wx.hideToast()
+                      wx.showModal({
+                        title: '提示',
+                        content: '发布成功!',
+                        confirmText: '确认',
+                        showCancel: false,
+                        success(res) {
+                          wx.navigateBack({
+                            delta: 1
+                          })
+                        }
                       })
-                      util.showSuccess('发布成功！')
                       break;
                     }
                   default:

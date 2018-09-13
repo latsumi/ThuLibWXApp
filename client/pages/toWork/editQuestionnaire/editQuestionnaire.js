@@ -110,10 +110,18 @@ Page({
               url: "updateQues",
               data: data,
               success: function (res) {
-                wx.navigateBack({
-                  delta: 1
+                wx.hideToast()
+                wx.showModal({
+                  title: '提示',
+                  content: '修改成功!',
+                  confirmText: '确认',
+                  showCancel: false,
+                  success(res) {
+                    wx.navigateBack({
+                      delta: 1
+                    })
+                  }
                 })
-                util.showSuccess('修改成功！')
               },
               fail: function (res) {
                 util.showFail('修改失败', '请稍后再试')
@@ -138,10 +146,18 @@ Page({
             url: "delQues",
             data: { id: id },
             success: function (res) {
-              wx.navigateBack({
-                delta: 1
+              wx.hideToast()
+              wx.showModal({
+                title: '提示',
+                content: '已删除',
+                confirmText: '确认',
+                showCancel: false,
+                success(res) {
+                  wx.navigateBack({
+                    delta: 1
+                  })
+                }
               })
-              util.showSuccess('已删除')
             },
             fail: function (res) {
               util.showFail('删除失败', '请稍后再试')
