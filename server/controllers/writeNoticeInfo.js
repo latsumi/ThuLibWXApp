@@ -15,8 +15,8 @@ module.exports = async ctx  => {
 	      else{
 	        toppest = 1
 	        await mysql('Notice_Info').insert({ title: query.title, detail: query.detail, top: toppest })
-	        let res = await mysql('Notice_Info').select('*').orderBy('top', 'desc')
-	        let toppest_id = res[0].id
+	        let res2 = await mysql('Notice_Info').select('*').orderBy('top', 'desc')
+	        let toppest_id = res2[0].id
 	        ctx.state.data = { toppest, toppest_id }
 	      }
 		}
