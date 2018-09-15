@@ -18,6 +18,7 @@ Page({
     authority: '',
     name: '',
     library: '',
+    version: '1.0.1',
     modalHidden: true,
     modalChoose: 0, //0:点击的是‘不要点这里’；1:点击的是‘关于我们’
     imageUrl: '../../image/kunbaby.jpeg',
