@@ -17,7 +17,7 @@
 .dutySwiper {
   margin: 0 auto;
   width: 750rpx;
-  height: 1000rpx;
+  height: 1200rpx;
 }
 .tableRow {
   display: flex;
@@ -40,7 +40,8 @@
   height: 80rpx;
 }
 .detail {
-  margin: 0 5px;
+  margin: 0px 5px;
+  padding: 10px 0px;
   justify-content: center;
   text-align: center;
 }
@@ -56,11 +57,14 @@
 .bg-detail{
   background: hsl(270, 95%, 95%);
 }
+.swiperBlock{
+  height: 800rpx;
+}
 .descs {
   display: flex;
   width: 100%;
   justify-content: center;
   align-items: center;
-  height: 80rpx;
+  height: 65rpx;
   font-size: 20rpx;
 }
