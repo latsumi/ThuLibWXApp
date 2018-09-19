@@ -1,11 +1,13 @@
-//update question
+// 修改排班表
+/*
+  增加还是删除，对象是班负或队员，分类讨论
+  更新是否有leader和队员数量值
+*/
 module.exports = async ctx => {
-	//	if (ctx.state.$wxInfo.loginState === 1) {
 	const { mysql } = require('../qcloud')
 
 	if (ctx.method === 'GET') {
 		const query = ctx.query
-		
 	}
 	if (ctx.method === 'POST') {
 		const query = ctx.request.body
@@ -19,7 +21,7 @@ module.exports = async ctx => {
     if(query.status == '1') {// del leader
       await mysql(name_table).where({ theClass: query.theClass }).update({ leader_name: null, leader_studentNum: null, hasleader: 0 });
     }
-    else {
+    else { // del member
       res = await mysql(name_table).where({ theClass: query.theClass }).select('*')
       num = res[0].num
       var name = new Array()
@@ -72,10 +74,10 @@ module.exports = async ctx => {
     }
   }
   else { //add
-    if (query.status == '1'){
+    if (query.status == '1'){ // add leader
       await mysql(name_table).where({ theClass: query.theClass }).update({ leader_name: query.name, leader_studentNum: query.studentNum, hasleader: 1 });
     }
-    else {
+    else { // add member
       let n = await mysql(name_table).where({ theClass: query.theClass }).select('num')
       switch (n[0].num) {
         case 0: await mysql(name_table).where({ theClass: query.theClass }).update({ member1_name: query.name, member1_studentNum: query.studentNum }); break;

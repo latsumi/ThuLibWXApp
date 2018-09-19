@@ -1,3 +1,9 @@
+// 根据对应的问卷，提交的全部的答卷信息创建初始排班表
+/*
+  在提交某一份问卷的答案之后，根据报班问卷的答案，找到每个人报的班次，进行排班，排班结果存在schedule的变量中；
+  建立对应的排班表，存储包括队员班负在内的所有成员信息，注意对于成员，由于排班表使用静态的结构，因此对于队员信息的处理需要在外部动态的进行，即对于有n个队员的班次，保持前n个member是非空的，后面的可以设为null
+  建立排班表列表，记录建立的初始排班表的信息，包括是否为假期排班表，是否一天只有两个班次，标记为终版时用的flag，等等
+*/
 const fs = require('fs')
 const path = require('path')
 const { mysql: config } = require('../config')
@@ -831,13 +837,11 @@ module.exports = async ctx => {
     query = ctx.request.body
   }
 
-  // var name_table = "Schedule" + query.id.toString() + "_" + query.library.toString()
   var name_table = "duty_" + query.title
-  //var name_table = query.name
   let classes_to_choose = await mysql('Question_Info').where({ id: query.id }).select('canIChoose')
-
-  //must exist the question info
-  //The formatting requirements of the parse are too high
+  // 初始排班表的列数应该和相应问卷可选班次数一致
+  // must exist the question info
+  // The formatting requirements of the parse are too high
   if (classes_to_choose.length == 0) {
     ctx.state.data = "不存在该问卷"
   }
@@ -849,6 +853,7 @@ module.exports = async ctx => {
       let has_table = await DB.schema.hasTable(name_table)
       if (!has_table) {
         await DB.schema.createTable(name_table, function (table) {
+          // 创建表的信息：班次、成员数量（包含leader）、是否有leader，leader姓名学号，十个成员分别的姓名学号，特定班次成员数目上限
           table.increments('id');
           table.string('theClass', 100).notNullable();
           table.integer('mem_num', 11);//the number of teammember
@@ -881,6 +886,7 @@ module.exports = async ctx => {
           var max
           let class_name = array[i]
           switch (class_name[1]) {
+            // 设定成员数目上限，早午晚一8人，晚二10人
             case 'A': { max = 8; break }
             case 'B': { max = 8; break }
             case 'C': { max = 8; break }
@@ -972,12 +978,12 @@ module.exports = async ctx => {
           });
         }
       });
-      // <<<<<<< HEAD
+      // 更新排班表列表的信息
       if (!await mysql(list_name).where({ title: query.title, library: query.library, question_id: query.id, isHoliday: query.isHoliday, isTwoClass: query.isTwoClass }).update({ isOrigin: 1 })) {
         await mysql(list_name).insert({ title: query.title, library: query.library, question_id: query.id, isHoliday: query.isHoliday, isTwoClass: query.isTwoClass, isOrigin: 1 })
       }
       ctx.state.data = { res, schedule, info }
-      // >>>>>>> c6d64200822d6013a7e8625b2d1e61564bacc6d0
+      // 
     }
   }
 }

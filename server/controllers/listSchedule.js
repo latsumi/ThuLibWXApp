@@ -1,13 +1,14 @@
+// 显示排班表，根据排班表在排班表列表中的id信息，如果没有指定id，则显示指定库区的最新的初始排班表
 const fs = require('fs')
 const path = require('path')
 const { mysql: config } = require('../config')
 
 module.exports = async ctx => {
 	const { mysql } = require('../qcloud')
-
 	const query = ctx.request.body
   var res
   if(!query.id){
+    // 如果没有指定id的话
     res = await mysql('Schedule_List').where({ library: query.library, isOrigin: 0 }).select('title', 'isTwoClass').orderBy('updated_at', 'desc')
   }else{
     res = await mysql('Schedule_List').where({ id: query.id, library: query.library }).select('title', 'isTwoClass')
@@ -21,6 +22,7 @@ module.exports = async ctx => {
     let mem_num
     let hasleader
     for(let i = 0; i<schedule.length; i++){
+      // 在将获得的排班表信息输出时，顺便校正一下排班表中“是否有班负”和“队员数量”等信息
       person[i] = ""
       mem_num = 0
       let name = new Array()

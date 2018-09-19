@@ -1,3 +1,4 @@
+// 根据isOrigin显示终版排班表或初始排班表列表
 module.exports = async ctx => {
   const { mysql } = require('../qcloud')
   if (ctx.method === 'GET') {

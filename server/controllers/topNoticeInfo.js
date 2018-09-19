@@ -1,3 +1,7 @@
+// 置顶公告
+/* 设置一项为优先级指标top
+	按照倒序得到公告的优先级，以最高优先级的top值+1作为要置顶的公告的top值
+*/
 module.exports  = async ctx =>{
 	const {mysql} = require('../qcloud')
 	const query = ctx.request.body

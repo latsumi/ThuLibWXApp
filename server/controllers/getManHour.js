@@ -1,3 +1,4 @@
+// 根据提交的openid查看工时信息，返回姓名学号、本周上周的签到工时、替班次数、负责班次数
 const fs = require('fs')
 const path = require('path')
 const { mysql: config } = require('../config')
@@ -26,12 +27,12 @@ module.exports = async ctx => {
 	let prevHour = 0
 	let prevHelp = 0
 	let prevLeader = 0
-	//let res = await mysql('signin_fore').whereRaw('yearweek(DATE_FORMAT(\'update_time\', \'%Y-%m-%d\')) = yearweek(NOW()) - 1').select('*')
 	
 	let nowres = await DB('signin_fore').select(DB.raw('*')).where(DB.raw(" yearweek(DATE_FORMAT(`update_time`, '%Y-%m-%d')) = yearweek(NOW())")).where({name: name, studentNum: studentNum})
 	let nownum = nowres.length
 	if( nownum != 0){
 		for (let i = 0; i < nownum; i++) {
+			// 计算本周工时数，替班情况和是否为班负
 			nowHour = nowHour + nowres[i].manHour
 			nowHelp = nowHelp + nowres[i].isRelief
 			nowLeader = nowLeader + nowres[i].isLeader
@@ -41,6 +42,7 @@ module.exports = async ctx => {
 	let prevnum = prevres.length
 	if (prevnum != 0) {
 		for (let i = 0; i < prevnum; i++) {
+			// 计算上周工时数，替班情况和是否为班负
 			prevHour = prevHour + prevres[i].manHour
 			prevHelp = prevHelp + prevres[i].isRelief
 			prevLeader = prevLeader + prevres[i].isLeader

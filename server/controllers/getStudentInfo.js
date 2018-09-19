@@ -1,4 +1,4 @@
-//write notice
+// 根据姓名学号得到该成员其他信息
 module.exports = async ctx => {
 	//	if (ctx.state.$wxInfo.loginState === 1) {
 	const { mysql } = require('../qcloud')

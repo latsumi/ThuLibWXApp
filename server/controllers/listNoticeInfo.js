@@ -1,13 +1,8 @@
-//list notice; 
-//method only GET
+// 显示公告信息，使用GET方式，按照优先级的高低显示
 module.exports = async (ctx, next) => {
-//	if (ctx.state.$wxInfo.loginState === 1) {
-		const { mysql } = require('../qcloud')
-		await mysql("Notice_Info").select('*').orderBy('top', 'desc').then(res=> {
-			ctx.state.data = res
-		})
-//  } else {
-//	ctx.state.code = -1
-//}
+	const { mysql } = require('../qcloud')
+	await mysql("Notice_Info").select('*').orderBy('top', 'desc').then(res=> {
+		ctx.state.data = res
+	})
 }
 

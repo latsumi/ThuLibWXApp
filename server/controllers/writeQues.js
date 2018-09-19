@@ -1,4 +1,4 @@
-//write Questions
+// 编写问卷
 const fs = require('fs')
 const path = require('path')
 const { mysql: config } = require('../config')
@@ -15,7 +15,8 @@ module.exports = async ctx  => {
       charset: config.char,
       multipleStatements: true
     }
-  })
+	})
+	// 创建问卷列表
 	await DB.schema.hasTable('Question_Info').then(function (exists) {
 		if (!exists) {
 			return DB.schema.createTable('Question_Info', function (table) {
@@ -40,7 +41,4 @@ module.exports = async ctx  => {
     await mysql('Question_Info').insert({ title: query.title, descript: query.descript, detail: query.detail, isClass: query.isClass, canIChoose: query.canIChoose, numFilled: 0, hasMinLimit: query.hasMinLimit })
 		ctx.state.data = query
 	}
-	//	} else {
-	//		ctx.state.code = -1
-	//	}
 }
