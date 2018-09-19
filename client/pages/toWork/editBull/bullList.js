@@ -105,10 +105,18 @@ Page({
             url: "topNoticeInfo",
             data: { id: id },
             success: function (res) {
-              wx.navigateBack({
-                delta: 1
+              wx.hideToast()
+              wx.showModal({
+                title: '提示',
+                content: '已置顶',
+                confirmText: '确认',
+                showCancel: false,
+                success(res) {
+                  wx.navigateBack({
+                    delta: 1
+                  })
+                }
               })
-              util.showSuccess('已置顶')
             },
             fail: function (res) {
               util.showFail('操作失败', '请稍后再试')

@@ -55,10 +55,18 @@ Page({
               data: data,
               success: function (res) {
                 console.log(res.data)
-                wx.navigateBack({
-                  delta: 1
+                wx.hideToast()
+                wx.showModal({
+                  title: '提示',
+                  content: '排班成功!',
+                  confirmText: '确认',
+                  showCancel: false,
+                  success(res) {
+                    wx.navigateBack({
+                      delta: 1
+                    })
+                  }
                 })
-                util.showSuccess('排班成功！')
               },
               fail: function (res) {
                 util.showFail('排班失败', '请稍后再试')

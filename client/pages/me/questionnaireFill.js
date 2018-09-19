@@ -86,10 +86,18 @@ Page({
                 switch (res.data.data) {
                   case 'SUCCESS_FILLED':
                     {
-                      wx.navigateBack({
-                        delta: 1
+                      wx.hideToast()
+                      wx.showModal({
+                        title: '提示',
+                        content: '提交成功!',
+                        confirmText: '确认',
+                        showCancel: false,
+                        success(res) {
+                          wx.navigateBack({
+                            delta: 1
+                          })
+                        }
                       })
-                      util.showSuccess('提交成功！')
                       break;
                     }
                   case 'ERR_WRONG_INFO':

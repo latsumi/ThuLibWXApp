@@ -63,10 +63,18 @@ Page({
                     app.globalData.authority = res.data.data[0].grade
                     app.globalData.name = res.data.data[0].name
                     app.globalData.library = res.data.data[0].library
-                    wx.navigateBack({
-                      delta: 1
+                    wx.hideToast()
+                    wx.showModal({
+                      title: '提示',
+                      content: '绑定成功!',
+                      confirmText: '确认',
+                      showCancel: false,
+                      success(res) {
+                        wx.navigateBack({
+                          delta: 1
+                        })
+                      }
                     })
-                    util.showSuccess('绑定成功！')
                   }
                 }  
               },

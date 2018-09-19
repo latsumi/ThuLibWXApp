@@ -98,10 +98,18 @@ Page({
                     }
                   case 'success':
                     {
-                      wx.navigateBack({
-                        delta: 1
+                      wx.hideToast()
+                      wx.showModal({
+                        title: '提示',
+                        content: '提交成功!',
+                        confirmText: '确认',
+                        showCancel: false,
+                        success(res) {
+                          wx.navigateBack({
+                            delta: 1
+                          })
+                        }
                       })
-                      util.showSuccess('提交成功！')
                       break;
                     }
                   default:
@@ -137,10 +145,18 @@ Page({
               url: "delSigninInfo",
               data: data,
               success: function (res) {
-                wx.navigateBack({
-                  delta: 1
+                wx.hideToast()
+                wx.showModal({
+                  title: '提示',
+                  content: '成功删除！!',
+                  confirmText: '确认',
+                  showCancel: false,
+                  success(res) {
+                    wx.navigateBack({
+                      delta: 1
+                    })
+                  }
                 })
-                util.showSuccess('成功删除！')
               },
               fail: function (res) {
                 util.showFail('提交失败', '请稍后再试')
