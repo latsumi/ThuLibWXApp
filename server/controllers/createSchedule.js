@@ -979,14 +979,15 @@ module.exports = async ctx => {
             table.boolean('isHoliday');
             table.boolean('isTwoClass');
             table.boolean('isOrigin');
+            table.string('info', 1024);
             table.dateTime('created_at').notNullable().defaultTo(DB.raw('CURRENT_TIMESTAMP'));
             table.dateTime('updated_at').notNullable().defaultTo(DB.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
           });
         }
       });
       // 更新排班表列表的信息
-      if (!await mysql(list_name).where({ title: query.title, library: query.library, question_id: query.id, isHoliday: query.isHoliday, isTwoClass: query.isTwoClass }).update({ isOrigin: 1 })) {
-        await mysql(list_name).insert({ title: query.title, library: query.library, question_id: query.id, isHoliday: query.isHoliday, isTwoClass: query.isTwoClass, isOrigin: 1 })
+      if (!await mysql(list_name).where({ title: query.title, library: query.library, question_id: query.id, isHoliday: query.isHoliday, isTwoClass: query.isTwoClass }).update({ isOrigin: 1, info: info })) {
+        await mysql(list_name).insert({ title: query.title, library: query.library, question_id: query.id, isHoliday: query.isHoliday, isTwoClass: query.isTwoClass, info: info, isOrigin: 1 })
       }
       ctx.state.data = { res, schedule, info }
       // 

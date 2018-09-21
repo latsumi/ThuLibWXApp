@@ -99,7 +99,7 @@ module.exports = async ctx => {
     }
     if (info == "SUCCESS_PUBLISHED"){
       // 成功发布，并修改数据库
-      if (await mysql('Schedule_List').where({ id: query.id }).update({ isOrigin: 0 })){
+      if (await mysql('Schedule_List').where({ id: query.id }).update({ isOrigin: 0, info: null })){
         ctx.state.data = info
       }else{
         ctx.state.data = "ERR_SQL_UPDATE"
