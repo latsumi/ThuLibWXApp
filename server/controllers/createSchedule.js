@@ -860,7 +860,8 @@ module.exports = async ctx => {
           table.boolean('hasleader');
           table.string('leader_name', 30);
           table.string('leader_studentNum', 30);
-          table.string('member1_name', 30);
+          table.string('member', 300);
+/*          table.string('member1_name', 30);
           table.string('member1_studentNum', 30);
           table.string('member2_name', 30);
           table.string('member2_studentNum', 30);
@@ -880,6 +881,7 @@ module.exports = async ctx => {
           table.string('member9_studentNum', 30);
           table.string('member10_name', 30);
           table.string('member10_studentNum', 30);
+*/
           table.integer('max_num', 11);
         });
         for (var i = 0; i < array.length; i++) {
@@ -917,15 +919,18 @@ module.exports = async ctx => {
       //------------------------------------------------------------------
       for (var i = 1; i < schedule.length; i++) {
         var class_info = schedule[i]
-        var mem_list = new Array(10)
-        var num_list = new Array(10)
-        for (var j = 0; j < 10; j++) {
-          mem_list[j] = null;
-          num_list[j] = null;
-        }
-        for (var j = 0; j < class_info.mem_num + 1 - (class_info.hasleader ? 1 : 0); j++) {
-          mem_list[j] = class_info.class_mem[j + 1];
-          num_list[j] = class_info.mem_student_num[j + 1];
+        // var mem_list = new Array(10)
+        // var num_list = new Array(10)
+        var member_str=""
+        // for (var j = 0; j < 10; j++) {
+        //   mem_list[j] = null;
+        //   num_list[j] = null;
+        // }
+        for (var j = 0; j < class_info.mem_num - 1 - (class_info.hasleader ? 1 : 0); j++) {
+          // mem_list[j] = class_info.class_mem[j + 1];
+          // num_list[j] = class_info.mem_student_num[j + 1];
+          member_str = member_str + class_info.class_mem[j+1] + " "
+          // member_str = member_str + "1 "
         }
         let mem_num = class_info.mem_num;
         if (mem_num <= 0) {
@@ -937,26 +942,27 @@ module.exports = async ctx => {
             mem_num: mem_num,
             leader_name: class_info.leader,
             hasleader: class_info.hasLeader,
-            member1_name: mem_list[0],
-            member1_studentNum: num_list[0],
-            member2_name: mem_list[1],
-            member2_studentNum: num_list[1],
-            member3_name: mem_list[2],
-            member3_studentNum: num_list[2],
-            member4_name: mem_list[3],
-            member4_studentNum: num_list[3],
-            member5_name: mem_list[4],
-            member5_studentNum: num_list[4],
-            member6_name: mem_list[5],
-            member6_studentNum: num_list[5],
-            member7_name: mem_list[6],
-            member7_studentNum: num_list[6],
-            member8_name: mem_list[7],
-            member8_studentNum: num_list[7],
-            member9_name: mem_list[8],
-            member9_studentNum: num_list[8],
-            member10_name: mem_list[9],
-            member10_studentNum: num_list[9],
+            // member1_name: mem_list[0],
+            // member1_studentNum: num_list[0],
+            // member2_name: mem_list[1],
+            // member2_studentNum: num_list[1],
+            // member3_name: mem_list[2],
+            // member3_studentNum: num_list[2],
+            // member4_name: mem_list[3],
+            // member4_studentNum: num_list[3],
+            // member5_name: mem_list[4],
+            // member5_studentNum: num_list[4],
+            // member6_name: mem_list[5],
+            // member6_studentNum: num_list[5],
+            // member7_name: mem_list[6],
+            // member7_studentNum: num_list[6],
+            // member8_name: mem_list[7],
+            // member8_studentNum: num_list[7],
+            // member9_name: mem_list[8],
+            // member9_studentNum: num_list[8],
+            // member10_name: mem_list[9],
+            // member10_studentNum: num_list[9],
+            member: member_str,
             leader_studentNum: class_info.leader_student_num,
           })
       }
