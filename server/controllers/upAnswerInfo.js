@@ -25,7 +25,6 @@ module.exports = async ctx => {
 	if (ctx.method === 'POST') {
 		query = ctx.request.body
 	}
-	var hasWork
 	var name_table = "QuestionAnswer" + query.id.toString()
 	// 建立对应问卷的答卷数据表
 	if(query.isClass == 1){
@@ -69,7 +68,7 @@ module.exports = async ctx => {
 				if((query.library == res[0].library && res[0].library != 2) || res[0].library == 2){
 					// 库区的限制，问卷填写的库区要匹配队员在通讯录中的库区
 					if ((res[0].grade == 2 && query.status > 0) || (res[0].grade > 2 && query.status == 0)){
-						await mysql(name_table).insert({ name: query.name, studentNum: query.studentNum, library: query.library, status: query.status, isClass: query.isClass, answer: query.answer, hasWork: hasWork, remark: query.remark })
+						await mysql(name_table).insert({ name: query.name, studentNum: query.studentNum, library: query.library, status: query.status, isClass: query.isClass, answer: query.answer, hasWork: query.hasWork, remark: query.remark })
 						let num = await mysql('Question_Info').where({ id: query.id }).select('numFilled')
 						let n = num[0].numFilled + 1
 						// 更新问卷填写数量
@@ -84,7 +83,7 @@ module.exports = async ctx => {
 				}
 			}else{
 				// 队员填过问卷，更新
-				await mysql(name_table).where({ name: query.name, studentNum: query.studentNum, library: query.library }).update({ status: query.status,  isClass: query.isClass,  answer: query.answer, hasWork: hasWork, remark: query.remark })
+				await mysql(name_table).where({ name: query.name, studentNum: query.studentNum, library: query.library }).update({ status: query.status,  isClass: query.isClass,  answer: query.answer, hasWork: query.hasWork, remark: query.remark })
 				ctx.state.data = "SUCCESS_FILLED"
 			}
 		}else{
