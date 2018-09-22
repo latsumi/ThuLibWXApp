@@ -19,7 +19,7 @@
   <picker bindchange="bindPickerWeekChange" value="{{chooseWeek}}" range="{{week}}" name='whichWeek'>
     <view class="picker">{{chooseWeek}}</view>
   </picker>
-  <picker bindchange="bindPickerDayChange" value="{{day[currentDay]}}" range="{{day}}" name='whatDay'>
+  <picker bindchange="bindPickerDayChange" value="{{chooseDay}}" range="{{day}}" name='whatDay'>
     <view class="picker">{{chooseDay}}</view>
   </picker>
 </view>
