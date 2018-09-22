@@ -979,7 +979,7 @@ module.exports = async ctx => {
             table.boolean('isHoliday');
             table.boolean('isTwoClass');
             table.boolean('isOrigin');
-            table.string('info', 1024);
+            table.string('info', 4096);
             table.dateTime('created_at').notNullable().defaultTo(DB.raw('CURRENT_TIMESTAMP'));
             table.dateTime('updated_at').notNullable().defaultTo(DB.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
           });
