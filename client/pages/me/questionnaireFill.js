@@ -82,7 +82,7 @@ Page({
               url: "upAnswerInfo",
               data: data,
               success: function (res) {
-                console.log("提交问卷的返回值为 ", res.data.data);
+                console.log("提交问卷的返回值为 ", res.data);
                 switch (res.data.data) {
                   case 'SUCCESS_FILLED':
                     {

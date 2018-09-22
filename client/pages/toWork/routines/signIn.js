@@ -126,8 +126,11 @@ Page({
     var currentPeriod;
 
     if(hour>=5&&hour<=11){
-      currentManHour = 0;
       currentClass = 0;
+      if (day == 0 || day == 6)  //周末默认工时为2h
+        currentManHour = 1;
+      else
+        currentManHour = 0;
       if(hour<=7)
         currentPeriod = 1;
       else
