@@ -861,7 +861,7 @@ module.exports = async ctx => {
           table.string('leader_name', 30);
           table.string('leader_studentNum', 30);
           table.string('member', 300);
-/*          table.string('member1_name', 30);
+/*        table.string('member1_name', 30);
           table.string('member1_studentNum', 30);
           table.string('member2_name', 30);
           table.string('member2_studentNum', 30);
@@ -899,46 +899,44 @@ module.exports = async ctx => {
         }
       }
       var answer_table = "QuestionAnswer" + query.id.toString()
-      res = await mysql(answer_table).where({ library: query.library, hasWork: 1 }).select('*')
-
-
-      //根据res解析出同学姓名&学号&status&classes调用排班算法进行排班
-      var is_holiday = query.isHoliday;
-      var is_two_class = query.isTwoClass;
-      if ((typeof is_holiday) == typeof '1') {
-        is_holiday = !(is_holiday === '0')
-      }
-      if ((typeof is_two_class) == typeof '1') {
-        is_two_class = !(is_two_class === '0')
-      }
-      //------------------------------------------------------------------
-      get_info_and_schedule(is_holiday, is_two_class);
-      //------------------------------------------------------------------
-
-      //将排班结果按班次&leader&member存入schedule中
-      //------------------------------------------------------------------
-      for (var i = 1; i < schedule.length; i++) {
-        var class_info = schedule[i]
-        // var mem_list = new Array(10)
-        // var num_list = new Array(10)
-        var member_str=""
-        // for (var j = 0; j < 10; j++) {
-        //   mem_list[j] = null;
-        //   num_list[j] = null;
-        // }
-        for (var j = 0; j < class_info.mem_num - 1 - (class_info.hasleader ? 1 : 0); j++) {
-          // mem_list[j] = class_info.class_mem[j + 1];
-          // num_list[j] = class_info.mem_student_num[j + 1];
-          member_str = member_str + class_info.class_mem[j+1] + " "
-          // member_str = member_str + "1 "
+      // 如果存在答卷表的话
+      if(await DB.schema.hasTable(answer_table)){
+        res = await mysql(answer_table).where({ library: query.library, hasWork: 1 }).select('*')
+        //根据res解析出同学姓名&学号&status&classes调用排班算法进行排班
+        var is_holiday = query.isHoliday;
+        var is_two_class = query.isTwoClass;
+        if ((typeof is_holiday) == typeof '1') {
+          is_holiday = !(is_holiday === '0')
         }
-        let mem_num = class_info.mem_num;
-        if (mem_num <= 0) {
-          mem_num = 0
+        if ((typeof is_two_class) == typeof '1') {
+          is_two_class = !(is_two_class === '0')
         }
-        
-        await mysql(name_table).where({ theClass: class_info.class_name })
-          .update({
+        //------------------------------------------------------------------
+        get_info_and_schedule(is_holiday, is_two_class);
+        //------------------------------------------------------------------
+
+        //将排班结果按班次&leader&member存入schedule中
+        //------------------------------------------------------------------
+        for (var i = 1; i < schedule.length; i++) {
+          var class_info = schedule[i]
+          // var mem_list = new Array(10)
+          // var num_list = new Array(10)
+          var member_str=""
+          // for (var j = 0; j < 10; j++) {
+          //   mem_list[j] = null;
+          //   num_list[j] = null;
+          // }
+          for (var j = 0; j < class_info.mem_num - 1 - (class_info.hasleader ? 1 : 0); j++) {
+            // mem_list[j] = class_info.class_mem[j + 1];
+            // num_list[j] = class_info.mem_student_num[j + 1];
+            member_str = member_str + class_info.class_mem[j+1] + " "
+          }
+          let mem_num = class_info.mem_num;
+          if (mem_num <= 0) {
+            mem_num = 0
+          }
+          
+          await mysql(name_table).where({ theClass: class_info.class_name }).update({
             mem_num: mem_num,
             leader_name: class_info.leader,
             hasleader: class_info.hasLeader,
@@ -965,6 +963,7 @@ module.exports = async ctx => {
             member: member_str,
             leader_studentNum: class_info.leader_student_num,
           })
+        }
       }
       // await mysql(name_table).where({ theClass: theclass }).update()	//待补充
       //------------------------------------------------------------------
@@ -990,7 +989,6 @@ module.exports = async ctx => {
         await mysql(list_name).insert({ title: query.title, library: query.library, question_id: query.id, isHoliday: query.isHoliday, isTwoClass: query.isTwoClass, info: info, isOrigin: 1 })
       }
       ctx.state.data = { res, schedule, info }
-      // 
     }
   }
 }

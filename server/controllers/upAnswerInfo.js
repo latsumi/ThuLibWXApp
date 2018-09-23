@@ -43,23 +43,6 @@ module.exports = async ctx => {
 				});
 			}
 		});
-		/*
-		await DB.schema.hasColumn('Address_List','openId').then(function(exists){
-			if(!exists){
-				return DB.schema.table('Address_List',function(table){
-					table.string('openId',512);
-				});
-			}
-		});
-		await DB.schema.hasColumn('Address_List', 'grade').then(function (exists) {
-			if (!exists) {
-				return DB.schema.table('Address_List', function (table) {
-					table.string('grade', 10);
-				});
-			}
-		})*/;
-	//do a judge by isClass, for "answer"
-		// let res = await mysql('Address_List').where({ name: query.name, studentNum: query.studentNum}).update({ grade: query.status})//pay attention
 		let res = await mysql('Address_List').where({name: query.name, studentNum: query.studentNum}).select('*')
 		let haveIt = await mysql(name_table).where({ name: query.name, studentNum: query.studentNum, library: query.library })
 		if (res.length != 0){
@@ -69,8 +52,8 @@ module.exports = async ctx => {
 					// 库区的限制，问卷填写的库区要匹配队员在通讯录中的库区
 					if ((res[0].grade == 2 && query.status > 0) || (res[0].grade > 2 && query.status == 0)){
 						await mysql(name_table).insert({ name: query.name, studentNum: query.studentNum, library: query.library, status: query.status, isClass: query.isClass, answer: query.answer, hasWork: query.hasWork, remark: query.remark })
-						let num = await mysql('Question_Info').where({ id: query.id }).select('numFilled')
-						let n = num[0].numFilled + 1
+						let num = await mysql(name_table).select('*')
+						let n = num.length
 						// 更新问卷填写数量
 						await mysql('Question_Info').where({ id: query.id }).update({ numFilled: n })
 						ctx.state.data = "SUCCESS_FILLED"
@@ -104,23 +87,6 @@ module.exports = async ctx => {
 				});
 			}
 		});
-		/*
-		await DB.schema.hasColumn('Address_List','openId').then(function(exists){
-			if(!exists){
-				return DB.schema.table('Address_List',function(table){
-					table.string('openId',512);
-				});
-			}
-		});
-		await DB.schema.hasColumn('Address_List', 'grade').then(function (exists) {
-			if (!exists) {
-				return DB.schema.table('Address_List', function (table) {
-					table.string('grade', 10);
-				});
-			}
-		})*/;
-	//do a judge by isClass, for "answer"
-		// let res = await mysql('Address_List').where({ name: query.name, studentNum: query.studentNum}).update({ grade: query.status})//pay attention
 		let res = await mysql('Address_List').where({name: query.name, studentNum: query.studentNum}).select('*')
 		let haveIt = await mysql(name_table).where({ name: query.name, studentNum: query.studentNum, library: query.library })
 		if (res.length != 0){
@@ -130,8 +96,8 @@ module.exports = async ctx => {
 					// 库区的限制，问卷填写的库区要匹配队员在通讯录中的库区
 					if ((res[0].grade == 2 && query.status > 0) || (res[0].grade > 2 && query.status == 0)){
 						await mysql(name_table).insert({ name: query.name, studentNum: query.studentNum, library: query.library, status: query.status, isClass: query.isClass, answer: query.answer, remark: query.remark })
-						let num = await mysql('Question_Info').where({ id: query.id }).select('numFilled')
-						let n = num[0].numFilled + 1
+						let num = await mysql(name_table).select('*')
+						let n = num.length
 						// 更新问卷填写数量
 						await mysql('Question_Info').where({ id: query.id }).update({ numFilled: n })
 						ctx.state.data = "SUCCESS_FILLED"
