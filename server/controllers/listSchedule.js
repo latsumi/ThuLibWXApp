@@ -21,7 +21,7 @@ module.exports = async ctx => {
     let person = Array(schedule.length)
     let mem_num
     let hasleader
-    if(query.id > 8){
+    if(query.id > 8 || !query.id){
       for(let i = 0; i<schedule.length; i++){
         // 在将获得的排班表信息输出时，顺便校正一下排班表中“是否有班负”和“队员数量”等信息
         person[i] = ""
@@ -41,15 +41,13 @@ module.exports = async ctx => {
           person[i] = person[i] + leader_name + " "
         }
         for (let j = 0; j < member_name.length; j++) {
-          // if (member_name[j] == null) {
-          //   await mysql(name_table).where({ id: schedule[i].id }).update({ mem_num: mem_num + hasleader })
-          //   break
-          // } else {
+          if (member_name[j] == "") {
+            continue
+          } else {
             mem_num = mem_num + 1
             person[i] = person[i] + member_name[j] + " "
-          // }
+          }
         }
-        mem_num = mem_num - 1
         await mysql(name_table).where({ id: schedule[i].id }).update({ mem_num: mem_num + hasleader })
       }
     }else{

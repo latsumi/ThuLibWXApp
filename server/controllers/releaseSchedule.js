@@ -80,9 +80,12 @@ module.exports = async ctx => {
         }
       }
       for (let j = 0; j < member_name.length; j++) {
+        if (member_name[j] == "") {
+          continue
+        } else {
           mem_num = mem_num + 1
+        } 
       }
-      mem_num = mem_num - 1
       await mysql(name_table).where({ id: schedule[i].id }).update({ mem_num: mem_num + hasleader })
       if (mem_num + hasleader <= 0) {
         // 如果没有队员（包括班负）
