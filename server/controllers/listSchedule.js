@@ -27,13 +27,12 @@ module.exports = async ctx => {
         person[i] = ""
         mem_num = 0
         let leader_name = schedule[i].leader_name
-        let member_name = schedule[i].member.split(" ")
+        var member_name = schedule[i].member.split(" ")
         if (leader_name == "lack") {
           hasleader = 0
           if (schedule[i].hasleader) {
             await mysql(name_table).where({ id: schedule[i].id }).update({ hasleader: hasleader })
           }
-          continue
         } else {
           hasleader = 1
           if (!schedule[i].hasleader) {
@@ -42,14 +41,16 @@ module.exports = async ctx => {
           person[i] = person[i] + leader_name + " "
         }
         for (let j = 0; j < member_name.length; j++) {
-          if (member_name[j] == null) {
-            await mysql(name_table).where({ id: schedule[i].id }).update({ mem_num: mem_num + hasleader })
-            break
-          } else {
+          // if (member_name[j] == null) {
+          //   await mysql(name_table).where({ id: schedule[i].id }).update({ mem_num: mem_num + hasleader })
+          //   break
+          // } else {
             mem_num = mem_num + 1
             person[i] = person[i] + member_name[j] + " "
-          }
+          // }
         }
+        mem_num = mem_num - 1
+        await mysql(name_table).where({ id: schedule[i].id }).update({ mem_num: mem_num + hasleader })
       }
     }else{
       for (let i = 0; i < schedule.length; i++) {

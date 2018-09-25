@@ -68,12 +68,11 @@ module.exports = async ctx => {
     // }
       if (leader_name == "lack") {
         // 如果没有班负，则发布错误信息
-        if (info != "ERR_NO_PERSON") { info = "ERR_NO_LEADER" }
+        info = "ERR_NO_LEADER"
         hasleader = 0
         if (schedule[i].hasleader) {
           await mysql(name_table).where({ id: schedule[i].id }).update({ hasleader: hasleader })
         }
-        continue
       } else {
         hasleader = 1
         if (!schedule[i].hasleader) {
@@ -81,20 +80,17 @@ module.exports = async ctx => {
         }
       }
       for (let j = 0; j < member_name.length; j++) {
-        if (member_name[j] == null) {
-          await mysql(name_table).where({ id: schedule[i].id }).update({ mem_num: mem_num + hasleader })
-          if (mem_num + hasleader <= 0) {
-            // 如果没有队员（包括班负）
-            info = "ERR_NO_PERSON"
-          }
-          if (mem_num + hasleader > schedule[i].max_num) {
-            // 超过人数限制
-            if (info != "ERR_NO_PERSON") { info = "ERR_EXCEED_LIMIT" }
-          }
-          break
-        } else {
           mem_num = mem_num + 1
-        }
+      }
+      mem_num = mem_num - 1
+      await mysql(name_table).where({ id: schedule[i].id }).update({ mem_num: mem_num + hasleader })
+      if (mem_num + hasleader <= 0) {
+        // 如果没有队员（包括班负）
+        info = "ERR_NO_PERSON"
+      }
+      if (mem_num + hasleader > schedule[i].max_num) {
+        // 超过人数限制
+        if (info != "ERR_NO_PERSON") { info = "ERR_EXCEED_LIMIT" }
       }
     }
     if (info == "SUCCESS_PUBLISHED"){
