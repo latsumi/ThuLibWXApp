@@ -850,145 +850,164 @@ module.exports = async ctx => {
       ctx.state.data = "该问卷不存在可选班次"
     } else {
       var array = classes_to_choose[0].canIChoose.split(",")
-      let has_table = await DB.schema.hasTable(name_table)
-      if (!has_table) {
-        await DB.schema.createTable(name_table, function (table) {
-          // 创建表的信息：班次、成员数量（包含leader）、是否有leader，leader姓名学号，十个成员分别的姓名学号，特定班次成员数目上限
-          table.increments('id');
-          table.string('theClass', 100).notNullable();
-          table.integer('mem_num', 11);//the number of teammember
-          table.boolean('hasleader');
-          table.string('leader_name', 30);
-          table.string('leader_studentNum', 30);
-          table.string('member', 300);
-/*        table.string('member1_name', 30);
-          table.string('member1_studentNum', 30);
-          table.string('member2_name', 30);
-          table.string('member2_studentNum', 30);
-          table.string('member3_name', 30);
-          table.string('member3_studentNum', 30);
-          table.string('member4_name', 30);
-          table.string('member4_studentNum', 30);
-          table.string('member5_name', 30);
-          table.string('member5_studentNum', 30);
-          table.string('member6_name', 30);
-          table.string('member6_studentNum', 30);
-          table.string('member7_name', 30);
-          table.string('member7_studentNum', 30);
-          table.string('member8_name', 30);
-          table.string('member8_studentNum', 30);
-          table.string('member9_name', 30);
-          table.string('member9_studentNum', 30);
-          table.string('member10_name', 30);
-          table.string('member10_studentNum', 30);
-*/
-          table.integer('max_num', 11);
-        });
-        for (var i = 0; i < array.length; i++) {
-          var max
-          let class_name = array[i]
-          switch (class_name[1]) {
-            // 设定成员数目上限，早午晚一8人，晚二10人
-            case 'A': { max = 8; break }
-            case 'B': { max = 8; break }
-            case 'C': { max = 8; break }
-            case 'D': { max = 10; break }
-            default: { max = 0; break }
-          }
-          await mysql(name_table).insert({ theClass: array[i], max_num: max });
+      // 判断isTwoClass信息的准确性
+      var class_num = Array(7)
+      for (let j = 0; j < 7; j++) {
+        class_num[j] = 0
+      }
+      for (var i = 0; i < array.length; i++) {
+        class_num[array[i][0].charCodeAt(0) - 49]++
+      }
+      var class_max_num = 0
+      for (let j=0;j<7;j++){
+        if(class_max_num < class_num[j]){
+          class_max_num = class_num[j]
         }
       }
-      var answer_table = "QuestionAnswer" + query.id.toString()
-      // 如果存在答卷表的话
-      if(await DB.schema.hasTable(answer_table)){
-        res = await mysql(answer_table).where({ library: query.library, hasWork: 1 }).select('*')
-        //根据res解析出同学姓名&学号&status&classes调用排班算法进行排班
-        var is_holiday = query.isHoliday;
-        var is_two_class = query.isTwoClass;
-        if ((typeof is_holiday) == typeof '1') {
-          is_holiday = !(is_holiday === '0')
-        }
-        if ((typeof is_two_class) == typeof '1') {
-          is_two_class = !(is_two_class === '0')
-        }
-        //------------------------------------------------------------------
-        get_info_and_schedule(is_holiday, is_two_class);
-        //------------------------------------------------------------------
-
-        //将排班结果按班次&leader&member存入schedule中
-        //------------------------------------------------------------------
-        for (var i = 1; i < schedule.length; i++) {
-          var class_info = schedule[i]
-          // var mem_list = new Array(10)
-          // var num_list = new Array(10)
-          var member_str=""
-          // for (var j = 0; j < 10; j++) {
-          //   mem_list[j] = null;
-          //   num_list[j] = null;
-          // }
-          for (var j = 0; j < class_info.mem_num - 1 - (class_info.hasleader ? 1 : 0); j++) {
-            // mem_list[j] = class_info.class_mem[j + 1];
-            // num_list[j] = class_info.mem_student_num[j + 1];
-            member_str = member_str + class_info.class_mem[j+1] + " "
-          }
-          let mem_num = class_info.mem_num;
-          if (mem_num <= 0) {
-            mem_num = 0
-          }
-          
-          await mysql(name_table).where({ theClass: class_info.class_name }).update({
-            mem_num: mem_num,
-            leader_name: class_info.leader,
-            hasleader: class_info.hasLeader,
-            // member1_name: mem_list[0],
-            // member1_studentNum: num_list[0],
-            // member2_name: mem_list[1],
-            // member2_studentNum: num_list[1],
-            // member3_name: mem_list[2],
-            // member3_studentNum: num_list[2],
-            // member4_name: mem_list[3],
-            // member4_studentNum: num_list[3],
-            // member5_name: mem_list[4],
-            // member5_studentNum: num_list[4],
-            // member6_name: mem_list[5],
-            // member6_studentNum: num_list[5],
-            // member7_name: mem_list[6],
-            // member7_studentNum: num_list[6],
-            // member8_name: mem_list[7],
-            // member8_studentNum: num_list[7],
-            // member9_name: mem_list[8],
-            // member9_studentNum: num_list[8],
-            // member10_name: mem_list[9],
-            // member10_studentNum: num_list[9],
-            member: member_str,
-            leader_studentNum: class_info.leader_student_num,
-          })
-        }
-      }
-      // await mysql(name_table).where({ theClass: theclass }).update()	//待补充
-      //------------------------------------------------------------------
-      let list_name = "Schedule_List"
-      await DB.schema.hasTable(list_name).then(function (exists) {
-        if (!exists) {
-          return DB.schema.createTable(list_name, function (table) {
+      if(class_max_num > (2-query.isTwoClass)*2){
+        ctx.state.data = "选择班次数错误"
+      }else{
+        let has_table = await DB.schema.hasTable(name_table)
+        if (!has_table) {
+          await DB.schema.createTable(name_table, function (table) {
+            // 创建表的信息：班次、成员数量（包含leader）、是否有leader，leader姓名学号，十个成员分别的姓名学号，特定班次成员数目上限
             table.increments('id');
-            table.string('title', 100).notNullable();
-            table.integer('library', 11);
-            table.integer('question_id', 11);//the number of teammember
-            table.boolean('isHoliday');
-            table.boolean('isTwoClass');
-            table.boolean('isOrigin');
-            table.string('info', 4096);
-            table.dateTime('created_at').notNullable().defaultTo(DB.raw('CURRENT_TIMESTAMP'));
-            table.dateTime('updated_at').notNullable().defaultTo(DB.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+            table.string('theClass', 100).notNullable();
+            table.integer('mem_num', 11);//the number of teammember
+            table.boolean('hasleader');
+            table.string('leader_name', 30);
+            table.string('leader_studentNum', 30);
+            table.string('member', 300);
+            /*        table.string('member1_name', 30);
+                      table.string('member1_studentNum', 30);
+                      table.string('member2_name', 30);
+                      table.string('member2_studentNum', 30);
+                      table.string('member3_name', 30);
+                      table.string('member3_studentNum', 30);
+                      table.string('member4_name', 30);
+                      table.string('member4_studentNum', 30);
+                      table.string('member5_name', 30);
+                      table.string('member5_studentNum', 30);
+                      table.string('member6_name', 30);
+                      table.string('member6_studentNum', 30);
+                      table.string('member7_name', 30);
+                      table.string('member7_studentNum', 30);
+                      table.string('member8_name', 30);
+                      table.string('member8_studentNum', 30);
+                      table.string('member9_name', 30);
+                      table.string('member9_studentNum', 30);
+                      table.string('member10_name', 30);
+                      table.string('member10_studentNum', 30);
+            */
+            table.integer('max_num', 11);
           });
+
+          for (var i = 0; i < array.length; i++) {
+            var max
+            let class_name = array[i]
+            switch (class_name[1]) {
+              // 设定成员数目上限，早午晚一8人，晚二10人
+              case 'A': { max = 8; break }
+              case 'B': { max = 8; break }
+              case 'C': { max = 8; break }
+              case 'D': { max = 10; break }
+              default: { max = 0; break }
+            }
+            await mysql(name_table).insert({ theClass: array[i], max_num: max });
+          }
         }
-      });
-      // 更新排班表列表的信息
-      if (!await mysql(list_name).where({ title: query.title, library: query.library, question_id: query.id, isHoliday: query.isHoliday, isTwoClass: query.isTwoClass }).update({ isOrigin: 1, info: info })) {
-        await mysql(list_name).insert({ title: query.title, library: query.library, question_id: query.id, isHoliday: query.isHoliday, isTwoClass: query.isTwoClass, info: info, isOrigin: 1 })
+        var answer_table = "QuestionAnswer" + query.id.toString()
+        // 如果存在答卷表的话
+        if (await DB.schema.hasTable(answer_table)) {
+          res = await mysql(answer_table).where({ library: query.library, hasWork: 1 }).select('*')
+          //根据res解析出同学姓名&学号&status&classes调用排班算法进行排班
+          var is_holiday = query.isHoliday;
+          var is_two_class = query.isTwoClass;
+          if ((typeof is_holiday) == typeof '1') {
+            is_holiday = !(is_holiday === '0')
+          }
+          if ((typeof is_two_class) == typeof '1') {
+            is_two_class = !(is_two_class === '0')
+          }
+          //------------------------------------------------------------------
+          get_info_and_schedule(is_holiday, is_two_class);
+          //------------------------------------------------------------------
+
+          //将排班结果按班次&leader&member存入schedule中
+          //------------------------------------------------------------------
+          for (var i = 1; i < schedule.length; i++) {
+            var class_info = schedule[i]
+            // var mem_list = new Array(10)
+            // var num_list = new Array(10)
+            var member_str = ""
+            // for (var j = 0; j < 10; j++) {
+            //   mem_list[j] = null;
+            //   num_list[j] = null;
+            // }
+            for (var j = 0; j < class_info.mem_num - 1 - (class_info.hasleader ? 1 : 0); j++) {
+              // mem_list[j] = class_info.class_mem[j + 1];
+              // num_list[j] = class_info.mem_student_num[j + 1];
+              member_str = member_str + class_info.class_mem[j + 1] + " "
+            }
+            let mem_num = class_info.mem_num;
+            if (mem_num <= 0) {
+              mem_num = 0
+            }
+
+            await mysql(name_table).where({ theClass: class_info.class_name }).update({
+              mem_num: mem_num,
+              leader_name: class_info.leader,
+              hasleader: class_info.hasLeader,
+              // member1_name: mem_list[0],
+              // member1_studentNum: num_list[0],
+              // member2_name: mem_list[1],
+              // member2_studentNum: num_list[1],
+              // member3_name: mem_list[2],
+              // member3_studentNum: num_list[2],
+              // member4_name: mem_list[3],
+              // member4_studentNum: num_list[3],
+              // member5_name: mem_list[4],
+              // member5_studentNum: num_list[4],
+              // member6_name: mem_list[5],
+              // member6_studentNum: num_list[5],
+              // member7_name: mem_list[6],
+              // member7_studentNum: num_list[6],
+              // member8_name: mem_list[7],
+              // member8_studentNum: num_list[7],
+              // member9_name: mem_list[8],
+              // member9_studentNum: num_list[8],
+              // member10_name: mem_list[9],
+              // member10_studentNum: num_list[9],
+              member: member_str,
+              leader_studentNum: class_info.leader_student_num,
+            })
+          }
+        }
+        // await mysql(name_table).where({ theClass: theclass }).update()	//待补充
+        //------------------------------------------------------------------
+        let list_name = "Schedule_List"
+        await DB.schema.hasTable(list_name).then(function (exists) {
+          if (!exists) {
+            return DB.schema.createTable(list_name, function (table) {
+              table.increments('id');
+              table.string('title', 100).notNullable();
+              table.integer('library', 11);
+              table.integer('question_id', 11);//the number of teammember
+              table.boolean('isHoliday');
+              table.boolean('isTwoClass');
+              table.boolean('isOrigin');
+              table.string('info', 4096);
+              table.dateTime('created_at').notNullable().defaultTo(DB.raw('CURRENT_TIMESTAMP'));
+              table.dateTime('updated_at').notNullable().defaultTo(DB.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+            });
+          }
+        });
+        // 更新排班表列表的信息
+        if (!await mysql(list_name).where({ title: query.title, library: query.library, question_id: query.id, isHoliday: query.isHoliday, isTwoClass: query.isTwoClass }).update({ isOrigin: 1, info: info })) {
+          await mysql(list_name).insert({ title: query.title, library: query.library, question_id: query.id, isHoliday: query.isHoliday, isTwoClass: query.isTwoClass, info: info, isOrigin: 1 })
+        }
+        ctx.state.data = { res, schedule, info, class_max_num }
       }
-      ctx.state.data = { res, schedule, info }
     }
   }
 }
