@@ -16,15 +16,27 @@ module.exports = async ctx => {
   if (res.length != 0) {
     title = res[0].title
     var name_table = "duty_" + res[0].title
-    let schedule = await mysql(name_table).select('*')
+    let schedule = await mysql(name_table).select('*').orderBy('theClass')
     var isTwoClass = res[0].isTwoClass
-    let person = Array(schedule.length)
+    if (isTwoClass) {
+      var person = Array(14)
+      var classNum = 2
+    }else{
+      var person = Array(28)
+      var classNum = 4
+    }
+    for (let i = 0; i < person.length; i++) {
+      person[i] = ""
+    }
+    // let person = Array(schedule.length)
     let mem_num
     let hasleader
+    var classId
     if(query.id > 8 || !query.id){
       for(let i = 0; i<schedule.length; i++){
         // 在将获得的排班表信息输出时，顺便校正一下排班表中“是否有班负”和“队员数量”等信息
-        person[i] = ""
+        classId = (schedule[i].theClass[0].charCodeAt(0) - 49) * classNum + (schedule[i].theClass[1].charCodeAt(0) - 65)
+        // person[i] = ""
         mem_num = 0
         let leader_name = schedule[i].leader_name
         var member_name = schedule[i].member.split(" ")
@@ -38,14 +50,14 @@ module.exports = async ctx => {
           if (!schedule[i].hasleader) {
             await mysql(name_table).where({ id: schedule[i].id }).update({ hasleader: hasleader })
           }
-          person[i] = person[i] + leader_name + " "
+          person[classId] = person[classId] + leader_name + " "
         }
         for (let j = 0; j < member_name.length; j++) {
           if (member_name[j] == "") {
             continue
           } else {
             mem_num = mem_num + 1
-            person[i] = person[i] + member_name[j] + " "
+            person[classId] = person[classId] + member_name[j] + " "
           }
         }
         await mysql(name_table).where({ id: schedule[i].id }).update({ mem_num: mem_num + hasleader })
@@ -94,7 +106,7 @@ module.exports = async ctx => {
         }
       }
     }
-    ctx.state.data = { person, title, isTwoClass }
+    ctx.state.data = { person, title, isTwoClass, classId }
   }else{
     ctx.state.data = 0
   }
