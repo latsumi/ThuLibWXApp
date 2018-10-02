@@ -38,8 +38,15 @@ Page({
     //根据用户的openId去通讯录查询权限
     app.globalData.userInfo = that.data.userInfo
     app.globalData.authority = 1
-    console.log(app.globalData.userInfo)
+    console.log('检查权限中，用户信息为：', app.globalData.userInfo)
     var data = {}
+    try {
+      var timestamp = Date.parse(new Date())/1000;
+      wx.setStorageSync('userInfo', that.data.userInfo)
+      wx.setStorageSync('timestamp', timestamp)
+    } catch (e) {
+      console.log("存储出错: ", e)
+    }
     data.openId = that.data.userInfo.openId
     http.POST({
       url: 'getStatus',
@@ -79,6 +86,7 @@ Page({
         qcloud.loginWithCode({
           success: res => {
               this.setData({ userInfo: res, logged: true })
+              app.globalData.logged = true
               util.showSuccess('登录成功')
               console.log('验证开始2')
               this.checkStatus(this)
@@ -94,6 +102,7 @@ Page({
         qcloud.login({
           success: res => {
               this.setData({ userInfo: res, logged: true })
+              app.globalData.logged = true
               util.showSuccess('登录成功')
               console.log('验证开始1')
               this.checkStatus(this)
@@ -158,20 +167,31 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    var that = this
+    if (app.globalData.logged){
+      that.setData({
+        userInfo: app.globalData.userInfo,
+        logged: app.globalData.logged,
+        authority: app.globalData.authority,
+        name: app.globalData.name,
+        library: app.globalData.library,
+      })
+    }  
   },
   onPullDownRefresh: function () {
     wx.showNavigationBarLoading() //在标题栏中显示加载
     var that = this
-    that.checkStatus(that)  //刷新用户status
-    util.showSuccess('刷新成功')
+    if(that.data.logged){
+      that.checkStatus(that)  //刷新用户status
+      util.showSuccess('刷新成功')
+    }
     wx.hideNavigationBarLoading() //完成停止加载
     wx.stopPullDownRefresh() //停止下拉刷新
   },

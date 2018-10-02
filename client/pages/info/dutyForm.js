@@ -131,6 +131,7 @@ Page({
             i--
           }
         }
+        console.log('返回值为：', data)
         that.setData({
           listData: data,
         })
