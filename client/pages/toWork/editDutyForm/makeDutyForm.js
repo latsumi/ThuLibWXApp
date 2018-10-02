@@ -54,22 +54,48 @@ Page({
               url: "createSchedule",
               data: data,
               success: function (res) {
-                console.log(res.data)
-                wx.hideToast()
-                wx.showModal({
-                  title: '提示',
-                  content: '排班成功!',
-                  confirmText: '确认',
-                  showCancel: false,
-                  success(res) {
-                    wx.navigateBack({
-                      delta: 1
-                    })
-                  }
-                })
+                console.log("提交请求的返回值为 ", res.data);
+                switch (res.data.data) {
+                  case 'SUCCESS_CREATED':
+                    {
+                      wx.hideToast()
+                      wx.showModal({
+                        title: '提示',
+                        content: '排班成功!',
+                        confirmText: '确认',
+                        showCancel: false,
+                        success(res) {
+                          wx.navigateBack({
+                            delta: 1
+                          })
+                        }
+                      })
+                      break;
+                    }
+                  case 'ERR_NO_QUES':
+                    {
+                      util.showFailShort('选择的问卷不存在!')
+                      break;
+                    }
+                  case 'ERR_NO_CLASSES':
+                    {
+                      util.showFailShort('所选问卷没有可选班次!')
+                      break;
+                    }
+                  case 'ERR_EXCEED_CLASS_LIMIT':
+                    {
+                      util.showFailShort('问卷某天可选班次超过两个!')
+                      break;
+                    }
+                  default:
+                    {
+                      util.showFail('提交失败', '请稍后再试')
+                      break;
+                    }
+                }
               },
               fail: function (res) {
-                util.showFail('排班失败', '请稍后再试')
+                util.showFail('提交失败', '请稍后再试')
               }, complete: function (res) { },
             })
           }
