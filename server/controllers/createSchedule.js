@@ -518,11 +518,15 @@ function get_info_and_schedule(isHoliday,isTwoclass) {
       if (class_s_info[i].mem_choice_num > 0) {
         info = info + class_s_info[i].class_name + "已满，还报了这个班但没被排上的人有"
         //console.log(class_s_info[i].class_name + "已满，还报了这个班但没被排上的人有");
-        for (var j = 1; j < class_s_info[i].mem_choice.length; j++)
+        for (var j = 1; j < class_s_info[i].mem_choice.length; j++){
           if (mem[class_s_info[i].mem_choice[j]].CanBeChoose[i] == 2) {
             info = info + mem[class_s_info[i].mem_choice[j]].name
             //console.log(mem[class_s_info[i].mem_choice[j]].name);
           }
+          if (j == class_s_info[i].mem_choice.length - 1) {
+            info = info + ";\r\n"
+          }
+        }
       }
     }
     else {
@@ -533,6 +537,9 @@ function get_info_and_schedule(isHoliday,isTwoclass) {
           if (mem[class_s_info[i].mem_choice[j]].CanBeChoose[i] == 2) {
             info = info + mem[class_s_info[i].mem_choice[j]].name
             //console.log(mem[class_s_info[i].mem_choice[j]].name);
+          }
+          if (j == class_s_info[i].mem_choice.length - 1) {
+            info = info + ";\r\n"
           }
         }
       }
@@ -843,11 +850,11 @@ module.exports = async ctx => {
   // must exist the question info
   // The formatting requirements of the parse are too high
   if (classes_to_choose.length == 0) {
-    ctx.state.data = "不存在该问卷"
+    ctx.state.data = "ERR_NO_QUES"
   }
   else {
     if (classes_to_choose[0].canIChoose == null) {
-      ctx.state.data = "该问卷不存在可选班次"
+      ctx.state.data = "ERR_NO_CLASSES"
     } else {
       var array = classes_to_choose[0].canIChoose.split(",")
       // 判断isTwoClass信息的准确性
@@ -865,7 +872,7 @@ module.exports = async ctx => {
         }
       }
       if(class_max_num > (2-query.isTwoClass)*2){
-        ctx.state.data = "选择班次数错误"
+        ctx.state.data = "ERR_EXCEED_CLASS_LIMIT"
       }else{
         let has_table = await DB.schema.hasTable(name_table)
         if (!has_table) {
@@ -1006,7 +1013,7 @@ module.exports = async ctx => {
         if (!await mysql(list_name).where({ title: query.title, library: query.library, question_id: query.id, isHoliday: query.isHoliday, isTwoClass: query.isTwoClass }).update({ isOrigin: 1, info: info })) {
           await mysql(list_name).insert({ title: query.title, library: query.library, question_id: query.id, isHoliday: query.isHoliday, isTwoClass: query.isTwoClass, info: info, isOrigin: 1 })
         }
-        ctx.state.data = { res, schedule, info, class_max_num }
+        ctx.state.data = "SUCCESS_CREATED"
       }
     }
   }
