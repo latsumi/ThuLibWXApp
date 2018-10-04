@@ -489,14 +489,16 @@ function get_info_and_schedule(isHoliday, isTwoclass) {
         info = info + class_s_info[i].class_name + "已满，还报了这个班但没被排上的人有"
         //console.log(class_s_info[i].class_name + "已满，还报了这个班但没被排上的人有");
         for (var j = 1; j < class_s_info[i].mem_choice.length; j++)
+        {
           if (mem[class_s_info[i].mem_choice[j]].CanBeChoose[i] == 2) {
-            info = info + mem[class_s_info[i].mem_choice[j]].name
+            info = info +" " + mem[class_s_info[i].mem_choice[j]].name
             //console.log(mem[class_s_info[i].mem_choice[j]].name);
           }
           if(j == class_s_info[i].mem_choice.length - 1)
           {
             info = info + ";\r\n"
           }
+        }
       }
     }
     else {
@@ -505,7 +507,7 @@ function get_info_and_schedule(isHoliday, isTwoclass) {
         //console.log(class_s_info[i].class_name + "未满，报了这个班但没排上的人有");
         for (var j = 1; j < class_s_info[i].mem_choice.length; j++) {
           if (mem[class_s_info[i].mem_choice[j]].CanBeChoose[i] == 2) {
-            info = info + mem[class_s_info[i].mem_choice[j]].name
+            info = info + " " + mem[class_s_info[i].mem_choice[j]].name
             //console.log(mem[class_s_info[i].mem_choice[j]].name);
           }
           if (j == class_s_info[i].mem_choice.length - 1) {
