@@ -270,43 +270,12 @@ function get_class_info(isHoliday, isTwoclass) {
       for (var i = 1; i < 29; i++) {
         var need_mem;
         class_[i] = i;
-        switch (i) {
-          case 2:
-          case 6:
-          case 7:
-          case 10:
-          case 11:
-          case 14:
-          case 15:
-          case 18:
-          case 19:
-          case 21:
-          case 22:
-          case 23:
-          case 25:
-          case 26:
-          case 27:
-            need_mem = 7;
-            break;
-          case 4:
-          case 8:
-          case 12:
-          case 16:
-          case 20:
-          case 24:
-          case 28:
-            need_mem = 9;
-            break;
-          case 1:
-          case 5:
-          case 9:
-          case 13:
-          case 17:
-            need_mem = 4;
-            break;
-          default:
-            break;
-        }
+        if (i % 4 == 0)
+          need_mem = 10;
+        else if (i % 4 == 1)
+          need_mem = 7;
+        else
+          need_mem = 8;
         var class_name;
         switch (i) {
           case 1:
@@ -404,7 +373,7 @@ function get_class_info(isHoliday, isTwoclass) {
   }
 }
 
-function get_info_and_schedule(isHoliday,isTwoclass) {
+function get_info_and_schedule(isHoliday, isTwoclass) {
   get_class_info(isHoliday, isTwoclass);
   mem[0] = new member('', 0, '', 3, '', 0);
   // for (var i = 0; i < res.status.length; i++) {
@@ -508,29 +477,30 @@ function get_info_and_schedule(isHoliday,isTwoclass) {
 
   sort_class_by_leader(class_, 1);
   arrange_leader(isHoliday);
+
   sort_class_by_mem(class_, 1);
   arrange_member(isHoliday);
 
-  //console.log(schedule);
-
+  for (var i = 1; i < class_s_info.length; i++)
+    console.log(schedule[i].leader, '      ', schedule[i].class_mem)
   for (var i = 1; i < class_s_info.length; i++) {
     if (class_s_info[i].need_mem == 0) {
       if (class_s_info[i].mem_choice_num > 0) {
         info = info + class_s_info[i].class_name + "已满，还报了这个班但没被排上的人有"
         //console.log(class_s_info[i].class_name + "已满，还报了这个班但没被排上的人有");
-        for (var j = 1; j < class_s_info[i].mem_choice.length; j++){
+        for (var j = 1; j < class_s_info[i].mem_choice.length; j++)
           if (mem[class_s_info[i].mem_choice[j]].CanBeChoose[i] == 2) {
             info = info + mem[class_s_info[i].mem_choice[j]].name
             //console.log(mem[class_s_info[i].mem_choice[j]].name);
           }
-          if (j == class_s_info[i].mem_choice.length - 1) {
+          if(j == class_s_info[i].mem_choice.length - 1)
+          {
             info = info + ";\r\n"
           }
-        }
       }
     }
     else {
-      if (class_s_info[class_[i]].mem_choice_num > 0) {
+      if (class_s_info[i].mem_choice_num > 0) {
         info = info + class_s_info[i].class_name + "未满，报了这个班但没排上的人有"
         //console.log(class_s_info[i].class_name + "未满，报了这个班但没排上的人有");
         for (var j = 1; j < class_s_info[i].mem_choice.length; j++) {
@@ -547,10 +517,10 @@ function get_info_and_schedule(isHoliday,isTwoclass) {
   }
 }
 
-function sort_leader(arr,isHoliday) {
+function sort_leader(arr) {
   for (var i = 1; i < arr.length; i++)
     if (mem[arr[i]].class_choice_num != 0) {
-      mem[arr[i]].pow = mem[arr[i]].class_choice_num - mem[arr[i]].need_class_num;
+      mem[arr[i]].pow = (mem[arr[i]].class_choice_num - mem[arr[i]].need_class_num - 1) * (mem[arr[i]].signup_class_num / mem[arr[i]].class_choice_num);
     }
     else {
       mem[arr[i]].pow = 0;
@@ -566,37 +536,20 @@ function sort_leader(arr,isHoliday) {
     }
 }
 
-function sort_mem(arr, isHoliday) {
-  if (!isHoliday) {
-    for (var i = 1; i < arr.length; i++) {
-      if (mem[arr[i]].need_class_num == 0) {
-        mem[arr[i]].pow = 0;
-      }
-      else {
-        mem[arr[i]].poew =
-          mem[arr[i]].class_choice_num - mem[arr[i]].need_class_num
-          + mem[arr[i]].status;
-      }
-    }
-    for (var i = 1; i < arr.length; i++)
-      for (var j = i + 1; j < arr.length; j++)
-        if (mem[arr[i]].pow > mem[arr[j]].pow) {
-          var temp;
-          temp = arr[i];
-          arr[i] = arr[j];
-          arr[j] = temp;
-        }
+function sort_mem(arr) {
+  for (var i = 1; i < arr.length; i++) {
+    mem[arr[i]].poew =
+      (mem[arr[i]].class_choice_num - mem[arr[i]].need_class_num) * (mem[arr[i]].class_choice_num / mem[arr[i]].need_class_num)
+      + mem[arr[i]].status;
   }
-  else {
-    for (var i = 1; i < arr.length; i++) {
-      if (mem[arr[i]].class_choice_num > mem[arr[i]].class_choice_num) {
+  for (var i = 1; i < arr.length; i++)
+    for (var j = i + 1; j < arr.length; j++)
+      if (mem[arr[i]].pow > mem[arr[j]].pow) {
         var temp;
         temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;
       }
-    }
-  }
 }
 
 function sort_class_by_mem(arr, s) {
@@ -626,60 +579,33 @@ function sort_class_by_leader(arr, s) {
 }
 
 function arrange_leader(isHoliday) {
-  if(!isHoliday){
-    for (var i = 1; i < class_s_info.length; i++) {
-      if (class_s_info[class_[i]].leader_choice_num == 0 || schedule[class_[i]].hasLeader == 1) {
-        continue;
-      }
-      else {
-        sort_leader(class_s_info[class_[i]].leader_choice);
-        for (var j = 1; j < class_s_info[class_[i]].leader_choice.length; j++) {
-          var leader = class_s_info[class_[i]].leader_choice[j];
-          if (mem[leader].CanBeChoose[class_[i]] == 1) {
-            schedule[class_[i]].leader
-              = mem[class_s_info[class_[i]].leader_choice[j]].name;
-            schedule[class_[i]].hasLeader = 1;
-            schedule[class_[i]].leader_student_num = mem[class_s_info[class_[i]].leader_choice[j]].studentNum;
-            mem[leader].need_class_num--;
-            mem[leader].class_choice_num--;
-            mem[leader].CanBeChoose[class_[i]] = 0;
-            class_s_info[class_[i]].mem_choice_num--;
-            if (mem[leader].need_class_num == 0) {
-              for (j = 0; j < mem[leader].signup_class.length; j++) {
-                if (mem[leader].CanBeChoose[mem[leader].signup_class[j]] == 1) {
-                  class_s_info[mem[leader].signup_class[j]].leader_choice_num--;
-                  class_s_info[mem[leader].signup_class[j]].mem_choice_num--;
-                  mem[leader].CanBeChoose[mem[leader].signup_class[j]] = 0;
-                }
-              }
-              sort_class_by_leader(class_, i + 1);
-            }
-            break;
-          }
-        }
-      }
+  for (var i = 1; i < class_s_info.length; i++) {
+    if (class_s_info[class_[i]].leader_choice_num == 0 || schedule[class_[i]].hasLeader == 1) {
+      continue;
     }
-  }
-  else{
-    for (var i = 1; i < class_s_info.length; i++) {
-      if (class_s_info[i].leader_choice_num == 0 || schedule[i].hasLeader == 1) {
-        continue;
-      }
-      else {
-        sort_leader(class_s_info[i].leader_choice);
-        for (var j = 1; j < class_s_info[i].leader_choice.length; j++) {
-          var leader = class_s_info[i].leader_choice[j];
-          if (mem[leader].CanBeChoose[i] == 1) {
-            schedule[i].leader
-              = mem[class_s_info[i].leader_choice[j]].name;
-            schedule[i].hasLeader = 1;
-            schedule[i].leader_student_num = mem[class_s_info[i].leader_choice[j]].studentNum;
-            mem[leader].need_class_num--;
-            mem[leader].class_choice_num--;
-            mem[leader].CanBeChoose[i] = 0;
-            class_s_info[i].mem_choice_num--;
-            break;
+    else {
+      for (var j = 1; j < class_s_info[class_[i]].leader_choice.length; j++) {
+        var leader = class_s_info[class_[i]].leader_choice[j];
+        if (mem[leader].CanBeChoose[class_[i]] == 1) {
+          schedule[class_[i]].leader
+            = mem[class_s_info[class_[i]].leader_choice[j]].name;
+          schedule[class_[i]].hasLeader = 1;
+          schedule[class_[i]].leader_student_num = mem[class_s_info[class_[i]].leader_choice[j]].studentNum;
+          mem[leader].need_class_num--;
+          mem[leader].class_choice_num--;
+          mem[leader].CanBeChoose[class_[i]] = 0;
+          class_s_info[class_[i]].mem_choice_num--;
+          if (mem[leader].need_class_num == 0) {
+            for (j = 0; j < mem[leader].signup_class.length; j++) {
+              if (mem[leader].CanBeChoose[mem[leader].signup_class[j]] == 1) {
+                class_s_info[mem[leader].signup_class[j]].leader_choice_num--;
+                class_s_info[mem[leader].signup_class[j]].mem_choice_num--;
+                mem[leader].CanBeChoose[mem[leader].signup_class[j]] = 2;
+              }
+            }
+            sort_class_by_leader(class_, i + 1);
           }
+          break;
         }
       }
     }
@@ -689,122 +615,147 @@ function arrange_leader(isHoliday) {
       schedule[class_[i]].leader = "lack";
     }
   }
+  if (isHoliday) {
+    for (var i = 1; i < class_s_info.length; i++) {
+      if (schedule[class_[i]].leader == "lack") {
+        for (var j = 1; j < class_s_info[class_[i]].leader_choice.length; j++) {
+          var leader = class_s_info[class_[i]].leader_choice[j];
+          if (mem[leader].CanBeChoose[class_[i]] == 1 | mem[leader].CanBeChoose[class_[i]] == 2) {
+            schedule[class_[i]].leader
+              = mem[class_s_info[class_[i]].leader_choice[j]].name;
+            schedule[class_[i]].hasLeader = 1;
+            schedule[class_[i]].leader_student_num = mem[class_s_info[class_[i]].leader_choice[j]].studentNum;
+            mem[leader].need_class_num--;
+            mem[leader].class_choice_num--;
+            mem[leader].CanBeChoose[class_[i]] = 0;
+            class_s_info[class_[i]].mem_choice_num--;
+            break;
+          }
+        }
+      }
+    }
+  }
 }
 
 
 function arrange_member(isHoliday) {
-  if (!isHoliday) {
-    for (var i = 1; i < class_s_info.length; i++) {
-      sort_mem(class_s_info[class_[i]].mem_choice, isHoliday);
-      var choose = class_s_info[class_[i]].mem_choice.length;
-      for (var j = 1; j < choose && j < 5; j++) {
-        var mem_ = class_s_info[class_[i]].mem_choice[j];
-        if (mem[mem_].CanBeChoose[class_[i]] == 1) {
-          schedule[class_[i]].mem_num++;
-          var t = schedule[class_[i]].mem_num;
-          schedule[class_[i]].class_mem[t] = mem[mem_].name;
-          schedule[class_[i]].mem_student_num[t] = mem[mem_].studentNum;
-          mem[mem_].class_choice_num--;
-          mem[mem_].need_class_num--;
-          mem[mem_].CanBeChoose[class_[i]] = 0;
-          class_s_info[class_[i]].need_mem--;
-          class_s_info[class_[i]].mem_choice_num--;
-          if (mem[mem_].class_choice_num == mem[mem_].need_class_num) {
-            for (var k = 1; k < mem[mem_].signup_class.length; k++) {
-              var c = mem[mem_].signup_class[k];
-              if (mem[mem_].CanBeChoose[c] == 1) {
-                if (class_s_info[c].need_mem > 0) {
-                  schedule[c].mem_num++;
-                  var t = schedule[c].mem_num;
-                  schedule[c].class_mem[t] = mem[mem_].name;
-                  schedule[c].mem_student_num[t] = mem[mem_].studentNum;
-                  class_s_info[c].mem_choice_num--;
-                  class_s_info[c].need_mem--;
-                  mem[mem_].need_class_num--;
-                  mem[mem_].class_choice_num--;
-                }
-                mem[mem_].CanBeChoose[c] = 0;
+  for (var i = 1; i < class_s_info.length; i++) {
+    sort_mem(class_s_info[class_[i]].mem_choice);
+    var choose = class_s_info[class_[i]].mem_choice.length;
+    for (var j = 1; j < choose && j < 5; j++) {
+      var mem_ = class_s_info[class_[i]].mem_choice[j];
+      if (mem[mem_].CanBeChoose[class_[i]] == 1) {
+        schedule[class_[i]].mem_num++;
+        var t = schedule[class_[i]].mem_num;
+        schedule[class_[i]].class_mem[t] = mem[mem_].name;
+        schedule[class_[i]].mem_student_num[t] = mem[mem_].studentNum;
+        mem[mem_].class_choice_num--;
+        mem[mem_].need_class_num--;
+        mem[mem_].CanBeChoose[class_[i]] = 0;
+        class_s_info[class_[i]].need_mem--;
+        class_s_info[class_[i]].mem_choice_num--;
+        if (mem[mem_].class_choice_num == mem[mem_].need_class_num) {
+          for (var k = 1; k < mem[mem_].signup_class.length; k++) {
+            var c = mem[mem_].signup_class[k];
+            if (mem[mem_].CanBeChoose[c] == 1) {
+              if (class_s_info[c].need_mem > 0) {
+                schedule[c].mem_num++;
+                var t = schedule[c].mem_num;
+                schedule[c].class_mem[t] = mem[mem_].name;
+                schedule[c].mem_student_num[t] = mem[mem_].studentNum;
+                class_s_info[c].mem_choice_num--;
+                class_s_info[c].need_mem--;
+                mem[mem_].need_class_num--;
+                mem[mem_].class_choice_num--;
               }
+              mem[mem_].CanBeChoose[c] = 0;
             }
-            mem[mem_].pow = 0;
           }
-          if (mem[mem_].need_class_num == 0) {
-            for (var k = 1; k < mem[mem_].signup_class.length; k++) {
-              var c = mem[mem_].signup_class[k];
-              if (mem[mem_].CanBeChoose[c] == 1) {
-                if (class_s_info[c].need_mem > 0) {
-                  class_s_info[c].mem_choice_num--;
-                }
-                mem[mem_].CanBeChoose[c] = 2;
+        }
+        if (mem[mem_].need_class_num == 0) {
+          for (var k = 1; k < mem[mem_].signup_class.length; k++) {
+            var c = mem[mem_].signup_class[k];
+            if (mem[mem_].CanBeChoose[c] == 1) {
+              if (class_s_info[c].need_mem > 0) {
+                class_s_info[c].mem_choice_num--;
               }
+              mem[mem_].CanBeChoose[c] = 2;
             }
           }
         }
       }
-    }
-    sort_class_by_mem(class_, i + 1);
-    for (var i = 1; i < class_s_info.length; i++) {
-      sort_mem(class_s_info[class_[i]].mem_choice, isHoliday);
-      var j = 1;
-      var choose = class_s_info[class_[i]].mem_choice.length;
-      while (class_s_info[class_[i]].need_mem > 0 && j < choose) {
-        var mem_ = class_s_info[class_[i]].mem_choice[j];
-        if (mem[mem_].CanBeChoose[class_[i]] == 1) {
-          schedule[class_[i]].mem_num++;
-          var t = schedule[class_[i]].mem_num;
-          schedule[class_[i]].class_mem[t] = mem[mem_].name;
-          schedule[class_[i]].mem_student_num[t] = mem[mem_].studentNum;
-          mem[mem_].class_choice_num--;
-          mem[mem_].need_class_num--;
-          mem[mem_].CanBeChoose[class_[i]] = 0;
-          class_s_info[class_[i]].need_mem--;
-          class_s_info[class_[i]].mem_choice_num--;
-          if (mem[mem_].class_choice_num == mem[mem_].need_class_num) {
-            for (var k = 1; k < mem[mem_].signup_class.length; k++) {
-              var c = mem[mem_].signup_class[k];
-              if (mem[mem_].CanBeChoose[c] == 1) {
-                if (class_s_info[c].need_mem > 0) {
-                  schedule[c].mem_num++;
-                  var t = schedule[c].mem_num;
-                  schedule[c].class_mem[t] = mem[mem_].name;
-                  schedule[c].mem_student_num[t] = mem[mem_].studentNum;
-                  class_s_info[c].mem_choice_num--;
-                  class_s_info[c].need_mem--;
-                  mem[mem_].need_class_num--;
-                  mem[mem_].class_choice_num--;
-                }
-                mem[mem_].CanBeChoose[c] = 0;
-              }
-            }
-            mem[mem_].pow = 0;
-          }
-          if (mem[mem_].need_class_num == 0) {
-            for (var k = 1; k < mem[mem_].signup_class.length; k++) {
-              var c = mem[mem_].signup_class[k];
-              if (mem[mem_].CanBeChoose[c] == 1) {
-                if (class_s_info[c].need_mem > 0) {
-                  class_s_info[c].mem_choice_num--;
-                }
-                mem[mem_].CanBeChoose[c] = 2;
-              }
-            }
-            mem[mem_].pow = 0;
-          }
-        }
-        j++;
-      }
-      schedule[class_[i]].mem_num = schedule[class_[i]].mem_num + schedule[class_[i]].hasLeader;
-      sort_class_by_mem(class_, i + 1);
     }
   }
-  else {
+  sort_class_by_mem(class_, i + 1);
+  for (var i = 1; i < class_s_info.length; i++) {
+    sort_mem(class_s_info[class_[i]].mem_choice);
+    var j = 1;
+    var choose = class_s_info[class_[i]].mem_choice.length;
+    while (class_s_info[class_[i]].need_mem > 0 && j < choose) {
+      var mem_ = class_s_info[class_[i]].mem_choice[j];
+      if (mem[mem_].CanBeChoose[class_[i]] == 1) {
+        schedule[class_[i]].mem_num++;
+        var t = schedule[class_[i]].mem_num;
+        schedule[class_[i]].class_mem[t] = mem[mem_].name;
+        schedule[class_[i]].mem_student_num[t] = mem[mem_].studentNum;
+        mem[mem_].class_choice_num--;
+        mem[mem_].need_class_num--;
+        mem[mem_].CanBeChoose[class_[i]] = 0;
+        class_s_info[class_[i]].need_mem--;
+        class_s_info[class_[i]].mem_choice_num--;
+        if (mem[mem_].class_choice_num == mem[mem_].need_class_num) {
+          for (var k = 1; k < mem[mem_].signup_class.length; k++) {
+            var c = mem[mem_].signup_class[k];
+            if (mem[mem_].CanBeChoose[c] == 1) {
+              if (class_s_info[c].need_mem > 0) {
+                schedule[c].mem_num++;
+                var t = schedule[c].mem_num;
+                schedule[c].class_mem[t] = mem[mem_].name;
+                schedule[c].mem_student_num[t] = mem[mem_].studentNum;
+                class_s_info[c].mem_choice_num--;
+                class_s_info[c].need_mem--;
+                mem[mem_].need_class_num--;
+                mem[mem_].class_choice_num--;
+              }
+              mem[mem_].CanBeChoose[c] = 0;
+            }
+          }
+        }
+        if (mem[mem_].need_class_num == 0) {
+          for (var k = 1; k < mem[mem_].signup_class.length; k++) {
+            var c = mem[mem_].signup_class[k];
+            if (mem[mem_].CanBeChoose[c] == 1) {
+              if (class_s_info[c].need_mem > 0) {
+                class_s_info[c].mem_choice_num--;
+              }
+              mem[mem_].CanBeChoose[c] = 2;
+            }
+          }
+        }
+      }
+      j++;
+    }
+    schedule[class_[i]].mem_num = schedule[class_[i]].mem_num + schedule[class_[i]].hasLeader;
+    sort_class_by_mem(class_, i + 1);
+  }
+  for (var i = 1; i < class_s_info.length; i++) {
+    sort_mem(class_s_info[i].mem_choice)
+    var choose = class_s_info[i].mem_choice.length;
+    for (var j = 1; j < choose; j++) {
+      var mem_ = class_s_info[i].mem_choice[j];
+      if (mem[mem_].CanBeChoose[i] == 2)
+        class_s_info[i].mem_choice_num++;
+    }
+  }
+  if (isHoliday) {
     for (var i = 1; i < class_s_info.length; i++) {
-      sort_mem(class_s_info[i].mem_choice, isHoliday)
-      let j = 1;
+      schedule[i].mem_num = schedule[i].mem_num - schedule[i].hasLeader;
+      sort_mem(class_s_info[i].mem_choice)
       var choose = class_s_info[i].mem_choice.length;
+      j = 1;
       while (class_s_info[i].need_mem > 0 && j < choose) {
         var mem_ = class_s_info[i].mem_choice[j];
-        if (mem[mem_].CanBeChoose[i] == 1) {
+        if (mem[mem_].CanBeChoose[i] == 1 | mem[mem_].CanBeChoose[i] == 2) {
           schedule[i].mem_num++;
           var t = schedule[i].mem_num;
           schedule[i].class_mem[t] = mem[mem_].name;
