@@ -60,7 +60,7 @@ Page({
     else {
       var begin = data.begin.split('-')
       var end = data.end.split('-')
-      if (begin[0] > end[0] || ((begin[0] <= end[0]) && begin[1] > end[1]) || ((begin[0] <= end[0]) && begin[1] <= end[1] && begin[2] > end[2]))
+      if (!(begin[0] < end[0] || ((begin[0] == end[0]) && (begin[1] < end[1])) || ((begin[0] == end[0]) && (begin[1] == end[1]) && (begin[2] <= end[2]))))
         util.showFailShort('请选择正确的起止日期！')
       else{
         wx.showModal({
