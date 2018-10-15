@@ -28,7 +28,7 @@ module.exports = async ctx => {
 	let prevHelp = 0
 	let prevLeader = 0
 	
-	let nowres = await DB('signin_fore').select(DB.raw('*')).where(DB.raw(" yearweek(DATE_FORMAT(`update_time`, '%Y-%m-%d')) = yearweek(NOW())")).where({name: name, studentNum: studentNum})
+	let nowres = await DB('signin_fore').select(DB.raw('*')).where(DB.raw(" yearweek(DATE_FORMAT(`update_time`, '%Y-%m-%d'),5) = yearweek(NOW(),5)")).where({name: name, studentNum: studentNum})
 	let nownum = nowres.length
 	if( nownum != 0){
 		for (let i = 0; i < nownum; i++) {
@@ -38,7 +38,7 @@ module.exports = async ctx => {
 			nowLeader = nowLeader + nowres[i].isLeader
 		}
 	}
-	let prevres = await DB('signin_fore').select(DB.raw('*')).where(DB.raw(" yearweek(DATE_FORMAT(`update_time`, '%Y-%m-%d')) = yearweek(NOW())-1")).where({ name: name, studentNum: studentNum })
+	let prevres = await DB('signin_fore').select(DB.raw('*')).where(DB.raw(" yearweek(DATE_FORMAT(`update_time`, '%Y-%m-%d'),5) = yearweek(DATE_SUB(NOW(),INTERVAL 7 DAY),5)-1")).where({ name: name, studentNum: studentNum })
 	let prevnum = prevres.length
 	if (prevnum != 0) {
 		for (let i = 0; i < prevnum; i++) {
