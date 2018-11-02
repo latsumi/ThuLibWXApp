@@ -26,9 +26,9 @@
   <image wx:if="{{!modalChoose}}"style="width: 600rpx;" src="{{imageUrl}}" mode='aspectFill'></image>
   <block wx:else>  
     <view class="zyBlank">清小图 ver {{version}}</view>
-    <view class="zyBlank">清华大学图书馆助理分队</view>
     <view class="zyBlank">Developed by csq, jx and xaj</view>
-    <view class="zyBlank">Copyright © 2018 TsingHua Library. \r\nAll rights reserved.</view>
+    <view class="zyBlank">清华大学图书馆助理分队</view>
+    <view class="zyBlank">Copyright © 2018\r\n TsingHua Library Assistant Unit. \r\nAll rights reserved.</view>
   </block>
 
 </zy-modal>
