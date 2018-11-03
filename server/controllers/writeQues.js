@@ -28,6 +28,7 @@ module.exports = async ctx  => {
 				table.string('canIChoose', 2048);
 				table.integer('numFilled', 11).defaultTo(0);
 				table.boolean('hasMinLimit');
+        table.integer('overwriteMode',11).defaultTo(0);
 			});
 		}
 	});

@@ -25,6 +25,7 @@ module.exports = async ctx => {
 	if (ctx.method === 'POST') {
 		query = ctx.request.body
 	}
+  var overWriteAble = await mysql('QuestionInfo').where({id: query.id}).select(overwriteMode)
 	var name_table = "QuestionAnswer" + query.id.toString()
 	// 建立对应问卷的答卷数据表
 	if(query.isClass == 1){
@@ -46,7 +47,7 @@ module.exports = async ctx => {
 		let res = await mysql('Address_List').where({name: query.name, studentNum: query.studentNum}).select('*')
 		let haveIt = await mysql(name_table).where({ name: query.name, studentNum: query.studentNum, library: query.library })
 		if (res.length != 0){
-			if(haveIt == 0){
+			if(haveIt == 0 || overWriteAble == 1){
 				// 如果对应队员没有填过问卷，插入，匹配问卷提交的队员类型和通讯录中的grade值，匹配成功才可以
 				if((query.library == res[0].library && res[0].library != 2) || res[0].library == 2){
 					// 库区的限制，问卷填写的库区要匹配队员在通讯录中的库区
@@ -90,8 +91,8 @@ module.exports = async ctx => {
 		let res = await mysql('Address_List').where({name: query.name, studentNum: query.studentNum}).select('*')
 		let haveIt = await mysql(name_table).where({ name: query.name, studentNum: query.studentNum, library: query.library })
 		if (res.length != 0){
-			// if(haveIt == 0){
-			if (1){
+			if(haveIt == 0 || overWriteAble == 1){
+			// if (1){
 				// 如果对应队员没有填过问卷，插入，匹配问卷提交的队员类型和通讯录中的grade值，匹配成功才可以
 				if((query.library == res[0].library && res[0].library != 2) || res[0].library == 2){
 					// 库区的限制，问卷填写的库区要匹配队员在通讯录中的库区
