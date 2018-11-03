@@ -3,7 +3,7 @@ module.exports = async ctx  => {
 	const { mysql } = require('../qcloud')
 	if (ctx.method === 'GET'){
 		const query = ctx.query
-		let res = await mysql('Question_Info').where({ id: query.id }).update({ title: query.title, descript: query.descript, detail: query.detail, isClass: query.isClass, canIChoose: query.canIChoose, numFilled: 0, hasMinLimit: query.hasMinLimit })	
+		let res = await mysql('Question_Info').where({ id: query.id }).update({ title: query.title, descript: query.descript, detail: query.detail, isClass: query.isClass, canIChoose: query.canIChoose, numFilled: 0, hasMinLimit: query.hasMinLimit, overwriteMode: query.overwriteMode })	
 		ctx.state.data = query
 	}
 	if (ctx.method === 'POST'){
