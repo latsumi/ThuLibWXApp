@@ -28,8 +28,9 @@ Page({
     else{
       var hasMinLimit = item.hasMinLimit
     }
+    //TODO:改变传值方式
     wx.navigateTo({
-      url: this.data.urlTo + '?title=' + item.title + '&id=' + item.id + '&descript=' + item.descript + '&detail=' + item.detail + '&isClass=' + JSON.stringify(item.isClass) + '&canIChoose=' + JSON.stringify(canIChoose) + '&hasMinLimit=' + JSON.stringify(hasMinLimit),
+      url: this.data.urlTo + '?title=' + item.title + '&id=' + item.id + '&descript=' + item.descript + '&detail=' + item.detail + '&isClass=' + JSON.stringify(item.isClass) + '&canIChoose=' + JSON.stringify(canIChoose) + '&hasMinLimit=' + JSON.stringify(hasMinLimit) + '&overwriteMode=' + JSON.stringify(item.overwriteMode),
     })
   },
   /**

@@ -13,6 +13,7 @@ Page({
     detail: "",//第5题对于班次细节的描述,或者是信息收集问卷的问题
     isClass: true,//是否是排班问卷
     hasMinLimit: false,
+    overwriteMode: true,
     selectAll: false,
     canIChoose: [],
     canIChooseDefault: [{ name: "1A"}, { name: "1B" }, { name: "1C"}, { name: "1D" }, { name: "2A" }, { name: "2B" }, { name: "2C" }, { name: "2D" }, { name: "3A" }, { name: "3B" }, { name: "3C" }, { name: "3D" }, { name: "4A" }, { name: "4B" }, { name: "4C" }, { name: "4D" }, { name: "5A" }, { name: "5B" }, { name: "5C" }, { name: "5D" }, { name: "6A" }, { name: "6B" }, { name: "6C" }, { name: "6D" }, { name: "7A" }, { name: "7B" }, { name: "7C" }, { name: "7D" },],
@@ -38,7 +39,7 @@ Page({
     wx.setNavigationBarTitle({//动态设置当行栏标题
       title: "编辑问卷"
     }),
-      console.log(JSON.parse(res.hasMinLimit))
+    console.log("从上个页面获取的值为：", res)
     this.setData({//取值并更新数据和UI
       title: res.title,
       id: res.id,
@@ -46,6 +47,7 @@ Page({
       detail: res.detail,//第5题对于班次细节的描述,或者是信息收集问卷的问题
       isClass: JSON.parse(res.isClass),//是否是排班问卷
       hasMinLimit: JSON.parse(res.hasMinLimit),
+      overwriteMode: JSON.parse(res.overwriteMode),
     })
     if (!(res.canIChoose == null) && this.data.isClass)
     {
@@ -75,6 +77,12 @@ Page({
     console.log("hasMinLimit的value是： ", e.detail.value)
     this.setData({
       hasMinLimit: (e.detail.value > 0) ? true : false,//是否有最低报班限制
+    })
+  },
+  bindModeChange: function (e) {
+    console.log("overwriteMode的value是： ", e.detail.value)
+    this.setData({
+      overwriteMode: (e.detail.value > 0) ? true : false,//是否为覆盖模式
     })
   },
   save: function (e) {

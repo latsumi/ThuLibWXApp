@@ -16,20 +16,29 @@
   </radio-group>
   </view>
 
-<label class="label">3.问卷描述</label>
+<label class="label">3.是否为覆盖模式(相同人再次填写时覆盖之前内容)</label>
+<view class="log-list" style='padding:10rpx;'>
+    <radio-group class="radio" name="overwriteMode" >
+     <label wx:for="{{radioLimit}}" wx:key="">
+        <radio value="{{item.value}}" checked='{{item.value==true?true:false}}'/>{{item.name}}
+    </label>
+  </radio-group>
+</view>
+
+<label class="label">4.问卷描述</label>
 <view class="log-list border">
 <textarea name="descript" auto-height placeholder="问卷填写须知，截止日期等等" maxlength="-1"/>
 </view>
 
 <block wx:if="{{!isClass}}">
-  <label class="label">4.问卷要收集的信息(只能填一个问题)</label>
+  <label class="label">5.问卷要收集的信息(只能填一个问题)</label>
 <view class="log-list border">
 <textarea name="detail" auto-height placeholder="填写要问的问题" maxlength="-1"/>
 </view>
 </block>
 
 <block wx:if="{{isClass}}">
-<label class="label">4.是否有最少报班限制(4个班)</label>
+<label class="label">5.是否有最少报班限制(4个班)</label>
 <view class="log-list" style='padding:10rpx;'>
     <radio-group bindchange="bindLimitChange" class="radio" name="hasMinLimit" >
      <label wx:for="{{radioLimit}}" wx:key="">
@@ -38,12 +47,12 @@
   </radio-group>
 </view>
 
-<label class="label">5.班次选项描述</label>
+<label class="label">6.班次选项描述</label>
 <view class="log-list border">
 <textarea name="detail"auto-height placeholder="对班次选项和上班时间的描述" value="{{detail}}" maxlength="-1"/>
 </view>
 
-<label class="label"> 6.选择可报班次</label>
+<label class="label"> 7.选择可报班次</label>
 <view class='label desc'>请按顺序勾上可选项，以保证问卷中选项顺序正确</view>
 <view class="log-list">
   <label>
