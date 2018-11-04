@@ -47,7 +47,7 @@ module.exports = async ctx => {
 		let res = await mysql('Address_List').where({name: query.name, studentNum: query.studentNum}).select('*')
 		let haveIt = await mysql(name_table).where({ name: query.name, studentNum: query.studentNum, library: query.library })
 		if (res.length != 0){
-			if(haveIt == 0 || overWriteAble[0].overwriteMode == 1){
+			if(haveIt == 0 || overWriteAble[0].overwriteMode == 0){
 				// 如果对应队员没有填过问卷，插入，匹配问卷提交的队员类型和通讯录中的grade值，匹配成功才可以
 				if((query.library == res[0].library && res[0].library != 2) || res[0].library == 2){
 					// 库区的限制，问卷填写的库区要匹配队员在通讯录中的库区
@@ -91,7 +91,7 @@ module.exports = async ctx => {
 		let res = await mysql('Address_List').where({name: query.name, studentNum: query.studentNum}).select('*')
 		let haveIt = await mysql(name_table).where({ name: query.name, studentNum: query.studentNum, library: query.library })
 		if (res.length != 0){
-			if(haveIt == 0 || overWriteAble[0].overwriteMode == 1){
+			if(haveIt == 0 || overWriteAble[0].overwriteMode == 0){
 			// if (1){
 				// 如果对应队员没有填过问卷，插入，匹配问卷提交的队员类型和通讯录中的grade值，匹配成功才可以
 				if((query.library == res[0].library && res[0].library != 2) || res[0].library == 2){
