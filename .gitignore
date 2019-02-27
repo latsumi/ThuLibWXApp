@@ -43,3 +43,6 @@ typings/
 sh/
 # ignore test sdk.config.json
 sdk.config.json
+# ingore config.js for safety
+server/config.js
+client/config.js

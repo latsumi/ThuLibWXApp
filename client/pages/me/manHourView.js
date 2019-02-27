@@ -56,7 +56,7 @@ Page({
       url: 'getManHour',
       data: {openId: openId},
       success: function (res) {
-        console.log('返回值为：', res.data.data)
+        console.log('返回值为：', res.data)
         var temp = [
           { name: 'name', key: '姓名', value: '' },
           { name: 'studentNum', key: '学号', value: '' },
