@@ -9,3 +9,6 @@
 
 ## 运行环境
 + 微信开发者工具
+
+## 使用说明
+使用 `git clone` 命令之后，请自行将 `client/config.js.example` 和 `server/config.js.example` 两个文件重命名为 `config.js`
