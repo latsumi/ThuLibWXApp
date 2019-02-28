@@ -76,44 +76,13 @@ function get_class_info(isHoliday, isTwoclass) {
     for (var i = 1; i < 29; i++) {
       var need_mem;
       class_[i] = i;
-      switch (i) {
-        case 2:
-        case 6:
-        case 7:
-        case 10:
-        case 11:
-        case 14:
-        case 15:
-        case 18:
-        case 19:
-        case 22:
-        case 23:
-        case 26:
-        case 27:
-          need_mem = 7;
-          break;
-        case 4:
-        case 8:
-        case 12:
-        case 16:
-        case 20:
-        case 24:
-        case 28:
-          need_mem = 10;
-          break;
-        case 1:
-        case 5:
-        case 9:
-        case 13:
-        case 17:
-          need_mem = 4;
-          break;
-        case 21:
-        case 25:
-          need_mem = 6;
-          break;
-        default:
-          break;
+      if(i % 4 == 0)
+      {
+        need_mem = 10;
+      }
+      else
+      {
+        need_mem = 7;
       }
       var class_name;
       switch (i) {
