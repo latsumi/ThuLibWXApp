@@ -78,11 +78,11 @@ function get_class_info(isHoliday, isTwoclass) {
       class_[i] = i;
       if(i % 4 == 0)
       {
-        need_mem = 10;
+        need_mem = 7;
       }
       else
       {
-        need_mem = 7;
+        need_mem = 6;
       }
       var class_name;
       switch (i) {
@@ -240,11 +240,11 @@ function get_class_info(isHoliday, isTwoclass) {
         var need_mem;
         class_[i] = i;
         if (i % 4 == 0)
-          need_mem = 10;
+          need_mem = 9;
         else if (i % 4 == 1)
-          need_mem = 7;
+          need_mem = 6;
         else
-          need_mem = 8;
+          need_mem = 7;
         var class_name;
         switch (i) {
           case 1:
@@ -343,6 +343,7 @@ function get_class_info(isHoliday, isTwoclass) {
 }
 
 function get_info_and_schedule(isHoliday, isTwoclass) {
+  info = ''
   get_class_info(isHoliday, isTwoclass);
   mem[0] = new member('', 0, '', 3, '', 0);
   // for (var i = 0; i < res.status.length; i++) {
