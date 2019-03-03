@@ -101,8 +101,8 @@ Page({
     }
     else {
       if (!data.canIChoose == false && data.isClass == 1) {
-        if (data.canIChoose.length < 4 && this.data.hasMinLimit == true) {
-          util.showFailShort('可选班次不足四个！')
+        if (data.canIChoose.length < 5 && this.data.hasMinLimit == true) {
+          util.showFailShort('可选班次不足五个！')
           return
         }
       }

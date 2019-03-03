@@ -39,7 +39,7 @@
 </block>
 
 <block wx:if="{{isClass}}">
-<label class="label">5.是否有最少报班限制(4个班)</label>
+<label class="label">5.是否有最少报班限制(5个班)</label>
 <view class="log-list" style='padding:10rpx;'>
     <radio-group bindchange="bindLimitChange" class="radio" name="hasMinLimit" >
      <label wx:for="{{radioLimit}}" wx:key="">
