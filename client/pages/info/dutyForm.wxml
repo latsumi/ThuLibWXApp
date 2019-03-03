@@ -32,6 +32,7 @@
       </view>
     <view class="descs">{{descs1}}</view>
     <view class="descs">{{descs2}}</view>
+    <view class="descs">{{descs3}}</view>
     <!--下面这个空view如果删除会导致当天的descs2这行消失，玄学bug-->
     <view class="descs"></view>
     </swiper-item>

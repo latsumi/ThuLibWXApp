@@ -3,6 +3,7 @@
 .table {
   border: 0px solid darkgray;
   margin-bottom: 200rpx;
+  height: 1600rpx;
 }
 .formTitle {
   margin: 20rpx 30rpx;
@@ -17,7 +18,7 @@
 .dutySwiper {
   margin: 0 auto;
   width: 750rpx;
-  height: 1200rpx;
+  height: 1500rpx;
 }
 .tableRow {
   display: flex;
