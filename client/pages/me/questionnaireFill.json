@@ -1,1 +1,6 @@
-{}
+{
+  "usingComponents": {
+    "wux-checkbox-group": "../../component/wux-weapp/checkbox-group/index",
+    "wux-checkbox": "../../component/wux-weapp/checkbox/index"
+  }
+}

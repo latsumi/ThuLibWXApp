@@ -17,6 +17,7 @@ Page({
     hasWork: true,
     hasMinLimit: '',
     canIChoose: [],
+    checkboxValue: [],
     radioLibrary: [
       { name: '社科', value: '0' },
       { name: '科技', value: '1' },
@@ -38,6 +39,19 @@ Page({
     this.setData({
       hasWork: (e.detail.value > 0) ? true : false,//是否选择上班
     })
+  },
+  onChange(field, e) {
+    const { value } = e.detail
+    const data = this.data[field]
+    const index = data.indexOf(value)
+    const current = index === -1 ? [...data, value] : data.filter((n) => n !== value)
+    this.setData({
+      [field]: current,
+    })
+    // console.log('checkbox发生change事件，携带value值为：', e.detail.value)
+  },
+  bindOnChange: function (e) {
+    this.onChange('checkboxValue', e)
   },
   save: function (e) {
     var data = e.detail.value;

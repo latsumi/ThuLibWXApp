@@ -56,16 +56,14 @@
     <label class="label"> 6.所报班次</label>
     <view style='width:690rpx;margin:8px 0;'><text class="desc">{{detail}}</text>
   </view>
-    <view class="log-list">
-      <checkbox-group  class="answer" name="answer">
-        <label wx:for="{{canIChoose}}" wx:key="">
-        <checkbox style="margin-bottom:12px;margin-right:5px;" value="{{canIChoose[index]}}"/>{{canIChoose[index]}}
-      </label>
-      </checkbox-group>
-    </view>
+    <wux-checkbox-group name="answer" value="{{ checkboxValue }}" bind:change="bindOnChange">
+      <view wx:for="{{canIChoose}}" wx:key="">
+        <wux-checkbox color="royal" title="{{canIChoose[index]}}" value="{{canIChoose[index]}}" />
+      </view>
+    </wux-checkbox-group>
     </block>
   </block>
-
+  
   <label class="label" wx:if="{{hasWork&&isClass}}"> 7.还有什么想说的吗</label>
   <label class="label" wx:if="{{!hasWork||!isClass}}"> 6.还有什么想说的吗</label>
   <view class="log-list border-all">
