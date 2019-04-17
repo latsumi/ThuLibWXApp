@@ -43,7 +43,7 @@
 
   <!-- 排班问卷独有问题 -->
   <block wx:if="{{isClass}}">
-  <label class="label"> 5.是否上班</label>
+  <label class="label"> 5.是否上班/调班</label>
   <view class="log-list">
     <radio-group class="radio" name="hasWork" bindchange="bindHasWorkChange" >
      <label wx:for="{{radioHasWork}}" wx:key="">
