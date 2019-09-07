@@ -1,0 +1,7 @@
+/* client/pages/toWork/routines/leave.wxss */
+
+.contentSwiper {
+  margin: 0 auto;
+  width: 750rpx;
+  height: 1500rpx;
+}

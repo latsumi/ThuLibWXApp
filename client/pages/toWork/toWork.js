@@ -56,8 +56,15 @@ Page({
   bindMenuTap: function(e){
     var index = e.target.dataset.index
     switch(index){
+      case 0:
+      {//跳转到请假页面
+        wx.navigateTo({
+          url: 'routines/leave',
+        })
+        break;
+      }
       case 2:
-      {
+      {//跳转到签到界面
         wx.navigateTo({
           url: 'routines/signIn',
         })

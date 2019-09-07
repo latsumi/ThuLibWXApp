@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "请假",
+  "usingComponents": {
+    "wux-tabs": "../../../component/wux-weapp/tabs/index",
+    "wux-tab": "../../../component/wux-weapp/tab/index",
+    "wux-badge": "../../../component/wux-weapp/badge/index"
+  }
+}
