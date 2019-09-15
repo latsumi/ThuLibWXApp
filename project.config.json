@@ -4,11 +4,14 @@
 	"miniprogramRoot": "client/",
 	"qcloudRoot": "server/",
 	"setting": {
-		"newFeature": true
+		"newFeature": true,
+    "checkSiteMap": false
 	},
 	"appid": "wxb7411aeba820a5e8",
 	"projectname": "ThuLibWXApp",
 	"compileType": "miniprogram",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,
