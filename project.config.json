@@ -5,7 +5,7 @@
 	"qcloudRoot": "server/",
 	"setting": {
 		"newFeature": true,
-    "checkSiteMap": false
+		"checkSiteMap": false
 	},
 	"appid": "wxb7411aeba820a5e8",
 	"projectname": "ThuLibWXApp",

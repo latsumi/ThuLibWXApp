@@ -18,10 +18,10 @@ Page({
     authority: '',
     name: '',
     library: '',
-    version: '1.0.3',
+    version: '1.0.4',
     modalHidden: true,
     modalChoose: 0, //0:点击的是‘不要点这里’；1:点击的是‘关于我们’
-    imageUrl: '../../image/kunbaby.jpeg',
+    imageUrl: '../../image/captain_yang.jpeg',
     menu:[
       { menuImage: "../../image/questionnaire.png", descs: "填写问卷" },
       { menuImage: "../../image/manHour.png", descs: "工时查看" },
@@ -143,7 +143,7 @@ Page({
   },
   modalCandel: function () {
     if (this.data.modalChoose == 0){
-      util.showFailShort('Big KUN is \r\nwatching you!')
+      util.showFailShort('Big YANG is \r\nwatching you!')
     }
     this.setData({
       modalHidden: true,
@@ -229,13 +229,6 @@ Page({
             })
           break;
         }
-        // case 3:
-        //   {
-        //     wx.makePhoneCall({
-        //       phoneNumber: '18813139066',
-        //     })
-        //     break;
-        //   }
         // case 4:
         // {
         //   app.globalData.authority = 2;
