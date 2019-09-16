@@ -125,7 +125,7 @@ Page({
     var currentManHour;
     var currentPeriod;
 
-    if(hour>=5&&hour<=11){
+    if(hour>=5&&hour<=11){  //早班时间
       currentClass = 0;
       if (day == 0 || day == 6)  //周末默认工时为2h
         currentManHour = 1;
@@ -137,11 +137,16 @@ Page({
         currentPeriod = 2;
     }
     else{
-      currentManHour = 1;
-      if(hour<=4||hour>=18)
+      if (hour >= 12 && hour <= 16){  //午班时间
+        currentManHour = 0;
+      }
+      else{ //晚班时间
+        currentManHour = 1;
+      }
+      if(hour<=4||hour>=17)
       {
         currentPeriod = 0;
-        if(hour>=18&&hour<=20)
+        if(hour>=17&&hour<=19)
           currentClass = 2;
         else
           currentClass = 3;
