@@ -9,7 +9,7 @@ const path = require('path')
 const { mysql: config } = require('../config')
 
 var res
-var info = " "
+var info = ""
 var mem = new Array();
 var class_s_info = new Array();
 var schedule = new Array();
@@ -80,9 +80,13 @@ function get_class_info(isHoliday, isTwoclass) {
       {
         need_mem = 7;
       }
-      else
+      else if （i % 4 == 3)
       {
         need_mem = 6;
+      }
+      else
+      {
+        need_mem = 4;
       }
       var class_name;
       switch (i) {
