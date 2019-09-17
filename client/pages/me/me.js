@@ -18,7 +18,7 @@ Page({
     authority: '',
     name: '',
     library: '',
-    version: '1.0.4',
+    version: '1.0.5',
     modalHidden: true,
     modalChoose: 0, //0:点击的是‘不要点这里’；1:点击的是‘关于我们’
     imageUrl: '../../image/captain_yang.jpeg',
